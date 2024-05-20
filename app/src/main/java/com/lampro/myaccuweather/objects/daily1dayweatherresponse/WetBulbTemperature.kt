@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName
 
 data class WetBulbTemperature(
     @SerializedName("Average")
-    var average: AverageX,
+    var average: Average,
     @SerializedName("Maximum")
-    var maximum: MaximumX,
+    var maximum: Maximum,
     @SerializedName("Minimum")
     var minimum: Minimum
 )

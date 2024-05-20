@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class RealFeelTemperatureShade(
     @SerializedName("Maximum")
-    var maximum: MaximumXXXXX,
+    var maximum: MaximumXXXX,
     @SerializedName("Minimum")
-    var minimum: MinimumXXXXX
+    var minimum: MinimumXXXX
 )

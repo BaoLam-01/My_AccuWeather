@@ -7,7 +7,7 @@ data class Night(
     @SerializedName("CloudCover")
     var cloudCover: Int,
     @SerializedName("Evapotranspiration")
-    var evapotranspiration: EvapotranspirationX,
+    var evapotranspiration: Evapotranspiration,
     @SerializedName("HasPrecipitation")
     var hasPrecipitation: Boolean,
     @SerializedName("HoursOfIce")
@@ -19,7 +19,7 @@ data class Night(
     @SerializedName("HoursOfSnow")
     var hoursOfSnow: Int,
     @SerializedName("Ice")
-    var ice: IceX,
+    var ice: Ice,
     @SerializedName("IceProbability")
     var iceProbability: Int,
     @SerializedName("Icon")
@@ -39,15 +39,15 @@ data class Night(
     @SerializedName("RainProbability")
     var rainProbability: Int,
     @SerializedName("RelativeHumidity")
-    var relativeHumidity: RelativeHumidityX,
+    var relativeHumidity: RelativeHumidity,
     @SerializedName("ShortPhrase")
     var shortPhrase: String,
     @SerializedName("Snow")
-    var snow: SnowX,
+    var snow: Snow,
     @SerializedName("SnowProbability")
     var snowProbability: Int,
     @SerializedName("SolarIrradiance")
-    var solarIrradiance: SolarIrradianceX,
+    var solarIrradiance: SolarIrradiance,
     @SerializedName("ThunderstormProbability")
     var thunderstormProbability: Int,
     @SerializedName("TotalLiquid")

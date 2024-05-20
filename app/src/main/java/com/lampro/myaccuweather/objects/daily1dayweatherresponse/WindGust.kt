@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class WindGust(
     @SerializedName("Direction")
-    var direction: DirectionX,
+    var direction: Direction,
     @SerializedName("Speed")
-    var speed: SpeedX
+    var speed: Speed
 )

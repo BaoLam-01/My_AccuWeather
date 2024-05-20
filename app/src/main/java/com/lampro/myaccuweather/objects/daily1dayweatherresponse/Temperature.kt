@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Temperature(
     @SerializedName("Maximum")
-    var maximum: MaximumXXXXXX,
+    var maximum: Maximum,
     @SerializedName("Minimum")
     var minimum: Minimum
 )
