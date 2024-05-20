@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="currentWeatherResponse"
+            type="com.lampro.myaccuweather.objects.currentweatherresponse.CurrentWeatherResponseItem" />
+
+        <import type="com.lampro.weatherapp.utils.StringUtils" />
+
+        <import type="com.lampro.weatherapp.utils.BindingAdapter" />
+        <variable
+            name="view"
+            type="android.view.View" />
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.fragments.InfWeather">
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <LinearLayout
+                android:layout_above="@id/bottomnav"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/background_gradient">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:layout_gravity="center">-->
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="vertical">-->
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:fontFamily="@font/poppins_medium"-->
+<!--                            android:textSize="@dimen/_20sdp"-->
+<!--                            android:textColor="#48FFFFFF"-->
+<!--                            android:includeFontPadding="false"-->
+<!--                            android:text="@{currentWeatherResponse.weatherText}"-->
+<!--                            tools:text="london" />-->
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:fontFamily="@font/poppins_medium"-->
+<!--                            android:textSize="@dimen/_10sdp"-->
+<!--                            android:textColor="#48FFFFFF"-->
+<!--                            android:text="vn"-->
+<!--                            tools:text="US" />-->
+<!--                    </LinearLayout>-->
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="@dimen/_10sdp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:src="@drawable/arrow_down"-->
+<!--                        android:layout_margin="@dimen/_10sdp"-->
+<!--                        />-->
+<!--                </LinearLayout>-->
+
+
+
+
+                <ImageView
+                    android:layout_marginTop="@dimen/_50sdp"
+                    android:id="@+id/imgWeatherStt"
+                    android:layout_gravity="center"
+                    android:layout_width="@dimen/_150sdp"
+                    android:layout_height="@dimen/_150sdp"
+                    android:scaleType="fitCenter"
+                    tools:src="@drawable/weather_sunrain"
+                    imageUrl="@{currentWeatherResponse.weatherIcon}"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_minus20sdp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvTemp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{StringUtils.INSTANCE.convertDouble2String(currentWeatherResponse.temperature.metric.value)}"
+                        tools:text="19"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_40ssp"
+                        android:fontFamily="@font/poppins_medium"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="°"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_40ssp"
+                        android:fontFamily="@font/poppins_medium"/>
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/poppins_regular"
+                    tools:text="Sunny"
+                    android:text="@{currentWeatherResponse.weatherText}"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_15ssp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:gravity="right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_weight="1">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Max: "
+                            android:textSize="@dimen/_15ssp"
+                            android:textColor="@color/white"/>
+
+                        <TextView
+                            android:id="@+id/maxTemp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/_15ssp"
+                            android:textColor="@color/white"
+                            tools:text="20"
+                            android:text="@{StringUtils.INSTANCE.convertDouble2String(currentWeatherResponse.temperatureSummary.past12HourRange.maximum.metric.value)}"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/_15ssp"
+                            android:textColor="@color/white"
+                            android:text="°"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_weight="1">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Min: "
+                            android:textSize="@dimen/_15ssp"
+                            android:textColor="@color/white"/>
+
+                        <TextView
+                            android:id="@+id/minTemp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/_15ssp"
+                            android:textColor="@color/white"
+                            tools:text="19"
+                            android:text="@{StringUtils.INSTANCE.convertDouble2String(currentWeatherResponse.temperatureSummary.past12HourRange.minimum.metric.value)}"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/_15ssp"
+                            android:textColor="@color/white"
+                            android:text="°"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/house" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/d"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_frame_hour_gradient"
+                android:elevation="@dimen/_1sdp"
+                android:layout_above="@id/bottomnav">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/_40sdp"
+                    android:paddingVertical="@dimen/_10sdp">
+
+                    <TextView
+                        android:id="@+id/tvToday"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/opensans_regular"
+                        android:text="Today"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvCurrentDay"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/opensans_regular"
+                        android:gravity="right"
+                        android:text="July, 21"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:background="#4DFFFFFF"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvWeatherHour"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_130sdp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/bottomnav"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/nav_bg_gradient"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/btnLocation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="#00000000"
+                    android:src="@drawable/icon_location" />
+
+                <ImageButton
+                    android:id="@+id/btnPlusCircle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="#00000000"
+                    android:src="@drawable/icon_pluscircle" />
+
+                <ImageButton
+                    android:id="@+id/btnMenu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="#00000000"
+                    android:src="@drawable/icon_menu" />
+            </LinearLayout>
+        </RelativeLayout>
+
+
+    </FrameLayout>
+</layout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Layer 1: Shadow -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="20dp" />
+            <solid android:color="#4DFFFFFF" /> <!-- Shadow color with transparency -->
+            <padding
+                android:top="@dimen/_2sdp"
+                android:left="@dimen/_2sdp"
+                android:bottom="@dimen/_2sdp"
+                android:right="@dimen/_2sdp" />
+        </shape>
+    </item>
+
+    <!-- Layer 2: Main shape -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="20dp" />
+            <gradient
+                android:angle="45"
+                android:centerColor="#523187"
+                android:endColor="#15113C"
+                android:startColor="#81408E" />
+        </shape>
+    </item>
+</layer-list>
