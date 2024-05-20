@@ -17,7 +17,7 @@
         android:layout_height="wrap_content">
 
         <FrameLayout
-            android:layout_marginHorizontal="@dimen/_18sdp"
+            android:layout_marginRight="@dimen/_20sdp"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_150sdp"
             app:layout_constraintTop_toTopOf="parent"

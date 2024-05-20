@@ -12,6 +12,9 @@
             type="com.lampro.myaccuweather.objects.daily1dayweatherresponse.DailyForecast" />
 
         <import type="com.lampro.weatherapp.utils.StringUtils" />
+        <variable
+            name="daily1DayForecasts"
+            type="com.lampro.myaccuweather.objects.daily1dayweatherresponse.Daily1DayWeatherResponse" />
     </data>
 
     <FrameLayout
@@ -81,7 +84,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="20"
+                            android:text="@{StringUtils.INSTANCE.convertDouble2String(currenWeather.temperatureSummary.past12HourRange.maximum.metric.value)}"
+                            tools:text="20"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_16ssp" />
 
@@ -114,7 +118,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="18"
+                            android:text="@{StringUtils.INSTANCE.convertDouble2String(currenWeather.temperatureSummary.past12HourRange.minimum.metric.value)}"
+                            tools:text="18"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_16ssp" />
 
@@ -137,9 +142,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingHorizontal="@dimen/_20sdp"
+                        android:paddingHorizontal="@dimen/_30sdp"
                         android:fontFamily="@font/opensan_bold"
-                        android:text="7-Days Forecasts"
+                        android:text="5-Days Forecasts"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_15ssp" />
 
@@ -152,7 +157,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingHorizontal="@dimen/_8sdp"
+                            android:paddingHorizontal="@dimen/_10sdp"
                             android:layout_weight="1"
                             android:rotation="180"
                             android:src="@drawable/icon_chevron_left" />
@@ -168,7 +173,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingHorizontal="@dimen/_8sdp"
+                            android:paddingHorizontal="@dimen/_10sdp"
                             android:layout_weight="1"
                             android:src="@drawable/icon_chevron_left" />
                     </LinearLayout>
@@ -177,7 +182,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_110sdp"
-                    android:layout_marginHorizontal="@dimen/_25sdp"
+                    android:layout_marginHorizontal="@dimen/_30sdp"
                     android:background="@drawable/bg_frame_airquality_gradient"
                     android:elevation="@dimen/_5sdp"
                     android:orientation="vertical">
@@ -200,7 +205,7 @@
                             android:layout_gravity="center"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:fontFamily="@font/opensans_regular"
-                            android:text="PRESSURE TENDENCY"
+                            android:text="AIR QUALITY"
                             android:textColor="@color/white" />
                     </LinearLayout>
 
@@ -209,8 +214,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/opensan_bold"
-                        android:paddingHorizontal="@dimen/_10sdp"
-                        tools:text= "Ổn định"
+                        android:paddingHorizontal="@dimen/_15sdp"
+                        tools:text="Ổn định"
                         android:textColor="@color/white" />
 
                     <View
@@ -246,12 +251,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_25sdp"
+                    android:layout_marginHorizontal="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_25sdp"
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="@dimen/_100sdp"
                         android:layout_marginRight="@dimen/_5sdp"
                         android:layout_weight="1"
@@ -284,7 +289,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:paddingHorizontal="@dimen/_5sdp">
+                            android:paddingHorizontal="@dimen/_10sdp">
 
                             <TextView
                                 android:id="@+id/timeSunrise"
@@ -294,19 +299,13 @@
                                 android:text="5:28"
                                 android:textSize="@dimen/_16ssp" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/opensan_bold"
-                                android:text=" AM"
-                                android:textSize="@dimen/_16ssp" />
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
-                            android:paddingHorizontal="@dimen/_5sdp">
+                            android:paddingHorizontal="@dimen/_10sdp">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -323,19 +322,13 @@
                                 android:text="7:25"
                                 android:textColor="#73FFFFFF" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/opensan_bold"
-                                android:text=" PM"
-                                android:textColor="#72FFFFFF" />
                         </LinearLayout>
 
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="@dimen/_100sdp"
                         android:layout_marginLeft="@dimen/_5sdp"
                         android:layout_weight="1"
@@ -370,7 +363,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/opensan_bold"
-                            android:paddingHorizontal="@dimen/_5sdp"
+                            android:paddingHorizontal="@dimen/_10sdp"
                             android:text="@{StringUtils.INSTANCE.convertInt2String(currenWeather.UVIndex)}"
                             tools:text="4"
                             android:textSize="@dimen/_16ssp" />
@@ -380,7 +373,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/opensan_bold"
-                            android:paddingHorizontal="@dimen/_5sdp"
+                            android:paddingHorizontal="@dimen/_10sdp"
                             tools:text="Moderate"
                             android:text="@{currenWeather.UVIndexText}"
                             android:textSize="@dimen/_16ssp" />

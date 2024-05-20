@@ -12,13 +12,14 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent">
         <FrameLayout
+            android:layout_marginRight="@dimen/_6sdp"
             android:id="@+id/itemBody"
-            android:layout_width="@dimen/_40sdp"
+            android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_120sdp"
-            android:background="@drawable/bg_curentday_gradient"
+            android:background="@drawable/bg_dailyday_gradient"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -42,7 +43,6 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_medium"
                         android:text="@{StringUtils.INSTANCE.convertDouble2String(dailyForecasts.temperature.maximum.value)}"
-                        android:textSize="@dimen/_15ssp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="19" />
@@ -50,7 +50,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_medium"
-                        android:textSize="@dimen/_15ssp"
                         android:text="°C"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -70,7 +69,6 @@
                     android:text="15.00"
                     tools:text="15.00"
                     android:layout_gravity="center"
-                    android:textSize="@dimen/_15ssp"
                     android:fontFamily="@font/poppins_medium" />
             </LinearLayout>
 

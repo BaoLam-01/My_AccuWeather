@@ -58,7 +58,11 @@ class WeatherViewModel(application: Application, val weatherRepository: WeatherR
             "https://dataservice.accuweather.com/locations/v1/cities/neighbors/$key?apikey=${ConstantsApi.API_KEY}&language=vi&details=false"
         val arrayRequest = JsonArrayRequest(Request.Method.GET, url, null, { response ->
             var jsonobject = response.getJSONObject(0)
-            cityName.value = jsonobject.getString("LocalizedName")
+            if (jsonobject.getString("LocalizedName").isNotEmpty()){
+                cityName.value = jsonobject.getString("LocalizedName")
+            }else {
+                cityName.value = jsonobject.getString("EnglishName")
+            }
         }, { error ->
             cityName.value = null
             Log.d(TAG, "getLocationKey: $error")

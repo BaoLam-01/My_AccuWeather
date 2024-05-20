@@ -26,6 +26,7 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
         }
     }
 
+
     override fun inflateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?

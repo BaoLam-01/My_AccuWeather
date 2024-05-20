@@ -1,6 +1,8 @@
 package com.lampro.weatherapp.ui.fragments
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +24,8 @@ import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import java.util.Locale
+import kotlin.math.log
 
 
 private const val ARG_PARAM1 = "param1"
@@ -59,7 +63,6 @@ class WeatherFor7Days : BaseFragment<FragmentWeatherFor7DaysBinding>() {
         weatherViewModel.cityName.observe(viewLifecycleOwner) { response ->
             if (response != null) {
                 binding.tvCityName.text = response
-
             } else {
                 binding.tvCityName.text = "No data"
             }
@@ -91,7 +94,7 @@ class WeatherFor7Days : BaseFragment<FragmentWeatherFor7DaysBinding>() {
                     hideLoadingDialog()
                     Toast.makeText(
                         this@WeatherFor7Days.context,
-                        "get hourly weather ${response.message}",
+                        "get daily weather ${response.message}",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -110,12 +113,12 @@ class WeatherFor7Days : BaseFragment<FragmentWeatherFor7DaysBinding>() {
                     response.data?.let {
                         binding.dailyForecasts = it.dailyForecasts[0]
                         binding.tvAirQuality.text =
-                            it.dailyForecasts[0].airAndPollen[0].categoryValue.toString() + " - " +
-                                    it.dailyForecasts[0].airAndPollen[0].category.toString()
+                            "${it.dailyForecasts.get(0).airAndPollen.get(0).categoryValue}-" +
+                                    it.dailyForecasts.get(0).airAndPollen.get(0).category
                         val epochDateSunSet = it.dailyForecasts[0].sun.epochSet.toLong()
                         var instant = Instant.ofEpochSecond(epochDateSunSet)
                         var dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
-                        var formatter = DateTimeFormatter.ofPattern("h:mm a")
+                        var formatter = DateTimeFormatter.ofPattern("h:mm a", Locale.US)
                         var formattedDate = dateTime.format(formatter)
                         binding.timeSunset.setText(formattedDate)
 
@@ -131,9 +134,10 @@ class WeatherFor7Days : BaseFragment<FragmentWeatherFor7DaysBinding>() {
                     hideLoadingDialog()
                     Toast.makeText(
                         this@WeatherFor7Days.context,
-                        "get hourly weather ${response.message}",
+                        "get daily 1 day weather ${response.message}",
                         Toast.LENGTH_SHORT
                     ).show()
+                    Log.d(TAG, "onViewCreated: ${response.message}")
                 }
             }
         }

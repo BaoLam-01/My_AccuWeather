@@ -1,6 +1,7 @@
 package com.lampro.myaccuweather.adapters
 
 import android.widget.BaseAdapter
+import androidx.core.view.get
 import com.lampro.myaccuweather.R
 import com.lampro.myaccuweather.databinding.LayoutItemDayBinding
 import com.lampro.myaccuweather.databinding.LayoutItemHourBinding
@@ -11,6 +12,7 @@ import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 class DailyWeatherAdapter : BaseRecyclerViewAdapter<DailyForecast,LayoutItemDayBinding>(){
     override fun getLayout(): Int = R.layout.layout_item_day
@@ -22,8 +24,9 @@ class DailyWeatherAdapter : BaseRecyclerViewAdapter<DailyForecast,LayoutItemDayB
         val epochSeconds = mListData[position].epochDate.toLong()
         val instant = Instant.ofEpochSecond(epochSeconds)
         val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
-        val formatter = DateTimeFormatter.ofPattern("HH.mm")
+        val formatter = DateTimeFormatter.ofPattern("EE", Locale.ENGLISH)
         val formattedDate = dateTime.format(formatter)
         holder.binding.hourItem.setText(formattedDate)
+//        holder.binding.itemBody.get(0).setBackgroundResource(R.drawable.bg_dailyday_gradient_2)
     }
 }

@@ -9,5 +9,5 @@ data class Evapotranspiration(
     @SerializedName("UnitType")
     var unitType: Int,
     @SerializedName("Value")
-    var value: Int
+    var value: Double
 )
