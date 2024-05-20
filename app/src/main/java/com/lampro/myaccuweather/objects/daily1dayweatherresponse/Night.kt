@@ -51,13 +51,13 @@ data class Night(
     @SerializedName("ThunderstormProbability")
     var thunderstormProbability: Int,
     @SerializedName("TotalLiquid")
-    var totalLiquid: TotalLiquidX,
+    var totalLiquid: TotalLiquid,
     @SerializedName("WetBulbGlobeTemperature")
-    var wetBulbGlobeTemperature: WetBulbGlobeTemperatureX,
+    var wetBulbGlobeTemperature: WetBulbGlobeTemperature,
     @SerializedName("WetBulbTemperature")
-    var wetBulbTemperature: WetBulbTemperatureX,
+    var wetBulbTemperature: WetBulbTemperature,
     @SerializedName("Wind")
-    var wind: WindX,
+    var wind: Wind,
     @SerializedName("WindGust")
-    var windGust: WindGustX
+    var windGust: WindGust
 )
