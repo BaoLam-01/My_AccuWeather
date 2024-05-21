@@ -20,6 +20,7 @@ import com.google.android.gms.location.LocationServices
 import com.lampro.myaccuweather.databinding.FragmentInfWeatherBinding
 import com.lampro.myaccuweather.objects.currentweatherresponse.CurrentWeatherResponseItem
 import com.lampro.myaccuweather.ui.activities.MainActivity
+import com.lampro.myaccuweather.ui.fragments.LocationFragment
 import com.lampro.weatherapp.adapters.HourlyWeatherAdapter
 import com.lampro.weatherapp.base.BaseFragment
 import com.lampro.weatherapp.network.api.ApiResponse
@@ -185,6 +186,9 @@ class InfWeather : BaseFragment<FragmentInfWeatherBinding>() {
 
         binding.btnMenu.setOnClickListener {
             param2?.addFragment(WeatherFor7Days.newInstance(currentWeatherResponse, param2,param3), "", "")
+        }
+        binding.btnPlusCircle.setOnClickListener{
+            param2?.addFragment(LocationFragment.newInstance("", param2!!), "", "")
         }
 
     }

@@ -28,6 +28,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         supportFragmentManager
             .beginTransaction()
             .add(R.id.container, fragment)
+            .addToBackStack("")
             .commit()
     }
 

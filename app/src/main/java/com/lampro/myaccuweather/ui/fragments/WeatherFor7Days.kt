@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.get
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.lampro.myaccuweather.R
 import com.lampro.myaccuweather.adapters.DailyWeatherAdapter
 import com.lampro.myaccuweather.databinding.FragmentWeatherFor7DaysBinding
 import com.lampro.myaccuweather.objects.currentweatherresponse.CurrentWeatherResponseItem
@@ -160,7 +162,7 @@ class WeatherFor7Days : BaseFragment<FragmentWeatherFor7DaysBinding>() {
     }
 
     private fun initView() {
-        binding.btnMenu.setOnClickListener {
+        binding.btnBack.setOnClickListener {
             param2?.apply {
                 supportFragmentManager.beginTransaction().remove(this@WeatherFor7Days).commit()
             }

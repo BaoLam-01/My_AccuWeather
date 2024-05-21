@@ -8,9 +8,12 @@ object ConstantsApi {
     A18DGMLcvebA06oD90XjemEVAp6rR1P6
     3VYmfBZDenK2xi21ERvnfGyCUhqjyV4Y
     O45qbcr1hT0Z7EsD2Gy0RzHDJrHGbhXB
+    Dg98nYAeVGcVxD55lEokoKLLypiYTDGC
+    Vgx7dBAN35AEjsJ4KgVVSBPHWOIMBaI6
+    2qG5lURDwvJGqSRL6Hxl514djaOpJf3c
     * */
 
-    const val API_KEY = "3VYmfBZDenK2xi21ERvnfGyCUhqjyV4Y"
+    const val API_KEY = "2qG5lURDwvJGqSRL6Hxl514djaOpJf3c"
     const val BASE_URL = "https://dataservice.accuweather.com/"
     const val GET_CURRENT_WEATHER = "currentconditions/v1/{locationkey}?apikey=$API_KEY&language=vi&details=true"
     const val GET_HOURLY_WEATHER = "forecasts/v1/hourly/12hour/{locationkey}?apikey=$API_KEY&language=vi&details=true&metric=true"

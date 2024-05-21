@@ -2,6 +2,7 @@ package com.lampro.myaccuweather.adapters
 
 import android.widget.BaseAdapter
 import androidx.core.view.get
+import com.bumptech.glide.Glide
 import com.lampro.myaccuweather.R
 import com.lampro.myaccuweather.databinding.LayoutItemDayBinding
 import com.lampro.myaccuweather.databinding.LayoutItemHourBinding
@@ -27,6 +28,8 @@ class DailyWeatherAdapter : BaseRecyclerViewAdapter<DailyForecast,LayoutItemDayB
         val formatter = DateTimeFormatter.ofPattern("EE", Locale.ENGLISH)
         val formattedDate = dateTime.format(formatter)
         holder.binding.hourItem.setText(formattedDate)
-//        holder.binding.itemBody.get(0).setBackgroundResource(R.drawable.bg_dailyday_gradient_2)
+        if (position == 0) {
+            holder.binding.itemBody.setBackgroundResource(R.drawable.bg_dailyday_gradient_2)
+        }
     }
 }
