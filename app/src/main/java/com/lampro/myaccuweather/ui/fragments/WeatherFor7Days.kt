@@ -30,15 +30,18 @@ import kotlin.math.log
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+private const val ARG_PARAM3 = "param3"
 
 
 class WeatherFor7Days : BaseFragment<FragmentWeatherFor7DaysBinding>() {
     // TODO: Rename and change types of parameters
     private var param1: CurrentWeatherResponseItem? = null
     private var param2: MainActivity? = null
+    private var param3: String? = null
 
     private lateinit var weatherViewModel: WeatherViewModel
     private lateinit var mDailyWeatherAdapter: DailyWeatherAdapter
+    private var key = "226396"
 
 
     override fun inflateBinding(
@@ -51,6 +54,7 @@ class WeatherFor7Days : BaseFragment<FragmentWeatherFor7DaysBinding>() {
         arguments?.let {
             param1 = it.getSerializable(ARG_PARAM1) as CurrentWeatherResponseItem?
             param2 = it.getSerializable(ARG_PARAM2) as MainActivity?
+            param3 = it.getString(ARG_PARAM3)
         }
     }
 
@@ -58,8 +62,11 @@ class WeatherFor7Days : BaseFragment<FragmentWeatherFor7DaysBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         initViewModel()
+        if (param3 != null) {
+            key = param3.toString()
+        }
 
-        weatherViewModel.getCityName("226396")
+        weatherViewModel.getCityName(key)
         weatherViewModel.cityName.observe(viewLifecycleOwner) { response ->
             if (response != null) {
                 binding.tvCityName.text = response
@@ -67,7 +74,7 @@ class WeatherFor7Days : BaseFragment<FragmentWeatherFor7DaysBinding>() {
                 binding.tvCityName.text = "No data"
             }
         }
-        weatherViewModel.getDailyWeather("226396")
+        weatherViewModel.getDailyWeather(key)
         weatherViewModel.dailyWeatherData.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is ApiResponse.Loading -> {
@@ -101,7 +108,7 @@ class WeatherFor7Days : BaseFragment<FragmentWeatherFor7DaysBinding>() {
             }
         }
 
-        weatherViewModel.getDaily1DayWeather("226396")
+        weatherViewModel.getDaily1DayWeather(key)
         weatherViewModel._1DayWeatherData.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is ApiResponse.Loading -> {
@@ -170,11 +177,12 @@ class WeatherFor7Days : BaseFragment<FragmentWeatherFor7DaysBinding>() {
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: CurrentWeatherResponseItem?, param2: MainActivity?) =
+        fun newInstance(param1: CurrentWeatherResponseItem?, param2: MainActivity?, param3: String?) =
             WeatherFor7Days().apply {
                 arguments = Bundle().apply {
                     putSerializable(ARG_PARAM1, param1)
                     putSerializable(ARG_PARAM2, param2)
+                    putString(ARG_PARAM3,param3)
                 }
             }
     }

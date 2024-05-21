@@ -25,7 +25,6 @@ class HourlyWeatherAdapter : BaseRecyclerViewAdapter<HourlyWeatherResponseItem, 
         val formatter = DateTimeFormatter.ofPattern("HH.mm")
         val formattedDate = dateTime.format(formatter)
         holder.binding.tvhourItem.setText(formattedDate)
-//        holder.binding.tvhourItem.setText(mListData[position].dtTxt.substring(11,16))
     }
 
 }

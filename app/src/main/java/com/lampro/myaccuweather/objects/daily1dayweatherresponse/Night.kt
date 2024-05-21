@@ -13,9 +13,9 @@ data class Night(
     @SerializedName("HoursOfIce")
     var hoursOfIce: Int,
     @SerializedName("HoursOfPrecipitation")
-    var hoursOfPrecipitation: Int,
+    var hoursOfPrecipitation: Double,
     @SerializedName("HoursOfRain")
-    var hoursOfRain: Int,
+    var hoursOfRain: Double,
     @SerializedName("HoursOfSnow")
     var hoursOfSnow: Int,
     @SerializedName("Ice")
@@ -35,7 +35,7 @@ data class Night(
     @SerializedName("PrecipitationType")
     var precipitationType: String,
     @SerializedName("Rain")
-    var rain: RainX,
+    var rain: Rain,
     @SerializedName("RainProbability")
     var rainProbability: Int,
     @SerializedName("RelativeHumidity")

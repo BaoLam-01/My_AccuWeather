@@ -84,7 +84,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="@{StringUtils.INSTANCE.convertDouble2String(currenWeather.temperatureSummary.past12HourRange.maximum.metric.value)}"
+                            android:text="@{StringUtils.INSTANCE.convertDouble2String(currenWeather.temperatureSummary.past24HourRange.maximum.metric.value)}"
                             tools:text="20"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_16ssp" />

@@ -147,7 +147,7 @@
                             android:textSize="@dimen/_15ssp"
                             android:textColor="@color/white"
                             tools:text="20"
-                            android:text="@{StringUtils.INSTANCE.convertDouble2String(currentWeatherResponse.temperatureSummary.past12HourRange.maximum.metric.value)}"/>
+                            android:text="@{StringUtils.INSTANCE.convertDouble2String(currentWeatherResponse.temperatureSummary.past24HourRange.maximum.metric.value)}"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

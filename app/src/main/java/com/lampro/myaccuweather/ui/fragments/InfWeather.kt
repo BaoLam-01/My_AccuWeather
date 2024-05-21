@@ -36,6 +36,7 @@ import java.util.Locale
 // TODO: Rename parameter arguments, choose names that match
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+private const val ARG_PARAM3 = "param3"
 
 private lateinit var weatherViewModel: WeatherViewModel
 
@@ -46,8 +47,9 @@ class InfWeather : BaseFragment<FragmentInfWeatherBinding>() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: MainActivity? = null
-    private lateinit var currentWeatherResponse : CurrentWeatherResponseItem
-
+    private var param3: String? = null
+    private lateinit var currentWeatherResponse: CurrentWeatherResponseItem
+    private var key = MutableLiveData<String?>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -165,14 +167,13 @@ class InfWeather : BaseFragment<FragmentInfWeatherBinding>() {
                         Log.d(TAG, "initView: lat: ${it.latitude} | long: ${it.longitude}")
 //                        Toast.makeText(context,getLocationKey(it.latitude, it.longitude), Toast.LENGTH_SHORT).show()
 
-                        val hh = getLocationKey(it.latitude, it.longitude)
-                        hh.observe(viewLifecycleOwner){
-                                hh ->
-                            if (hh != null){
+                        key = getLocationKey(it.latitude, it.longitude)
+                        key.observe(viewLifecycleOwner) { key ->
+                            if (key != null) {
 
-                                weatherViewModel.getCurrentWeather(hh)
-                                weatherViewModel.getHourlyWeather(hh)
-                            }else{
+                                weatherViewModel.getCurrentWeather(key)
+                                weatherViewModel.getHourlyWeather(key)
+                            } else {
                                 Toast.makeText(context, "error", Toast.LENGTH_SHORT).show()
                             }
                         }
@@ -183,11 +184,10 @@ class InfWeather : BaseFragment<FragmentInfWeatherBinding>() {
         }
 
         binding.btnMenu.setOnClickListener {
-            param2?.addFragment(WeatherFor7Days.newInstance(currentWeatherResponse, param2), "", "")
+            param2?.addFragment(WeatherFor7Days.newInstance(currentWeatherResponse, param2,param3), "", "")
         }
 
     }
-
 
 
     @SuppressLint("MissingPermission")
@@ -203,14 +203,13 @@ class InfWeather : BaseFragment<FragmentInfWeatherBinding>() {
             return@registerForActivityResult
         } else locationClient.lastLocation.addOnSuccessListener {
             Log.d("TAG", ": lat: ${it.latitude} | long: ${it.longitude}")
-            val hh = getLocationKey(it.latitude, it.longitude)
-            hh.observe(viewLifecycleOwner){
-                hh ->
-                if (hh != null){
+            key = getLocationKey(it.latitude, it.longitude)
+            key.observe(viewLifecycleOwner) { key ->
+                if (key != null) {
 
-                    weatherViewModel.getCurrentWeather(hh)
-                    weatherViewModel.getHourlyWeather(hh)
-                }else{
+                    weatherViewModel.getCurrentWeather(key)
+                    weatherViewModel.getHourlyWeather(key)
+                } else {
                     Toast.makeText(context, "error", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -219,11 +218,11 @@ class InfWeather : BaseFragment<FragmentInfWeatherBinding>() {
     }
 
     private fun getLocationKey(latitude: Double, longitude: Double): MutableLiveData<String?> {
-        var key = MutableLiveData<String?>()
         weatherViewModel.getLocationKey(latitude, longitude)
         weatherViewModel.locationKeyData.observe(viewLifecycleOwner) { response ->
             if (response != null) {
                 key.value = response
+                param3 = response
             } else {
                 key.value = ""
             }
