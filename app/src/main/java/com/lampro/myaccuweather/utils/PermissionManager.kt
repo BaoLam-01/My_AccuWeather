@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
 import androidx.activity.result.ActivityResultLauncher
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
 
@@ -26,5 +27,18 @@ object PermissionManager {
             }
         }
         return false
+    }
+    fun checkRequestPermission(activity: Activity): Boolean{
+        for (per in locationPermission) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    activity,
+                    per
+                )
+
+            ) {
+               return false
+            }
+        }
+        return true
     }
 }

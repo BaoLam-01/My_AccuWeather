@@ -20,4 +20,7 @@ object ConstantsApi {
     const val GET_HOURLY_WEATHER = "forecasts/v1/hourly/12hour/{locationkey}?apikey=$API_KEY&language=vi&details=true&metric=true"
     const val GET_DAILY_WEATHER = "forecasts/v1/daily/5day/{locationkey}?apikey=$API_KEY&language=vi&details=true&metric=true"
     const val GET_DAILY_1DAY_WEATHER = "forecasts/v1/daily/1day/{locationkey}?apikey=$API_KEY&language=vi&details=true&metric=true"
+    const val GET_CITY_NAME = "locations/v1/cities/neighbors/{locationkey}?apikey=$API_KEY&language=vi&details=false"
+    const val GET_LOCATION_KEY = "locations/v1/cities/geoposition/search?apikey=$API_KEY&q={latitude}%2C{longitude}&language=vi"
+    const val GET_INF_BY_CITY_NAME = "locations/v1/cities/search?apikey=$API_KEY&q={cityname}&language=vi&details=true&offset=3"
 }

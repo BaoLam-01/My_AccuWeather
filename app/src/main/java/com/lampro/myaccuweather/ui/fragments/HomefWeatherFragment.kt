@@ -2,6 +2,7 @@ package com.lampro.myaccuweather.ui.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.ContentValues.TAG
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -12,11 +13,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.lampro.myaccuweather.R
 import com.lampro.myaccuweather.adapters.HourlyWeatherAdapter
 import com.lampro.myaccuweather.base.BaseFragment
 import com.lampro.myaccuweather.databinding.FragmentHomeWeatherBinding
@@ -25,6 +28,7 @@ import com.lampro.myaccuweather.repositories.WeatherRepository
 import com.lampro.myaccuweather.utils.PermissionManager
 import com.lampro.myaccuweather.objects.currentweatherresponse.CurrentWeatherResponseItem
 import com.lampro.myaccuweather.ui.activities.MainActivity
+import com.lampro.myaccuweather.ui.dialog.CustomDialogFragment
 import com.lampro.myaccuweather.viewmodels.HomeWeather.HomeWeatherViewModel
 import com.lampro.myaccuweather.viewmodels.HomeWeather.HomeWeatherViewModelFactory
 import java.time.Instant
@@ -48,7 +52,7 @@ class HomefWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
     private var param1: String? = null
     private var param2: MainActivity? = null
     private var param3: String? = null
-    private  var currentWeatherResponse: CurrentWeatherResponseItem? = null
+    private var currentWeatherResponse: CurrentWeatherResponseItem? = null
     private var key = MutableLiveData<String?>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -137,7 +141,6 @@ class HomefWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
     }
 
 
-
     override fun inflateBinding(
         inflater: LayoutInflater, container: ViewGroup?
     ): FragmentHomeWeatherBinding = FragmentHomeWeatherBinding.inflate(layoutInflater)
@@ -145,9 +148,13 @@ class HomefWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
     private fun initViewModel() {
         val application = activity?.application
         val weatherRepository = WeatherRepository()
-        val homeWeatherViewModelFactory = HomeWeatherViewModelFactory(application!!, weatherRepository)
+        val homeWeatherViewModelFactory =
+            HomeWeatherViewModelFactory(application!!, weatherRepository)
         homeWeatherViewModel =
-            ViewModelProvider(this, factory = homeWeatherViewModelFactory)[HomeWeatherViewModel::class.java]
+            ViewModelProvider(
+                this,
+                factory = homeWeatherViewModelFactory
+            )[HomeWeatherViewModel::class.java]
     }
 
     private fun initView() {
@@ -182,13 +189,21 @@ class HomefWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
 
                     }
                 }
+
+
             }
         }
 
         binding.btnMenu.setOnClickListener {
-            param2?.addFragment(WeatherFor7DaysFragment.newInstance(currentWeatherResponse, param2,param3), "", "")
+            param2?.addFragment(
+                WeatherFor7DaysFragment.newInstance(
+                    currentWeatherResponse,
+                    param2,
+                    param3
+                ), "", ""
+            )
         }
-        binding.btnPlusCircle.setOnClickListener{
+        binding.btnPlusCircle.setOnClickListener {
             param2?.addFragment(LocationFragment.newInstance("", param2), "", "")
         }
 
@@ -205,7 +220,37 @@ class HomefWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
                 requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            return@registerForActivityResult
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(
+                    requireActivity(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) &&
+                !ActivityCompat.shouldShowRequestPermissionRationale(
+                    requireActivity(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+            ) {
+//                val dialogView = layoutInflater.inflate(R.layout.dialog_custom, null)
+//                val alertDialog = AlertDialog.Builder(this.context)
+//                    .setTitle("Ban can phai cap quyen truy cap vi tri de su dung tinh nang nay")
+//                    .setView(dialogView)
+//                    .setPositiveButton("OK", null)
+//                    .setNegativeButton("Cancel", null)
+//                    .create()
+//
+//                alertDialog.show()
+
+
+//                val customDialogFragment = CustomDialogFragment()
+//                customDialogFragment.onCreateDialog(null)
+
+                Toast.makeText(
+                    this.context,
+                    "vui long cap quyen truy cap vi tri",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                return@registerForActivityResult
+            }
         } else locationClient.lastLocation.addOnSuccessListener {
             Log.d("TAG", ": lat: ${it.latitude} | long: ${it.longitude}")
             key = getLocationKey(it.latitude, it.longitude)

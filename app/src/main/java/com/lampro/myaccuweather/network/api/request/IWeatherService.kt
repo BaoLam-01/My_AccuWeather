@@ -19,4 +19,7 @@ interface IWeatherService {
     suspend fun getDailyWeather(@Path("locationkey") locationKey: String): Response<DailyWeatherResponse>
     @GET(ConstantsApi.GET_DAILY_1DAY_WEATHER)
     suspend fun getDaily1DayWeather(@Path("locationkey") locationKey: String): Response<Daily1DayWeatherResponse>
+     @GET(ConstantsApi.GET_CITY_NAME)
+    suspend fun getCityName(@Path("locationkey") locationKey: String): Response<Daily1DayWeatherResponse>
+
 }
