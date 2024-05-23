@@ -1,21 +1,16 @@
 package com.lampro.myaccuweather.adapters
 
-import android.widget.BaseAdapter
-import androidx.core.view.get
-import com.bumptech.glide.Glide
 import com.lampro.myaccuweather.R
+import com.lampro.myaccuweather.base.BaseRecyclerViewAdapter
 import com.lampro.myaccuweather.databinding.LayoutItemDayBinding
-import com.lampro.myaccuweather.databinding.LayoutItemHourBinding
 import com.lampro.myaccuweather.objects.dailyweatherresponse.DailyForecast
-import com.lampro.myaccuweather.objects.dailyweatherresponse.DailyWeatherResponse
-import com.lampro.weatherapp.base.BaseRecyclerViewAdapter
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-class DailyWeatherAdapter : BaseRecyclerViewAdapter<DailyForecast,LayoutItemDayBinding>(){
+class DailyWeatherAdapter : BaseRecyclerViewAdapter<DailyForecast, LayoutItemDayBinding>(){
     override fun getLayout(): Int = R.layout.layout_item_day
     override fun onBindViewHolder(holder: BaseViewHolder<LayoutItemDayBinding>, position: Int) {
         holder.binding.dailyForecasts = mListData[position]

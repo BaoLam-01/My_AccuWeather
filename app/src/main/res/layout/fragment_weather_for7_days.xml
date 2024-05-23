@@ -11,7 +11,7 @@
             name="dailyForecasts"
             type="com.lampro.myaccuweather.objects.daily1dayweatherresponse.DailyForecast" />
 
-        <import type="com.lampro.weatherapp.utils.StringUtils" />
+        <import type="com.lampro.myaccuweather.utils.StringUtils" />
         <variable
             name="daily1DayForecasts"
             type="com.lampro.myaccuweather.objects.daily1dayweatherresponse.Daily1DayWeatherResponse" />
@@ -23,6 +23,7 @@
         android:background="@drawable/background_gradient"
         tools:context=".ui.fragments.WeatherFor7Days">
         <RelativeLayout
+            android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

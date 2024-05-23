@@ -1,4 +1,4 @@
-package com.lampro.weatherapp.network
+package com.lampro.myaccuweather.network
 
 class NetworkUtils {
 }

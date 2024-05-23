@@ -1,4 +1,4 @@
-package com.lampro.weatherapp.utils
+package com.lampro.myaccuweather.utils
 
 object StringUtils {
     fun convertInt2String(i: Int) : String = ""+i

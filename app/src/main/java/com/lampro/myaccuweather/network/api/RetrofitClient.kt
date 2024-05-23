@@ -1,7 +1,7 @@
-package com.lampro.weatherapp.network.api
+package com.lampro.myaccuweather.network.api
 
-import com.lampro.weatherapp.constants.ConstantsApi
-import com.lampro.weatherapp.network.api.request.IWeatherService
+import com.lampro.myaccuweather.constants.ConstantsApi
+import com.lampro.myaccuweather.network.api.request.IWeatherService
 import jp.co.cyberagent.android.gpuimage.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

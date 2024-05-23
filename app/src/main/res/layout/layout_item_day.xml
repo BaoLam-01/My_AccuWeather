@@ -8,7 +8,7 @@
             name="dailyForecasts"
             type="com.lampro.myaccuweather.objects.dailyweatherresponse.DailyForecast" />
 
-        <import type="com.lampro.weatherapp.utils.StringUtils" />
+        <import type="com.lampro.myaccuweather.utils.StringUtils" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -8,9 +8,9 @@
             name="currentWeatherResponse"
             type="com.lampro.myaccuweather.objects.currentweatherresponse.CurrentWeatherResponseItem" />
 
-        <import type="com.lampro.weatherapp.utils.StringUtils" />
+        <import type="com.lampro.myaccuweather.utils.StringUtils" />
 
-        <import type="com.lampro.weatherapp.utils.BindingAdapter" />
+        <import type="com.lampro.myaccuweather.utils.BindingAdapter" />
         <variable
             name="view"
             type="android.view.View" />
@@ -35,49 +35,49 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:background="@drawable/background_gradient">
-<!--                <LinearLayout-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    android:layout_gravity="center">-->
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:orientation="vertical">-->
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center"-->
-<!--                            android:fontFamily="@font/poppins_medium"-->
-<!--                            android:textSize="@dimen/_20sdp"-->
-<!--                            android:textColor="#48FFFFFF"-->
-<!--                            android:includeFontPadding="false"-->
-<!--                            android:text="@{currentWeatherResponse.weatherText}"-->
-<!--                            tools:text="london" />-->
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center"-->
-<!--                            android:fontFamily="@font/poppins_medium"-->
-<!--                            android:textSize="@dimen/_10sdp"-->
-<!--                            android:textColor="#48FFFFFF"-->
-<!--                            android:text="vn"-->
-<!--                            tools:text="US" />-->
-<!--                    </LinearLayout>-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:id="@+id/llCityName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/poppins_medium"
+                            android:textSize="@dimen/_20sdp"
+                            android:textColor="#48FFFFFF"
+                            android:includeFontPadding="false"
+                            android:text="@{currentWeatherResponse.weatherText}"
+                            tools:text="london" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/poppins_medium"
+                            android:textSize="@dimen/_10sdp"
+                            android:textColor="#48FFFFFF"
+                            android:text="vn"
+                            tools:text="US" />
+                    </LinearLayout>
 
-<!--                    <ImageView-->
-<!--                        android:layout_width="@dimen/_10sdp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:src="@drawable/arrow_down"-->
-<!--                        android:layout_margin="@dimen/_10sdp"-->
-<!--                        />-->
-<!--                </LinearLayout>-->
+                    <ImageView
+                        android:layout_width="@dimen/_10sdp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow_down"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:layout_toRightOf="@id/llCityName"/>
+                </RelativeLayout>
 
 
 
 
                 <ImageView
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_minus10sdp"
                     android:id="@+id/imgWeatherStt"
                     android:layout_gravity="center"
                     android:layout_width="@dimen/_150sdp"
@@ -89,7 +89,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_minus20sdp"
+                    android:layout_marginTop="@dimen/_minus10sdp"
                     android:orientation="horizontal">
 
                     <TextView

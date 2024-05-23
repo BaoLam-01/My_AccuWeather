@@ -1,15 +1,17 @@
-package com.lampro.myaccuweather.objects.cityresponse
+package com.lampro.myaccuweather.objects.infomationcityreponse
 
 
 import com.google.gson.annotations.SerializedName
 
-data class CityResponseItem(
+data class InfCityResponseItem(
     @SerializedName("AdministrativeArea")
     var administrativeArea: AdministrativeArea,
     @SerializedName("Country")
     var country: Country,
     @SerializedName("DataSets")
     var dataSets: List<String>,
+    @SerializedName("Details")
+    var details: Details,
     @SerializedName("EnglishName")
     var englishName: String,
     @SerializedName("GeoPosition")

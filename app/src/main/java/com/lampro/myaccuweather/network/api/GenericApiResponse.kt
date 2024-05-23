@@ -1,4 +1,4 @@
-package com.lampro.weatherapp.network.api
+package com.lampro.myaccuweather.network.api
 
 import retrofit2.Response
 

@@ -1,4 +1,4 @@
-package com.lampro.weatherapp.constants
+package com.lampro.myaccuweather.constants
 
 object Constants {
 }

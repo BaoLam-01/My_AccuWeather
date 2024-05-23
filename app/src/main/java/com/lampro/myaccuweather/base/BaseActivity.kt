@@ -1,4 +1,4 @@
-package com.lampro.weatherapp.base
+package com.lampro.myaccuweather.base
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -36,6 +36,13 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.container, fragment)
+            .commit()
+    }
+    fun replaceFragmentToBackStack(fragment: Fragment, fragmentTag: String, stack: String?) {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.container, fragment)
+            .addToBackStack("")
             .commit()
     }
 }

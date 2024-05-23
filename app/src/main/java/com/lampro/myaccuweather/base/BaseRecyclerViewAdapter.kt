@@ -1,4 +1,4 @@
-package com.lampro.weatherapp.base
+package com.lampro.myaccuweather.base
 
 import android.content.Context
 import android.view.LayoutInflater

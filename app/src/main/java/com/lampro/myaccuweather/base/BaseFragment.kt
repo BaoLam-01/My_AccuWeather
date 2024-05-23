@@ -1,4 +1,4 @@
-package com.lampro.weatherapp.base
+package com.lampro.myaccuweather.base
 
 import android.app.ProgressDialog
 import android.os.Bundle

@@ -8,7 +8,7 @@
            name="hourlyWeatherResponse"
            type="com.lampro.myaccuweather.objects.hourlyweatherresponse.HourlyWeatherResponseItem" />
 
-        <import type="com.lampro.weatherapp.utils.StringUtils" />
+        <import type="com.lampro.myaccuweather.utils.StringUtils" />
 
     </data>
 

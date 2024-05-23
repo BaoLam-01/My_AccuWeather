@@ -1,12 +1,12 @@
-package com.lampro.weatherapp.repositories
+package com.lampro.myaccuweather.repositories
 
 import com.lampro.myaccuweather.objects.currentweatherresponse.CurrentWeatherResponse
 import com.lampro.myaccuweather.objects.daily1dayweatherresponse.Daily1DayWeatherResponse
 import com.lampro.myaccuweather.objects.dailyweatherresponse.DailyWeatherResponse
 import com.lampro.myaccuweather.objects.hourlyweatherresponse.HourlyWeatherResponse
-import com.lampro.weatherapp.network.api.ApiResponse
-import com.lampro.weatherapp.network.api.GenericApiResponse
-import com.lampro.weatherapp.network.api.RetrofitClient
+import com.lampro.myaccuweather.network.api.ApiResponse
+import com.lampro.myaccuweather.network.api.GenericApiResponse
+import com.lampro.myaccuweather.network.api.RetrofitClient
 
 class WeatherRepository : GenericApiResponse(){
     suspend fun getCurrentWeather(locationKey: String): ApiResponse<CurrentWeatherResponse> {

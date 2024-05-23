@@ -1,4 +1,4 @@
-package com.lampro.weatherapp.ui.fragments
+package com.lampro.myaccuweather.ui.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -17,17 +17,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.lampro.myaccuweather.databinding.FragmentInfWeatherBinding
+import com.lampro.myaccuweather.adapters.HourlyWeatherAdapter
+import com.lampro.myaccuweather.base.BaseFragment
+import com.lampro.myaccuweather.databinding.FragmentHomeWeatherBinding
+import com.lampro.myaccuweather.network.api.ApiResponse
+import com.lampro.myaccuweather.repositories.WeatherRepository
+import com.lampro.myaccuweather.utils.PermissionManager
 import com.lampro.myaccuweather.objects.currentweatherresponse.CurrentWeatherResponseItem
 import com.lampro.myaccuweather.ui.activities.MainActivity
-import com.lampro.myaccuweather.ui.fragments.LocationFragment
-import com.lampro.weatherapp.adapters.HourlyWeatherAdapter
-import com.lampro.weatherapp.base.BaseFragment
-import com.lampro.weatherapp.network.api.ApiResponse
-import com.lampro.weatherapp.repositories.WeatherRepository
-import com.lampro.weatherapp.utils.PermissionManager
-import com.lampro.weatherapp.viewmodels.WeatherViewModel
-import com.lampro.weatherapp.viewmodels.WeatherViewModelFactory
+import com.lampro.myaccuweather.viewmodels.HomeWeather.HomeWeatherViewModel
+import com.lampro.myaccuweather.viewmodels.HomeWeather.HomeWeatherViewModelFactory
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -39,17 +38,17 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 private const val ARG_PARAM3 = "param3"
 
-private lateinit var weatherViewModel: WeatherViewModel
+private lateinit var homeWeatherViewModel: HomeWeatherViewModel
 
 private lateinit var mHourlyWeatherAdapter: HourlyWeatherAdapter
 private lateinit var locationClient: FusedLocationProviderClient
 
-class InfWeather : BaseFragment<FragmentInfWeatherBinding>() {
+class HomefWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: MainActivity? = null
     private var param3: String? = null
-    private lateinit var currentWeatherResponse: CurrentWeatherResponseItem
+    private  var currentWeatherResponse: CurrentWeatherResponseItem? = null
     private var key = MutableLiveData<String?>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,8 +68,8 @@ class InfWeather : BaseFragment<FragmentInfWeatherBinding>() {
         initView()
 
 
-        weatherViewModel.getCurrentWeather("226396")
-        weatherViewModel.currentWeatherData.observe(viewLifecycleOwner) { response ->
+        homeWeatherViewModel.getCurrentWeather("226396")
+        homeWeatherViewModel.currentWeatherData.observe(viewLifecycleOwner) { response ->
 
             when (response) {
                 is ApiResponse.Loading -> {
@@ -95,15 +94,15 @@ class InfWeather : BaseFragment<FragmentInfWeatherBinding>() {
                 is ApiResponse.Failed -> {
                     hideLoadingDialog()
                     Toast.makeText(
-                        this@InfWeather.context,
+                        this@HomefWeatherFragment.context,
                         "get curent weather ${response.message}",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
             }
         }
-        weatherViewModel.getHourlyWeather("226396")
-        weatherViewModel.hourlyWeatherData.observe(viewLifecycleOwner) { response ->
+        homeWeatherViewModel.getHourlyWeather("226396")
+        homeWeatherViewModel.hourlyWeatherData.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is ApiResponse.Loading -> {
                     showLoadingDialog()
@@ -117,7 +116,7 @@ class InfWeather : BaseFragment<FragmentInfWeatherBinding>() {
                         binding.rvWeatherHour.apply {
                             adapter = mHourlyWeatherAdapter
                             layoutManager = LinearLayoutManager(
-                                this@InfWeather.context,
+                                this@HomefWeatherFragment.context,
                                 LinearLayoutManager.HORIZONTAL,
                                 false
                             )
@@ -128,7 +127,7 @@ class InfWeather : BaseFragment<FragmentInfWeatherBinding>() {
                 is ApiResponse.Failed -> {
                     hideLoadingDialog()
                     Toast.makeText(
-                        this@InfWeather.context,
+                        this@HomefWeatherFragment.context,
                         "get hourly weather ${response.message}",
                         Toast.LENGTH_SHORT
                     ).show()
@@ -137,16 +136,18 @@ class InfWeather : BaseFragment<FragmentInfWeatherBinding>() {
         }
     }
 
+
+
     override fun inflateBinding(
         inflater: LayoutInflater, container: ViewGroup?
-    ): FragmentInfWeatherBinding = FragmentInfWeatherBinding.inflate(layoutInflater)
+    ): FragmentHomeWeatherBinding = FragmentHomeWeatherBinding.inflate(layoutInflater)
 
     private fun initViewModel() {
         val application = activity?.application
         val weatherRepository = WeatherRepository()
-        val weatherViewModelFactory = WeatherViewModelFactory(application!!, weatherRepository)
-        weatherViewModel =
-            ViewModelProvider(this, factory = weatherViewModelFactory)[WeatherViewModel::class.java]
+        val homeWeatherViewModelFactory = HomeWeatherViewModelFactory(application!!, weatherRepository)
+        homeWeatherViewModel =
+            ViewModelProvider(this, factory = homeWeatherViewModelFactory)[HomeWeatherViewModel::class.java]
     }
 
     private fun initView() {
@@ -172,8 +173,8 @@ class InfWeather : BaseFragment<FragmentInfWeatherBinding>() {
                         key.observe(viewLifecycleOwner) { key ->
                             if (key != null) {
 
-                                weatherViewModel.getCurrentWeather(key)
-                                weatherViewModel.getHourlyWeather(key)
+                                homeWeatherViewModel.getCurrentWeather(key)
+                                homeWeatherViewModel.getHourlyWeather(key)
                             } else {
                                 Toast.makeText(context, "error", Toast.LENGTH_SHORT).show()
                             }
@@ -185,10 +186,10 @@ class InfWeather : BaseFragment<FragmentInfWeatherBinding>() {
         }
 
         binding.btnMenu.setOnClickListener {
-            param2?.addFragment(WeatherFor7Days.newInstance(currentWeatherResponse, param2,param3), "", "")
+            param2?.addFragment(WeatherFor7DaysFragment.newInstance(currentWeatherResponse, param2,param3), "", "")
         }
         binding.btnPlusCircle.setOnClickListener{
-            param2?.addFragment(LocationFragment.newInstance("", param2!!), "", "")
+            param2?.addFragment(LocationFragment.newInstance("", param2), "", "")
         }
 
     }
@@ -211,8 +212,8 @@ class InfWeather : BaseFragment<FragmentInfWeatherBinding>() {
             key.observe(viewLifecycleOwner) { key ->
                 if (key != null) {
 
-                    weatherViewModel.getCurrentWeather(key)
-                    weatherViewModel.getHourlyWeather(key)
+                    homeWeatherViewModel.getCurrentWeather(key)
+                    homeWeatherViewModel.getHourlyWeather(key)
                 } else {
                     Toast.makeText(context, "error", Toast.LENGTH_SHORT).show()
                 }
@@ -222,8 +223,8 @@ class InfWeather : BaseFragment<FragmentInfWeatherBinding>() {
     }
 
     private fun getLocationKey(latitude: Double, longitude: Double): MutableLiveData<String?> {
-        weatherViewModel.getLocationKey(latitude, longitude)
-        weatherViewModel.locationKeyData.observe(viewLifecycleOwner) { response ->
+        homeWeatherViewModel.getLocationKey(latitude, longitude)
+        homeWeatherViewModel.locationKeyData.observe(viewLifecycleOwner) { response ->
             if (response != null) {
                 key.value = response
                 param3 = response
@@ -237,11 +238,13 @@ class InfWeather : BaseFragment<FragmentInfWeatherBinding>() {
     companion object {
 
         @JvmStatic
-        fun newInstance(param1: String?, param2: MainActivity?) = InfWeather().apply {
+        fun newInstance(param1: String?, param2: MainActivity?) = HomefWeatherFragment().apply {
             arguments = Bundle().apply {
                 putString(ARG_PARAM1, param1)
                 putSerializable(ARG_PARAM2, param2)
             }
         }
     }
+
+
 }

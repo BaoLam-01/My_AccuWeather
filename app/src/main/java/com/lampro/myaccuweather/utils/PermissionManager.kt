@@ -1,4 +1,4 @@
-package com.lampro.weatherapp.utils
+package com.lampro.myaccuweather.utils
 
 import android.Manifest
 import android.app.Activity

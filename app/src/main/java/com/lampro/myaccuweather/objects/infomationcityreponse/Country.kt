@@ -1,4 +1,4 @@
-package com.lampro.myaccuweather.objects.cityresponse
+package com.lampro.myaccuweather.objects.infomationcityreponse
 
 
 import com.google.gson.annotations.SerializedName

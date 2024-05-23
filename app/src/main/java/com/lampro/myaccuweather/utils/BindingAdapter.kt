@@ -1,10 +1,8 @@
-package com.lampro.weatherapp.utils
+package com.lampro.myaccuweather.utils
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import com.bumptech.glide.R
-import retrofit2.http.Url
 
 object BindingAdapter {
     @BindingAdapter("imageUrl")

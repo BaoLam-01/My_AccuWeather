@@ -1,17 +1,10 @@
-package com.lampro.weatherapp.network.api.request
+package com.lampro.myaccuweather.network.api.request
 
-import android.widget.Toast
-import com.android.volley.Request
-import com.android.volley.RequestQueue
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
 import com.lampro.myaccuweather.objects.currentweatherresponse.CurrentWeatherResponse
 import com.lampro.myaccuweather.objects.daily1dayweatherresponse.Daily1DayWeatherResponse
 import com.lampro.myaccuweather.objects.dailyweatherresponse.DailyWeatherResponse
 import com.lampro.myaccuweather.objects.hourlyweatherresponse.HourlyWeatherResponse
-import com.lampro.myaccuweather.objects.locationkeyresponse.LocationKeyResponse
-import com.lampro.weatherapp.constants.ConstantsApi
-import org.json.JSONObject
+import com.lampro.myaccuweather.constants.ConstantsApi
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

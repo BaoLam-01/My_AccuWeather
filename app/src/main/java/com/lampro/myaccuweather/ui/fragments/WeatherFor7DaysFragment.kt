@@ -1,4 +1,4 @@
-package com.lampro.weatherapp.ui.fragments
+package com.lampro.myaccuweather.ui.fragments
 
 import android.content.ContentValues.TAG
 import android.os.Bundle
@@ -7,27 +7,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.get
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.lampro.myaccuweather.R
-import com.lampro.myaccuweather.adapters.DailyWeatherAdapter
+import com.lampro.myaccuweather.base.BaseFragment
 import com.lampro.myaccuweather.databinding.FragmentWeatherFor7DaysBinding
+import com.lampro.myaccuweather.network.api.ApiResponse
+import com.lampro.myaccuweather.repositories.WeatherRepository
+import com.lampro.myaccuweather.adapters.DailyWeatherAdapter
 import com.lampro.myaccuweather.objects.currentweatherresponse.CurrentWeatherResponseItem
 import com.lampro.myaccuweather.ui.activities.MainActivity
-import com.lampro.weatherapp.adapters.HourlyWeatherAdapter
-import com.lampro.weatherapp.base.BaseFragment
-import com.lampro.weatherapp.network.api.ApiResponse
-import com.lampro.weatherapp.repositories.WeatherRepository
-import com.lampro.weatherapp.viewmodels.WeatherViewModel
-import com.lampro.weatherapp.viewmodels.WeatherViewModelFactory
+import com.lampro.myaccuweather.viewmodels.HomeWeather.HomeWeatherViewModel
+import com.lampro.myaccuweather.viewmodels.HomeWeather.HomeWeatherViewModelFactory
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Locale
-import kotlin.math.log
 
 
 private const val ARG_PARAM1 = "param1"
@@ -35,13 +30,13 @@ private const val ARG_PARAM2 = "param2"
 private const val ARG_PARAM3 = "param3"
 
 
-class WeatherFor7Days : BaseFragment<FragmentWeatherFor7DaysBinding>() {
+class WeatherFor7DaysFragment : BaseFragment<FragmentWeatherFor7DaysBinding>(){
     // TODO: Rename and change types of parameters
     private var param1: CurrentWeatherResponseItem? = null
     private var param2: MainActivity? = null
     private var param3: String? = null
 
-    private lateinit var weatherViewModel: WeatherViewModel
+    private lateinit var homeWeatherViewModel: HomeWeatherViewModel
     private lateinit var mDailyWeatherAdapter: DailyWeatherAdapter
     private var key = "226396"
 
@@ -63,21 +58,23 @@ class WeatherFor7Days : BaseFragment<FragmentWeatherFor7DaysBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initView()
+
         initViewModel()
         if (param3 != null) {
             key = param3.toString()
         }
 
-        weatherViewModel.getCityName(key)
-        weatherViewModel.cityName.observe(viewLifecycleOwner) { response ->
+        homeWeatherViewModel.getCityName(key)
+        homeWeatherViewModel.cityNameData.observe(viewLifecycleOwner) { response ->
             if (response != null) {
                 binding.tvCityName.text = response
             } else {
                 binding.tvCityName.text = "No data"
             }
         }
-        weatherViewModel.getDailyWeather(key)
-        weatherViewModel.dailyWeatherData.observe(viewLifecycleOwner) { response ->
+        homeWeatherViewModel.getDailyWeather(key)
+        homeWeatherViewModel.dailyWeatherData.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is ApiResponse.Loading -> {
                     showLoadingDialog()
@@ -91,7 +88,7 @@ class WeatherFor7Days : BaseFragment<FragmentWeatherFor7DaysBinding>() {
                         binding.rv7Days.apply {
                             adapter = mDailyWeatherAdapter
                             layoutManager = LinearLayoutManager(
-                                this@WeatherFor7Days.context,
+                                this@WeatherFor7DaysFragment.context,
                                 LinearLayoutManager.HORIZONTAL,
                                 false
                             )
@@ -102,7 +99,7 @@ class WeatherFor7Days : BaseFragment<FragmentWeatherFor7DaysBinding>() {
                 is ApiResponse.Failed -> {
                     hideLoadingDialog()
                     Toast.makeText(
-                        this@WeatherFor7Days.context,
+                        this@WeatherFor7DaysFragment.context,
                         "get daily weather ${response.message}",
                         Toast.LENGTH_SHORT
                     ).show()
@@ -110,8 +107,8 @@ class WeatherFor7Days : BaseFragment<FragmentWeatherFor7DaysBinding>() {
             }
         }
 
-        weatherViewModel.getDaily1DayWeather(key)
-        weatherViewModel._1DayWeatherData.observe(viewLifecycleOwner) { response ->
+        homeWeatherViewModel.getDaily1DayWeather(key)
+        homeWeatherViewModel._1DayWeatherData.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is ApiResponse.Loading -> {
                     showLoadingDialog()
@@ -142,7 +139,7 @@ class WeatherFor7Days : BaseFragment<FragmentWeatherFor7DaysBinding>() {
                 is ApiResponse.Failed -> {
                     hideLoadingDialog()
                     Toast.makeText(
-                        this@WeatherFor7Days.context,
+                        this@WeatherFor7DaysFragment.context,
                         "get daily 1 day weather ${response.message}",
                         Toast.LENGTH_SHORT
                     ).show()
@@ -153,7 +150,6 @@ class WeatherFor7Days : BaseFragment<FragmentWeatherFor7DaysBinding>() {
 
 
 
-        initView()
 
         param1?.let {
             binding.currenWeather = it
@@ -161,26 +157,27 @@ class WeatherFor7Days : BaseFragment<FragmentWeatherFor7DaysBinding>() {
 
     }
 
-    private fun initView() {
-        binding.btnBack.setOnClickListener {
-            param2?.apply {
-                supportFragmentManager.beginTransaction().remove(this@WeatherFor7Days).commit()
-            }
-        }
-    }
 
     private fun initViewModel() {
         val application = activity?.application
         val weatherRepository = WeatherRepository()
-        val weatherViewModelFactory = WeatherViewModelFactory(application!!, weatherRepository)
-        weatherViewModel =
-            ViewModelProvider(this, factory = weatherViewModelFactory)[WeatherViewModel::class.java]
+        val homeWeatherViewModelFactory = HomeWeatherViewModelFactory(application!!, weatherRepository)
+        homeWeatherViewModel =
+            ViewModelProvider(this, factory = homeWeatherViewModelFactory)[HomeWeatherViewModel::class.java]
+    }
+    private fun initView(){
+        binding.btnBack.setOnClickListener {
+
+            param2?.apply {
+                supportFragmentManager.beginTransaction().remove(this@WeatherFor7DaysFragment).commit()
+            }
+        }
     }
 
     companion object {
         @JvmStatic
         fun newInstance(param1: CurrentWeatherResponseItem?, param2: MainActivity?, param3: String?) =
-            WeatherFor7Days().apply {
+            WeatherFor7DaysFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable(ARG_PARAM1, param1)
                     putSerializable(ARG_PARAM2, param2)
@@ -188,4 +185,5 @@ class WeatherFor7Days : BaseFragment<FragmentWeatherFor7DaysBinding>() {
                 }
             }
     }
+
 }

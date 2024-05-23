@@ -1,18 +1,19 @@
-package com.lampro.weatherapp.ui.fragments
+package com.lampro.myaccuweather.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.lampro.myaccuweather.databinding.FragmentHomeBinding
+import com.lampro.myaccuweather.base.BaseFragment
+import com.lampro.myaccuweather.databinding.FragmentStartBinding
 import com.lampro.myaccuweather.ui.activities.MainActivity
-import com.lampro.weatherapp.base.BaseFragment
+import com.lampro.myaccuweather.utils.PrefManager
 
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>() {
+class StartFragment : BaseFragment<FragmentStartBinding>() {
     private var param1: MainActivity? = null
     private var param2: String? = null
 
@@ -24,7 +25,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun inflateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentHomeBinding = FragmentHomeBinding.inflate(layoutInflater)
+    ): FragmentStartBinding = FragmentStartBinding.inflate(layoutInflater)
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,7 +45,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun initView() {
 
         binding.btnGetStart.setOnClickListener {
-            param1?.replaceFragment(InfWeather.newInstance(null,param1),"","")
+            param1?.replaceFragment(HomefWeatherFragment.newInstance(null,param1),"","")
+            PrefManager.setStatus(true)
         }
     }
 
@@ -52,7 +54,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     companion object {
         @JvmStatic
         fun newInstance(param1: MainActivity?, param2: String?) =
-            HomeFragment().apply {
+            StartFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

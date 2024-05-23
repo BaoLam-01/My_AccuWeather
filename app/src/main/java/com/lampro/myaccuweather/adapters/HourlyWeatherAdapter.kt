@@ -1,11 +1,9 @@
-package com.lampro.weatherapp.adapters
+package com.lampro.myaccuweather.adapters
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import com.lampro.myaccuweather.R
+import com.lampro.myaccuweather.base.BaseRecyclerViewAdapter
 import com.lampro.myaccuweather.databinding.LayoutItemHourBinding
 import com.lampro.myaccuweather.objects.hourlyweatherresponse.HourlyWeatherResponseItem
-import com.lampro.weatherapp.base.BaseRecyclerViewAdapter
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId

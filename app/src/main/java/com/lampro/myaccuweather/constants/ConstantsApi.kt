@@ -1,4 +1,4 @@
-package com.lampro.weatherapp.constants
+package com.lampro.myaccuweather.constants
 
 object ConstantsApi {
 
@@ -11,9 +11,10 @@ object ConstantsApi {
     Dg98nYAeVGcVxD55lEokoKLLypiYTDGC
     Vgx7dBAN35AEjsJ4KgVVSBPHWOIMBaI6
     2qG5lURDwvJGqSRL6Hxl514djaOpJf3c
+    lgAOdKCgYiYxqXlCuCxJyBshJrzJyd2o
     * */
 
-    const val API_KEY = "2qG5lURDwvJGqSRL6Hxl514djaOpJf3c"
+    const val API_KEY = "799lqqQ7AjSkWWO70SyydaRdAzi3O0Bn"
     const val BASE_URL = "https://dataservice.accuweather.com/"
     const val GET_CURRENT_WEATHER = "currentconditions/v1/{locationkey}?apikey=$API_KEY&language=vi&details=true"
     const val GET_HOURLY_WEATHER = "forecasts/v1/hourly/12hour/{locationkey}?apikey=$API_KEY&language=vi&details=true&metric=true"
