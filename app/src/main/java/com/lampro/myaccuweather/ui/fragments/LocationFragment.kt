@@ -2,6 +2,7 @@ package com.lampro.myaccuweather.ui.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.ContentValues
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
@@ -16,9 +18,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.lampro.myaccuweather.R
 import com.lampro.myaccuweather.base.BaseFragment
 import com.lampro.myaccuweather.databinding.FragmentLocationBinding
-import com.lampro.myaccuweather.repositories.WeatherRepository
+import com.lampro.myaccuweather.repositories.HomeWeatherRepository
 import com.lampro.myaccuweather.utils.PermissionManager
 import com.lampro.myaccuweather.adapters.LocationWeatherAdapter
 import com.lampro.myaccuweather.ui.activities.MainActivity
@@ -72,7 +75,7 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
 
     private fun initViewModel() {
         val application = activity?.application
-        val weatherRepository = WeatherRepository()
+        val weatherRepository = HomeWeatherRepository()
         val homeWeatherViewModelFactory =
             HomeWeatherViewModelFactory(application!!, weatherRepository)
         mHomeWeatherViewModel =
@@ -143,7 +146,27 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
                 requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            return@registerForActivityResult
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(
+                    requireActivity(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) &&
+                !ActivityCompat.shouldShowRequestPermissionRationale(
+                    requireActivity(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+            ) {
+                val dialogView = layoutInflater.inflate(R.layout.dialog_custom, null)
+                val alertDialog = AlertDialog.Builder(this.context)
+                    .setView(dialogView)
+                    .create()
+                val btnView = dialogView.findViewById<Button>(R.id.OK)
+
+                alertDialog.show()
+                btnView.setOnClickListener { alertDialog.dismiss() }
+
+            } else {
+                return@registerForActivityResult
+            }
         } else locationClient.lastLocation.addOnSuccessListener {
             Log.d("TAG", ": lat: ${it.latitude} | long: ${it.longitude}")
 //            key = getLocationKey(it.latitude, it.longitude)
@@ -159,14 +182,6 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
     }
 
     private fun getLocationKey(latitude: Double, longitude: Double): MutableLiveData<String?> {
-        mHomeWeatherViewModel.getLocationKey(latitude, longitude)
-        mHomeWeatherViewModel.locationKeyData.observe(viewLifecycleOwner) { response ->
-            if (response != null) {
-                key.value = response
-            } else {
-                key.value = ""
-            }
-        }
         return key
     }
 

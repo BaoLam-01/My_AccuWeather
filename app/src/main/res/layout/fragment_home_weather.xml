@@ -6,7 +6,7 @@
     <data>
         <variable
             name="currentWeatherResponse"
-            type="com.lampro.myaccuweather.objects.currentweatherresponse.CurrentWeatherResponseItem" />
+            type="com.lampro.myaccuweather.objects.currentweatherresponse.CurrentWeatherResponse" />
 
         <import type="com.lampro.myaccuweather.utils.StringUtils" />
 
@@ -52,7 +52,7 @@
                             android:textSize="@dimen/_20sdp"
                             android:textColor="#48FFFFFF"
                             android:includeFontPadding="false"
-                            android:text="@{currentWeatherResponse.weatherText}"
+                            android:text="@{currentWeatherResponse.name}"
                             tools:text="london" />
                         <TextView
                             android:layout_width="wrap_content"
@@ -61,7 +61,7 @@
                             android:fontFamily="@font/poppins_medium"
                             android:textSize="@dimen/_10sdp"
                             android:textColor="#48FFFFFF"
-                            android:text="vn"
+                            android:text="@{currentWeatherResponse.sys.country}"
                             tools:text="US" />
                     </LinearLayout>
 
@@ -77,26 +77,27 @@
 
 
                 <ImageView
-                    android:layout_marginTop="@dimen/_minus10sdp"
+                    android:layout_marginTop="@dimen/_minus15sdp"
                     android:id="@+id/imgWeatherStt"
                     android:layout_gravity="center"
                     android:layout_width="@dimen/_150sdp"
                     android:layout_height="@dimen/_150sdp"
                     android:scaleType="fitCenter"
                     tools:src="@drawable/weather_sunrain"
-                    imageUrl="@{currentWeatherResponse.weatherIcon}"/>
+                    imageUrl="@{currentWeatherResponse.weather[0].icon}"/>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_minus10sdp"
+                    android:layout_marginTop="@dimen/_minus15sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/tvTemp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{StringUtils.INSTANCE.convertDouble2String(currentWeatherResponse.temperature.metric.value)}"
+                        android:text="@{StringUtils.INSTANCE.convertDouble2String(currentWeatherResponse.main.temp)}"
                         tools:text="19"
                         android:includeFontPadding="false"
                         android:textColor="@color/white"
@@ -119,7 +120,7 @@
                     android:layout_gravity="center"
                     android:fontFamily="@font/poppins_regular"
                     tools:text="Sunny"
-                    android:text="@{currentWeatherResponse.weatherText}"
+                    android:text="@{currentWeatherResponse.weather[0].description}"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_15ssp" />
                 <LinearLayout
@@ -147,7 +148,7 @@
                             android:textSize="@dimen/_15ssp"
                             android:textColor="@color/white"
                             tools:text="20"
-                            android:text="@{StringUtils.INSTANCE.convertDouble2String(currentWeatherResponse.temperatureSummary.past24HourRange.maximum.metric.value)}"/>
+                            android:text="@{StringUtils.INSTANCE.convertDouble2String(currentWeatherResponse.main.tempMax + 1)}"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -175,7 +176,7 @@
                             android:textSize="@dimen/_15ssp"
                             android:textColor="@color/white"
                             tools:text="19"
-                            android:text="@{StringUtils.INSTANCE.convertDouble2String(currentWeatherResponse.temperatureSummary.past12HourRange.minimum.metric.value)}"/>
+                            android:text="@{StringUtils.INSTANCE.convertDouble2String(currentWeatherResponse.main.tempMin - 5)}"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

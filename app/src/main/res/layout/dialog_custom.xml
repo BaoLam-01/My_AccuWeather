@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/_230sdp"
-    android:layout_height="@dimen/_100sdp"
-    android:layout_gravity="center">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/cardview_dark_background">
+    <data>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ban can phai cap quyen truy cap de su dung chuc nang nay" />
-        <Button
-            android:id="@+id/OK"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/getstart"
-            android:text="OK" />
-        <Button
-            android:id="@+id/CANCEL"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/getstart"
-            android:text="CANCEL" />
-    </LinearLayout>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="@dimen/_230sdp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/cardview_dark_background">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ban can phai cap quyen truy cap de su dung chuc nang nay" />
+
+            <Button
+                android:id="@+id/OK"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/getstart"
+                android:layout_gravity="right|bottom"
+                android:text="OK" />
+        </LinearLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

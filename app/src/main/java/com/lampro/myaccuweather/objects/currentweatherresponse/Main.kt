@@ -15,9 +15,9 @@ data class Main(
     @SerializedName("sea_level")
     var seaLevel: Int,
     @SerializedName("temp")
-    var temp: Int,
+    var temp: Double,
     @SerializedName("temp_max")
-    var tempMax: Int,
+    var tempMax: Double,
     @SerializedName("temp_min")
-    var tempMin: Int
+    var tempMin: Double
 )

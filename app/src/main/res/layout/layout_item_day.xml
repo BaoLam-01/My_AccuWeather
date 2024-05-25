@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="dailyForecasts"
-            type="com.lampro.myaccuweather.objects.dailyweatherresponse.DailyForecast" />
+            name="dailyWeather"
+            type="com.lampro.myaccuweather.objects.dailyweatherresponse.DailyWeather" />
 
         <import type="com.lampro.myaccuweather.utils.StringUtils" />
     </data>
@@ -42,7 +42,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="@{StringUtils.INSTANCE.convertDouble2String(dailyForecasts.temperature.maximum.value)}"
+                        android:text="@{StringUtils.INSTANCE.convertDouble2String(dailyWeather.main.temp)}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="19" />
@@ -60,13 +60,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_50sdp"
                     android:src="@drawable/weather_sunrain"
-                    imageUrl="@{dailyForecasts.day.icon}"/>
+                    imageUrl="04n"/>
 
                 <TextView
                     android:id="@+id/hourItem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="15.00"
                     tools:text="15.00"
                     android:layout_gravity="center"
                     android:fontFamily="@font/poppins_medium" />
