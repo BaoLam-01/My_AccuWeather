@@ -88,17 +88,45 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
                             binding.tvCityName.text = it.englishName
                         }
                         binding.tvCountryName.text =
-                            it.administrativeArea.localizedName + ", "+it.country.localizedName
-                        binding.frLocationResult.visibility = View.VISIBLE
-                        binding.imgLocation.visibility = View.VISIBLE
+                            it.administrativeArea.localizedName + ", " + it.country.localizedName
+                        binding.llCurrentLocation.visibility = View.VISIBLE
                     }
 
                 }
 
                 is ApiResponse.Failed -> {
                     hideLoadingDialog()
-                    Toast.makeText(this.context, "get inf City failed ${response.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this.context,
+                        "get inf City failed ${response.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
+                }
+            }
+        }
+        mlocationViewModel.geoByCityNameData.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is ApiResponse.Loading -> {
+                    showLoadingDialog()
+                }
+                is ApiResponse.Success -> {
+                    hideLoadingDialog()
+                    response.data?.let {
+                        if (response.data.size != 0){
+                            mlocationViewModel.getLocationKey(it[0].lat,it[0].lon)
+                            lat = it[0].lat
+                            lon = it[0].lon
+                        }
+                        else  {
+                            binding.llCurrentLocation.visibility = View.GONE
+                            Toast.makeText(this.context, "No information about ${binding.edtLoactionSearch.text} city was found", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+                is ApiResponse.Failed -> {
+                    hideLoadingDialog()
+                    Toast.makeText(this.context, "Get api failed ${response.message}", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -137,7 +165,8 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
                             "initView: lat: ${it.latitude} | long: ${it.longitude}"
                         )
                         mlocationViewModel.getLocationKey(it.latitude, it.longitude)
-
+                        binding.imgLocation.visibility = View.VISIBLE
+                        binding.tvCurrentLocation.visibility = View.VISIBLE
                         lat = it.latitude
                         lon = it.longitude
                     }
@@ -145,13 +174,14 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
             }
         }
 
-        binding.frLocationResult.setOnClickListener{
-            binding.frLocationResult.visibility = View.GONE
+        binding.llCurrentLocation.setOnClickListener {
+            binding.llCurrentLocation.visibility = View.GONE
             binding.imgLocation.visibility = View.GONE
+            binding.tvCurrentLocation.visibility = View.GONE
             param2?.apply {
-                replaceFragment(HomeWeatherFragment.newInstance(null,param2),"","")
+                replaceFragment(HomeWeatherFragment.newInstance(null, param2), "", "")
             }
-            PrefManager.setLocation(lat,lon)
+            PrefManager.setLocation(lat, lon)
         }
 
 
@@ -166,10 +196,9 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
             if (binding.edtLoactionSearch.text.isEmpty()) {
                 Toast.makeText(context, "Enter yout location!", Toast.LENGTH_SHORT).show()
             } else {
-
-
-
-
+                mlocationViewModel.getGeoByCityName(binding.edtLoactionSearch.text.toString())
+                binding.imgLocation.visibility = View.GONE
+                binding.tvCurrentLocation.visibility = View.GONE
 //                var listLocation: MutableList<Location> = mutableListOf()
 //                mWeatherViewModel.
 //                listLocation.add(Location("${binding.edtLoactionSearch.text}",""))
@@ -211,7 +240,8 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
         } else locationClient.lastLocation.addOnSuccessListener {
             Log.d("TAG", ": lat: ${it.latitude} | long: ${it.longitude}")
             mlocationViewModel.getLocationKey(it.latitude, it.longitude)
-
+            binding.imgLocation.visibility = View.VISIBLE
+            binding.tvCurrentLocation.visibility = View.VISIBLE
 
             lat = it.latitude
             lon = it.longitude

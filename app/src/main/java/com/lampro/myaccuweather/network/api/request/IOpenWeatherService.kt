@@ -4,6 +4,7 @@ import com.lampro.myaccuweather.constants.ConstantsApi
 import com.lampro.myaccuweather.objects.airqualityresponse.AirQualityResponse
 import com.lampro.myaccuweather.objects.currentweatherresponse.CurrentWeatherResponse
 import com.lampro.myaccuweather.objects.dailyweatherresponse.DailyWeatherResponse
+import com.lampro.myaccuweather.objects.geopositionresponse.GeopositionResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -32,4 +33,9 @@ interface IOpenWeatherService {
         @Query("lat") lat: String,
         @Query("lon") lon: String
     ): Response<AirQualityResponse>
+    @GET(ConstantsApi.GET_GEO_BY_CITY_NAME)
+    suspend fun getGeoByCityName(
+        @Query("q") q: String
+    ): Response<GeopositionResponse>
 }
+

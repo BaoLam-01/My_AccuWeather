@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="currentResponse"
-            type="com.lampro.myaccuweather.objects.currentweatherresponse.CurrentWeatherResponse" />
+            name="location"
+            type="com.lampro.myaccuweather.objects.locationdata.Locationitem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

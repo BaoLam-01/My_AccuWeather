@@ -19,9 +19,7 @@ class HomeWeatherViewModel(application: Application, val weatherRepository: Home
     val currentWeatherData = MutableLiveData<ApiResponse<CurrentWeatherResponse>>()
     val hourlyWeatherData = MutableLiveData<ApiResponse<HourlyWeatherResponse>>()
     val locationKeyData = MutableLiveData<ApiResponse<LocationKeyResponse>>()
-    val cityNameData = MutableLiveData<String?>()
     val infCity = MutableLiveData<ApiResponse<InfCityResponse>>()
-    val requestQueue: RequestQueue = Volley.newRequestQueue(application)
 
     init {
 //        getCurrentWeather()
@@ -68,6 +66,7 @@ class HomeWeatherViewModel(application: Application, val weatherRepository: Home
             hourlyWeatherData.value = response
         }
     }
+
 
 
 }

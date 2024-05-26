@@ -26,8 +26,8 @@ import com.lampro.myaccuweather.databinding.FragmentHomeWeatherBinding
 import com.lampro.myaccuweather.network.api.ApiResponse
 import com.lampro.myaccuweather.objects.currentweatherresponse.CurrentWeatherResponse
 import com.lampro.myaccuweather.repositories.HomeWeatherRepository
-import com.lampro.myaccuweather.utils.PermissionManager
 import com.lampro.myaccuweather.ui.activities.MainActivity
+import com.lampro.myaccuweather.utils.PermissionManager
 import com.lampro.myaccuweather.utils.PrefManager
 import com.lampro.myaccuweather.viewmodels.homeweather.HomeWeatherViewModel
 import com.lampro.myaccuweather.viewmodels.homeweather.HomeWeatherViewModelFactory
@@ -53,7 +53,7 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
     private var currentWeatherResponse: CurrentWeatherResponse? = null
     private var lat: Double = 0.0
     private var lon: Double = 0.0
-    private var locationKey = MutableLiveData<String>()
+    private lateinit var locationKey: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -69,13 +69,17 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
         initViewModel()
 
 
-        if (PrefManager.getLocationLat() == 0.0 || PrefManager.getLocationLon() == 0.0) {
+        if (PrefManager.getLocationLat() == 0.0 || PrefManager.getLocationLon() == 0.0 || PrefManager.getLocationKey() == null) {
             lat = 35.6895
             lon = 139.6917
-
+            homeWeatherViewModel.getCurrentWeather(lat,lon)
+            homeWeatherViewModel.getLocationKey(lat,lon)
         } else {
             lat = PrefManager.getLocationLat()
             lon = PrefManager.getLocationLon()
+            locationKey = PrefManager.getLocationKey()
+            homeWeatherViewModel.getCurrentWeather(lat,lon)
+            homeWeatherViewModel.getHourlyWeather(locationKey)
         }
 
         activity?.let { locationClient = LocationServices.getFusedLocationProviderClient(it) }
@@ -84,21 +88,8 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
         initView()
 
 
-        getCurrentWeather()
-        locationKey = getLocationKey()
-        locationKey.observe(viewLifecycleOwner) { key ->
-            if (key != null) {
-                getHourlyWeather(key)
-            } else {
-                Toast.makeText(this.context, "Get location key failed", Toast.LENGTH_SHORT).show()
-            }
-        }
 
-    }
-
-    private fun getHourlyWeather(locationKey: String) {
-        homeWeatherViewModel.getHourlyWeather(locationKey)
-        homeWeatherViewModel.hourlyWeatherData.observe(viewLifecycleOwner) { response ->
+        homeWeatherViewModel.locationKeyData.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is ApiResponse.Loading -> {
                     showLoadingDialog()
@@ -106,34 +97,24 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
 
                 is ApiResponse.Success -> {
                     hideLoadingDialog()
-                    mHourlyWeatherAdapter = HourlyWeatherAdapter()
                     response.data?.let {
-                        mHourlyWeatherAdapter.updateData(it)
-                        binding.rvWeatherHour.apply {
-                            adapter = mHourlyWeatherAdapter
-                            layoutManager = LinearLayoutManager(
-                                this@HomeWeatherFragment.context,
-                                LinearLayoutManager.HORIZONTAL,
-                                false
-                            )
-                        }
+                        homeWeatherViewModel.getHourlyWeather(it.key)
+                        PrefManager.setLocationKey(it.key)
+                        PrefManager.setLocation(lat,lon)
                     }
                 }
 
                 is ApiResponse.Failed -> {
                     hideLoadingDialog()
                     Toast.makeText(
-                        this@HomeWeatherFragment.context,
-                        "get hourly weather failed ${response.message}",
+                        this.context,
+                        "Get location key Failed ${response.message}",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+
             }
         }
-    }
-
-    private fun getCurrentWeather() {
-        homeWeatherViewModel.getCurrentWeather(lat, lon)
         homeWeatherViewModel.currentWeatherData.observe(viewLifecycleOwner) { response ->
 
             when (response) {
@@ -164,6 +145,39 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
                         Toast.LENGTH_SHORT
                     ).show()
                     Log.d(TAG, "getCurrentWeather: ${response.message}")
+                }
+            }
+        }
+
+        homeWeatherViewModel.hourlyWeatherData.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is ApiResponse.Loading -> {
+                    showLoadingDialog()
+                }
+
+                is ApiResponse.Success -> {
+                    hideLoadingDialog()
+                    mHourlyWeatherAdapter = HourlyWeatherAdapter()
+                    response.data?.let {
+                        mHourlyWeatherAdapter.updateData(it)
+                        binding.rvWeatherHour.apply {
+                            adapter = mHourlyWeatherAdapter
+                            layoutManager = LinearLayoutManager(
+                                this@HomeWeatherFragment.context,
+                                LinearLayoutManager.HORIZONTAL,
+                                false
+                            )
+                        }
+                    }
+                }
+
+                is ApiResponse.Failed -> {
+                    hideLoadingDialog()
+                    Toast.makeText(
+                        this@HomeWeatherFragment.context,
+                        "get hourly weather failed ${response.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -204,27 +218,14 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
                     locationClient.lastLocation.addOnSuccessListener {
                         Log.d(TAG, "initView: lat: ${it.latitude} | long: ${it.longitude}")
 //                        Toast.makeText(context,getLocationKey(it.latitude, it.longitude), Toast.LENGTH_SHORT).show()
+
+
                         lat = it.latitude
                         lon = it.longitude
-                        PrefManager.setLocation(it.latitude, it.longitude)
-
+                        homeWeatherViewModel.getLocationKey(it.latitude, it.longitude)
 
                         homeWeatherViewModel.getCurrentWeather(it.latitude, it.longitude)
 
-
-                        locationKey = getLocationKey()
-                        locationKey.observe(viewLifecycleOwner) { key ->
-                            if (key != null) {
-
-                                homeWeatherViewModel.getHourlyWeather(key)
-                            } else {
-                                Toast.makeText(
-                                    this.context,
-                                    "Get location key failed",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
                     }
                 }
 
@@ -246,36 +247,6 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
 
     }
 
-    fun getLocationKey(): MutableLiveData<String> {
-        var key = MutableLiveData<String>()
-        homeWeatherViewModel.getLocationKey(lat, lon)
-        homeWeatherViewModel.locationKeyData.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is ApiResponse.Loading -> {
-                    showLoadingDialog()
-                }
-
-                is ApiResponse.Success -> {
-                    hideLoadingDialog()
-                    response.data?.let {
-                        key.value = it.key
-                        getHourlyWeather(it.key)
-                    }
-                }
-
-                is ApiResponse.Failed -> {
-                    hideLoadingDialog()
-                    Toast.makeText(
-                        this@HomeWeatherFragment.context,
-                        "get location key failed ${response.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    Log.d(TAG, "getLocationKey: ${response.message}")
-                }
-            }
-        }
-        return key
-    }
 
     @SuppressLint("MissingPermission")
     private val locationResultLauncher = registerForActivityResult(
@@ -312,26 +283,12 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
             Log.d("TAG", ": lat: ${it.latitude} | long: ${it.longitude}")
 
 
+
             lat = it.latitude
             lon = it.longitude
-            PrefManager.setLocation(it.latitude, it.longitude)
-
+            homeWeatherViewModel.getLocationKey(it.latitude, it.longitude)
 
             homeWeatherViewModel.getCurrentWeather(it.latitude, it.longitude)
-
-
-
-            locationKey = getLocationKey()
-            locationKey.observe(viewLifecycleOwner) { key ->
-                if (key != null) {
-
-                    homeWeatherViewModel.getHourlyWeather(key)
-                } else {
-                    Toast.makeText(this.context, "Get location key failed", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
-            
         }
     }
 

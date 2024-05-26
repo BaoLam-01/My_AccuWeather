@@ -7,12 +7,14 @@ import androidx.lifecycle.viewModelScope
 import com.lampro.myaccuweather.MyApplication
 import com.lampro.myaccuweather.network.api.ApiResponse
 import com.lampro.myaccuweather.objects.dailyweatherresponse.DailyWeatherResponse
+import com.lampro.myaccuweather.objects.geopositionresponse.GeopositionResponse
 import com.lampro.myaccuweather.objects.locationkeyresponse.LocationKeyResponse
 import com.lampro.myaccuweather.repositories.LocationResponsitory
 import kotlinx.coroutines.launch
 
 class LocationViewModel(application: Application, val locationResponsitory: LocationResponsitory): AndroidViewModel(application){
     val locationKeyData = MutableLiveData<ApiResponse<LocationKeyResponse>>()
+    val geoByCityNameData = MutableLiveData<ApiResponse<GeopositionResponse>>()
     fun getLocationKey(latitude: Double, longitude: Double) {
         locationKeyData.value = ApiResponse.Loading()
         viewModelScope.launch {
@@ -20,5 +22,11 @@ class LocationViewModel(application: Application, val locationResponsitory: Loca
             locationKeyData.value = response
         }
     }
-
+    fun getGeoByCityName(cityName: String){
+        geoByCityNameData.value = ApiResponse.Loading()
+        viewModelScope.launch {
+            val response = locationResponsitory.getGeoByCityName(cityName)
+            geoByCityNameData.value = response
+        }
+    }
 }

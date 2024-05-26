@@ -231,7 +231,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/opensan_bold"
                         android:paddingHorizontal="@dimen/_15sdp"
-                        tools:text="1 - Ổn định"
+                        tools:text="-1 - Ổn định"
                         android:textSize="@dimen/_15sdp"
                         android:textColor="@color/white" />
 
@@ -382,7 +382,7 @@
                             android:fontFamily="@font/opensan_bold"
                             android:paddingHorizontal="@dimen/_10sdp"
                             android:text="10"
-                            tools:text="4"
+                            tools:text="-4"
                             android:textSize="@dimen/_16ssp" />
 
                         <TextView

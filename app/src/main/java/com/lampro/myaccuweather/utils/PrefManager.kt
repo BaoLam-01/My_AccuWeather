@@ -27,5 +27,11 @@ class PrefManager {
         fun getLocationLon(): Double{
             return currentLocation.getFloat("lon", 0f).toDouble()
         }
+        fun setLocationKey(locationKey: String){
+            currentLocation.edit().putString("key", locationKey).commit()
+        }
+        fun getLocationKey(): String {
+            return currentLocation.getString("key", "")!!
+        }
     }
 }
