@@ -1,16 +1,11 @@
-package com.lampro.myaccuweather.viewmodels.HomeWeather
+package com.lampro.myaccuweather.viewmodels.homeweather
 
 import android.app.Application
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.android.volley.Request
 import com.android.volley.RequestQueue
-import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.lampro.myaccuweather.constants.ConstantsApi
 import com.lampro.myaccuweather.network.api.ApiResponse
 import com.lampro.myaccuweather.objects.currentweatherresponse.CurrentWeatherResponse
 import com.lampro.myaccuweather.objects.hourlyweatherresponse.HourlyWeatherResponse

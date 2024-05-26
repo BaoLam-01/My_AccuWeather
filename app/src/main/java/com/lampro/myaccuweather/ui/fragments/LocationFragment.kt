@@ -14,19 +14,23 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.lampro.myaccuweather.R
+import com.lampro.myaccuweather.adapters.LocationWeatherAdapter
 import com.lampro.myaccuweather.base.BaseFragment
 import com.lampro.myaccuweather.databinding.FragmentLocationBinding
-import com.lampro.myaccuweather.repositories.HomeWeatherRepository
-import com.lampro.myaccuweather.utils.PermissionManager
-import com.lampro.myaccuweather.adapters.LocationWeatherAdapter
+import com.lampro.myaccuweather.network.api.ApiResponse
+import com.lampro.myaccuweather.repositories.LocationResponsitory
 import com.lampro.myaccuweather.ui.activities.MainActivity
-import com.lampro.myaccuweather.viewmodels.HomeWeather.HomeWeatherViewModel
-import com.lampro.myaccuweather.viewmodels.HomeWeather.HomeWeatherViewModelFactory
+import com.lampro.myaccuweather.utils.PermissionManager
+import com.lampro.myaccuweather.utils.PrefManager
+import com.lampro.myaccuweather.viewmodels.location.LocationViewModel
+import com.lampro.myaccuweather.viewmodels.location.LocationViewModelFactory
+import kotlin.properties.Delegates
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -37,10 +41,12 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
     private var param1: String? = null
     private var param2: MainActivity? = null
 
-    private lateinit var mHomeWeatherViewModel: HomeWeatherViewModel
+    private lateinit var mlocationViewModel: LocationViewModel
     private lateinit var mlocationWeatherAdapter: LocationWeatherAdapter
     private lateinit var locationClient: FusedLocationProviderClient
     private var key = MutableLiveData<String?>()
+    private var lon by Delegates.notNull<Double>()
+    private var lat by Delegates.notNull<Double>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,30 +65,56 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        initView()
-
-
-//        initViewModel()
-
-
         activity?.let {
             locationClient = LocationServices.getFusedLocationProviderClient(it)
         }
+        initViewModel()
 
+        initView()
+
+        mlocationViewModel.locationKeyData.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is ApiResponse.Loading -> {
+                    showLoadingDialog()
+                }
+
+                is ApiResponse.Success -> {
+                    hideLoadingDialog()
+                    response.data?.let {
+
+                        if (it.localizedName.isNotEmpty()) {
+                            binding.tvCityName.text = it.localizedName
+                        } else {
+                            binding.tvCityName.text = it.englishName
+                        }
+                        binding.tvCountryName.text =
+                            it.administrativeArea.localizedName + ", "+it.country.localizedName
+                        binding.frLocationResult.visibility = View.VISIBLE
+                        binding.imgLocation.visibility = View.VISIBLE
+                    }
+
+                }
+
+                is ApiResponse.Failed -> {
+                    hideLoadingDialog()
+                    Toast.makeText(this.context, "get inf City failed ${response.message}", Toast.LENGTH_SHORT).show()
+
+                }
+            }
+        }
 
     }
 
     private fun initViewModel() {
         val application = activity?.application
-        val weatherRepository = HomeWeatherRepository()
-        val homeWeatherViewModelFactory =
-            HomeWeatherViewModelFactory(application!!, weatherRepository)
-        mHomeWeatherViewModel =
+        val locationResponsitory = LocationResponsitory()
+        val locationViewModelFactory =
+            LocationViewModelFactory(application!!, locationResponsitory)
+        mlocationViewModel =
             ViewModelProvider(
                 this,
-                factory = homeWeatherViewModelFactory
-            )[HomeWeatherViewModel::class.java]
+                factory = locationViewModelFactory
+            )[LocationViewModel::class.java]
     }
 
     private fun initView() {
@@ -104,20 +136,25 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
                             ContentValues.TAG,
                             "initView: lat: ${it.latitude} | long: ${it.longitude}"
                         )
+                        mlocationViewModel.getLocationKey(it.latitude, it.longitude)
 
-//                        key = getLocationKey(it.latitude, it.longitude)
-//                        key.observe(viewLifecycleOwner) { key ->
-//                            if (key != null) {
-//
-//                            } else {
-//                                Toast.makeText(context, "error", Toast.LENGTH_SHORT).show()
-//                            }
-//                        }
-
+                        lat = it.latitude
+                        lon = it.longitude
                     }
                 }
             }
         }
+
+        binding.frLocationResult.setOnClickListener{
+            binding.frLocationResult.visibility = View.GONE
+            binding.imgLocation.visibility = View.GONE
+            param2?.apply {
+                replaceFragment(HomeWeatherFragment.newInstance(null,param2),"","")
+            }
+            PrefManager.setLocation(lat,lon)
+        }
+
+
         binding.btnBack.setOnClickListener {
             param2?.apply {
                 supportFragmentManager.beginTransaction().remove(this@LocationFragment).commit()
@@ -129,6 +166,10 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
             if (binding.edtLoactionSearch.text.isEmpty()) {
                 Toast.makeText(context, "Enter yout location!", Toast.LENGTH_SHORT).show()
             } else {
+
+
+
+
 //                var listLocation: MutableList<Location> = mutableListOf()
 //                mWeatherViewModel.
 //                listLocation.add(Location("${binding.edtLoactionSearch.text}",""))
@@ -169,21 +210,14 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
             }
         } else locationClient.lastLocation.addOnSuccessListener {
             Log.d("TAG", ": lat: ${it.latitude} | long: ${it.longitude}")
-//            key = getLocationKey(it.latitude, it.longitude)
-//            key.observe(viewLifecycleOwner) { key ->
-//                if (key != null) {
-//
-//                } else {
-//                    Toast.makeText(context, "error", Toast.LENGTH_SHORT).show()
-//                }
-//            }
+            mlocationViewModel.getLocationKey(it.latitude, it.longitude)
 
+
+            lat = it.latitude
+            lon = it.longitude
         }
     }
 
-    private fun getLocationKey(latitude: Double, longitude: Double): MutableLiveData<String?> {
-        return key
-    }
 
     companion object {
 

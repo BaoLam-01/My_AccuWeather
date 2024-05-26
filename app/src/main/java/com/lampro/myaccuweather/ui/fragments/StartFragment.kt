@@ -45,7 +45,7 @@ class StartFragment : BaseFragment<FragmentStartBinding>() {
     private fun initView() {
 
         binding.btnGetStart.setOnClickListener {
-            param1?.replaceFragment(HomefWeatherFragment.newInstance(null,param1),"","")
+            param1?.replaceFragment(HomeWeatherFragment.newInstance(null,param1),"","")
             PrefManager.setStatus(true)
         }
     }

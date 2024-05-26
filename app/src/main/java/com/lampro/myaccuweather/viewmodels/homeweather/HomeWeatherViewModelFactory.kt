@@ -1,4 +1,4 @@
-package com.lampro.myaccuweather.viewmodels.HomeWeather
+package com.lampro.myaccuweather.viewmodels.homeweather
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

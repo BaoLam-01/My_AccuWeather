@@ -29,8 +29,8 @@ import com.lampro.myaccuweather.repositories.HomeWeatherRepository
 import com.lampro.myaccuweather.utils.PermissionManager
 import com.lampro.myaccuweather.ui.activities.MainActivity
 import com.lampro.myaccuweather.utils.PrefManager
-import com.lampro.myaccuweather.viewmodels.HomeWeather.HomeWeatherViewModel
-import com.lampro.myaccuweather.viewmodels.HomeWeather.HomeWeatherViewModelFactory
+import com.lampro.myaccuweather.viewmodels.homeweather.HomeWeatherViewModel
+import com.lampro.myaccuweather.viewmodels.homeweather.HomeWeatherViewModelFactory
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -40,18 +40,16 @@ import java.util.Locale
 // TODO: Rename parameter arguments, choose names that match
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-private const val ARG_PARAM3 = "param3"
 
 private lateinit var homeWeatherViewModel: HomeWeatherViewModel
 
 private lateinit var mHourlyWeatherAdapter: HourlyWeatherAdapter
 private lateinit var locationClient: FusedLocationProviderClient
 
-class HomefWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
+class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: MainActivity? = null
-    private var param3: String? = null
     private var currentWeatherResponse: CurrentWeatherResponse? = null
     private var lat: Double = 0.0
     private var lon: Double = 0.0
@@ -114,7 +112,7 @@ class HomefWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
                         binding.rvWeatherHour.apply {
                             adapter = mHourlyWeatherAdapter
                             layoutManager = LinearLayoutManager(
-                                this@HomefWeatherFragment.context,
+                                this@HomeWeatherFragment.context,
                                 LinearLayoutManager.HORIZONTAL,
                                 false
                             )
@@ -125,7 +123,7 @@ class HomefWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
                 is ApiResponse.Failed -> {
                     hideLoadingDialog()
                     Toast.makeText(
-                        this@HomefWeatherFragment.context,
+                        this@HomeWeatherFragment.context,
                         "get hourly weather failed ${response.message}",
                         Toast.LENGTH_SHORT
                     ).show()
@@ -161,7 +159,7 @@ class HomefWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
                 is ApiResponse.Failed -> {
                     hideLoadingDialog()
                     Toast.makeText(
-                        this@HomefWeatherFragment.context,
+                        this@HomeWeatherFragment.context,
                         "get curent weather failed ${response.message}",
                         Toast.LENGTH_SHORT
                     ).show()
@@ -239,7 +237,6 @@ class HomefWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
                 WeatherFor5DaysFragment.newInstance(
                     currentWeatherResponse,
                     param2,
-                    param3
                 ), "", ""
             )
         }
@@ -269,7 +266,7 @@ class HomefWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
                 is ApiResponse.Failed -> {
                     hideLoadingDialog()
                     Toast.makeText(
-                        this@HomefWeatherFragment.context,
+                        this@HomeWeatherFragment.context,
                         "get location key failed ${response.message}",
                         Toast.LENGTH_SHORT
                     ).show()
@@ -341,7 +338,7 @@ class HomefWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
     companion object {
 
         @JvmStatic
-        fun newInstance(param1: String?, param2: MainActivity?) = HomefWeatherFragment().apply {
+        fun newInstance(param1: String?, param2: MainActivity?) = HomeWeatherFragment().apply {
             arguments = Bundle().apply {
                 putString(ARG_PARAM1, param1)
                 putSerializable(ARG_PARAM2, param2)

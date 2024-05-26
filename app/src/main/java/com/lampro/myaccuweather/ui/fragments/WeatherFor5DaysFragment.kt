@@ -19,6 +19,7 @@ import com.lampro.myaccuweather.objects.currentweatherresponse.CurrentWeatherRes
 import com.lampro.myaccuweather.objects.dailyweatherresponse.DailyWeather
 import com.lampro.myaccuweather.repositories.Weather5DayResponsitory
 import com.lampro.myaccuweather.ui.activities.MainActivity
+import com.lampro.myaccuweather.utils.PrefManager
 import com.lampro.myaccuweather.viewmodels.weather5day.Weather5DayViewModel
 import com.lampro.myaccuweather.viewmodels.weather5day.Weather5DayViewModelFactory
 import java.text.SimpleDateFormat
@@ -39,11 +40,9 @@ class WeatherFor5DaysFragment : BaseFragment<FragmentWeatherFor5DaysBinding>() {
     // TODO: Rename and change types of parameters
     private var param1: CurrentWeatherResponse? = null
     private var param2: MainActivity? = null
-    private var param3: String? = null
 
     private lateinit var weather5DayViewModel: Weather5DayViewModel
     private lateinit var mDailyWeatherAdapter: DailyWeatherAdapter
-    private var key = "226396"
 
 
     override fun inflateBinding(
@@ -56,7 +55,6 @@ class WeatherFor5DaysFragment : BaseFragment<FragmentWeatherFor5DaysBinding>() {
         arguments?.let {
             param1 = it.getSerializable(ARG_PARAM1) as CurrentWeatherResponse?
             param2 = it.getSerializable(ARG_PARAM2) as MainActivity?
-            param3 = it.getString(ARG_PARAM3)
         }
     }
 
@@ -84,14 +82,11 @@ class WeatherFor5DaysFragment : BaseFragment<FragmentWeatherFor5DaysBinding>() {
             binding.timeSunrise.text = formattedDate
 
         }
-        if (param3 != null) {
-            key = param3.toString()
-        }
 
         initViewModel()
 
 
-        weather5DayViewModel.getDailyWeather(20.988511, 105.771125)
+        weather5DayViewModel.getDailyWeather(PrefManager.getLocationLat(),PrefManager.getLocationLon())
         weather5DayViewModel.dailyWeatherData.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is ApiResponse.Loading -> {
@@ -133,7 +128,7 @@ class WeatherFor5DaysFragment : BaseFragment<FragmentWeatherFor5DaysBinding>() {
 
     }
 
-    weather5DayViewModel.getAirQuality(20.988511, 105.771125)
+    weather5DayViewModel.getAirQuality(PrefManager.getLocationLat(),PrefManager.getLocationLon())
     weather5DayViewModel.airQualityData.observe(viewLifecycleOwner)
     {
         response ->
@@ -167,7 +162,7 @@ class WeatherFor5DaysFragment : BaseFragment<FragmentWeatherFor5DaysBinding>() {
         }
 
     }
-    weather5DayViewModel.getLocationKey(20.988511, 105.771125)
+    weather5DayViewModel.getLocationKey(PrefManager.getLocationLat(),PrefManager.getLocationLon())
     weather5DayViewModel.locationKeyData.observe(viewLifecycleOwner)
     {
         response ->
@@ -263,12 +258,11 @@ fun currentTime(): Int {
 
 companion object {
     @JvmStatic
-    fun newInstance(param1: CurrentWeatherResponse?, param2: MainActivity?, param3: String?) =
+    fun newInstance(param1: CurrentWeatherResponse?, param2: MainActivity?) =
         WeatherFor5DaysFragment().apply {
             arguments = Bundle().apply {
                 putSerializable(ARG_PARAM1, param1)
                 putSerializable(ARG_PARAM2, param2)
-                putString(ARG_PARAM3, param3)
             }
         }
 }
