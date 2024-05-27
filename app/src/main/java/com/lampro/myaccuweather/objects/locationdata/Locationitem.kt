@@ -5,6 +5,7 @@ data class Locationitem(
     var cityName: String,
     var countryName: String,
     var temp: String,
+    var icon : String,
     var lat: Double,
     var lon: Double
 )

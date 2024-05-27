@@ -14,7 +14,6 @@ class LocationWeatherAdapter: BaseRecyclerViewAdapter<Locationitem, LayoutItemLo
         position: Int
     ) {
         holder.binding.location = mListData[position]
-
         holder.binding.itemBody.setOnClickListener{
             listener?.invoke(it,mListData[position],position)
         }

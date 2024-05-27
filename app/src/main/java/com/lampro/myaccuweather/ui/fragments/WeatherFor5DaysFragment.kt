@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
@@ -20,6 +21,7 @@ import com.lampro.myaccuweather.objects.dailyweatherresponse.DailyWeather
 import com.lampro.myaccuweather.repositories.Weather5DayResponsitory
 import com.lampro.myaccuweather.ui.activities.MainActivity
 import com.lampro.myaccuweather.utils.PrefManager
+import com.lampro.myaccuweather.viewmodels.mainviewmodel.MainViewModel
 import com.lampro.myaccuweather.viewmodels.weather5day.Weather5DayViewModel
 import com.lampro.myaccuweather.viewmodels.weather5day.Weather5DayViewModelFactory
 import java.text.SimpleDateFormat
@@ -60,7 +62,6 @@ class WeatherFor5DaysFragment : BaseFragment<FragmentWeatherFor5DaysBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initView()
 
 

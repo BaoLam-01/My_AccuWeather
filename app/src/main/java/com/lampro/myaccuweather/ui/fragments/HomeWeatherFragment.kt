@@ -13,7 +13,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,6 +33,7 @@ import com.lampro.myaccuweather.utils.PermissionManager
 import com.lampro.myaccuweather.utils.PrefManager
 import com.lampro.myaccuweather.viewmodels.homeweather.HomeWeatherViewModel
 import com.lampro.myaccuweather.viewmodels.homeweather.HomeWeatherViewModelFactory
+import com.lampro.myaccuweather.viewmodels.mainviewmodel.MainViewModel
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -72,13 +75,13 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
         if (PrefManager.getLocationLat() == 0.0 || PrefManager.getLocationLon() == 0.0 || PrefManager.getLocationKey() == null) {
             lat = 35.6895
             lon = 139.6917
-            homeWeatherViewModel.getCurrentWeather(lat,lon)
-            homeWeatherViewModel.getLocationKey(lat,lon)
+            homeWeatherViewModel.getCurrentWeather(lat, lon)
+            homeWeatherViewModel.getLocationKey(lat, lon)
         } else {
             lat = PrefManager.getLocationLat()
             lon = PrefManager.getLocationLon()
             locationKey = PrefManager.getLocationKey()
-            homeWeatherViewModel.getCurrentWeather(lat,lon)
+            homeWeatherViewModel.getCurrentWeather(lat, lon)
             homeWeatherViewModel.getHourlyWeather(locationKey)
         }
 
@@ -100,7 +103,7 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
                     response.data?.let {
                         homeWeatherViewModel.getHourlyWeather(it.key)
                         PrefManager.setLocationKey(it.key)
-                        PrefManager.setLocation(lat,lon)
+                        PrefManager.setLocation(lat, lon)
                     }
                 }
 

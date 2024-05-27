@@ -27,7 +27,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     fun addFragment(fragment: Fragment, fragmentTag: String, stack: String?) {
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.container, fragment)
+            .add(R.id.container, fragment,fragmentTag)
             .addToBackStack("")
             .commit()
     }

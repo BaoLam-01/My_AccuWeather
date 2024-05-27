@@ -85,4 +85,7 @@ dependencies {
     implementation ("com.google.code.gson:gson:2.10.1")
 
     implementation("com.android.volley:volley:1.2.1")
+
+//    implementation("androidx.recyclerview:recyclerview:1.3.2")
+//    implementation ("com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1")
 }

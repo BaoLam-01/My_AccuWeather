@@ -11,12 +11,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.lampro.myaccuweather.R
@@ -24,12 +28,14 @@ import com.lampro.myaccuweather.adapters.LocationWeatherAdapter
 import com.lampro.myaccuweather.base.BaseFragment
 import com.lampro.myaccuweather.databinding.FragmentLocationBinding
 import com.lampro.myaccuweather.network.api.ApiResponse
+import com.lampro.myaccuweather.objects.locationdata.Locationitem
 import com.lampro.myaccuweather.repositories.LocationResponsitory
 import com.lampro.myaccuweather.ui.activities.MainActivity
 import com.lampro.myaccuweather.utils.PermissionManager
 import com.lampro.myaccuweather.utils.PrefManager
 import com.lampro.myaccuweather.viewmodels.location.LocationViewModel
 import com.lampro.myaccuweather.viewmodels.location.LocationViewModelFactory
+import com.lampro.myaccuweather.viewmodels.mainviewmodel.MainViewModel
 import kotlin.properties.Delegates
 
 private const val ARG_PARAM1 = "param1"
@@ -44,9 +50,16 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
     private lateinit var mlocationViewModel: LocationViewModel
     private lateinit var mlocationWeatherAdapter: LocationWeatherAdapter
     private lateinit var locationClient: FusedLocationProviderClient
-    private var key = MutableLiveData<String?>()
+    private lateinit var key: String
+    private lateinit var cityName: String
+    private lateinit var countryName: String
+    private lateinit var temp: String
+    private lateinit var icon: String
     private var lon by Delegates.notNull<Double>()
     private var lat by Delegates.notNull<Double>()
+    private lateinit var locationitem: Locationitem
+    private lateinit var listLocation: MutableList<Locationitem>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,13 +77,32 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        listLocation = mutableListOf()
+
+        if (PrefManager.getListLocation() != null) {
+
+            PrefManager.getListLocation()?.let { listLocation.addAll(it) }
+        }
 
         activity?.let {
             locationClient = LocationServices.getFusedLocationProviderClient(it)
         }
+
+        mlocationWeatherAdapter = LocationWeatherAdapter()
+        mlocationWeatherAdapter.updateData(listLocation)
+        binding.rvLocationWeather.apply {
+            adapter = mlocationWeatherAdapter
+            layoutManager = LinearLayoutManager(
+                this@LocationFragment.context,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+        }
+
         initViewModel()
 
         initView()
+
 
         mlocationViewModel.locationKeyData.observe(viewLifecycleOwner) { response ->
             when (response) {
@@ -81,15 +113,25 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
                 is ApiResponse.Success -> {
                     hideLoadingDialog()
                     response.data?.let {
+                        key = it.key
+
 
                         if (it.localizedName.isNotEmpty()) {
-                            binding.tvCityName.text = it.localizedName
+                            cityName = it.localizedName
                         } else {
-                            binding.tvCityName.text = it.englishName
+                            cityName = it.englishName
                         }
-                        binding.tvCountryName.text =
+                        binding.tvCityName.text = cityName
+                        countryName =
                             it.administrativeArea.localizedName + ", " + it.country.localizedName
+                        binding.tvCountryName.text = countryName
+
                         binding.llCurrentLocation.visibility = View.VISIBLE
+                        val params = binding.llRecently.layoutParams as RelativeLayout.LayoutParams
+                        params.addRule(RelativeLayout.BELOW, binding.llCurrentLocation.id)
+                        binding.llRecently.layoutParams = params
+
+
                     }
 
                 }
@@ -105,28 +147,59 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
                 }
             }
         }
+
         mlocationViewModel.geoByCityNameData.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is ApiResponse.Loading -> {
                     showLoadingDialog()
                 }
+
                 is ApiResponse.Success -> {
                     hideLoadingDialog()
                     response.data?.let {
-                        if (response.data.size != 0){
-                            mlocationViewModel.getLocationKey(it[0].lat,it[0].lon)
+                        if (response.data.size != 0) {
+                            mlocationViewModel.getLocationKey(it[0].lat, it[0].lon)
+                            mlocationViewModel.getCurrentWeather(it[0].lat, it[0].lon)
                             lat = it[0].lat
                             lon = it[0].lon
-                        }
-                        else  {
+                        } else {
                             binding.llCurrentLocation.visibility = View.GONE
-                            Toast.makeText(this.context, "No information about ${binding.edtLoactionSearch.text} city was found", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this.context,
+                                "No information about ${binding.edtLoactionSearch.text} city was found",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 }
+
                 is ApiResponse.Failed -> {
                     hideLoadingDialog()
-                    Toast.makeText(this.context, "Get api failed ${response.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this.context,
+                        "Get api failed ${response.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+        mlocationViewModel.currentWeatherData.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is ApiResponse.Loading -> {
+                    showLoadingDialog()
+                }
+
+                is ApiResponse.Success -> {
+                    hideLoadingDialog()
+                    response.data?.let {
+                        binding.tvTemp.text = it.main.temp.toInt().toString() + "℃"
+                        temp = it.main.temp.toInt().toString() + "℃"
+                        icon = it.weather[0].icon
+                    }
+                }
+
+                is ApiResponse.Failed -> {
+                    hideLoadingDialog()
                 }
             }
         }
@@ -165,6 +238,7 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
                             "initView: lat: ${it.latitude} | long: ${it.longitude}"
                         )
                         mlocationViewModel.getLocationKey(it.latitude, it.longitude)
+                        mlocationViewModel.getCurrentWeather(it.latitude, it.longitude)
                         binding.imgLocation.visibility = View.VISIBLE
                         binding.tvCurrentLocation.visibility = View.VISIBLE
                         lat = it.latitude
@@ -182,6 +256,15 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
                 replaceFragment(HomeWeatherFragment.newInstance(null, param2), "", "")
             }
             PrefManager.setLocation(lat, lon)
+            PrefManager.setLocationKey(key)
+            locationitem = Locationitem(key, cityName, countryName, temp, icon, lat, lon)
+
+
+            listLocation.removeIf {
+                it.cityName.equals(locationitem.cityName)
+            }
+            listLocation.add(0, locationitem)
+            PrefManager.saveListLocation(listLocation)
         }
 
 
@@ -199,9 +282,6 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
                 mlocationViewModel.getGeoByCityName(binding.edtLoactionSearch.text.toString())
                 binding.imgLocation.visibility = View.GONE
                 binding.tvCurrentLocation.visibility = View.GONE
-//                var listLocation: MutableList<Location> = mutableListOf()
-//                mWeatherViewModel.
-//                listLocation.add(Location("${binding.edtLoactionSearch.text}",""))
             }
         }
     }
@@ -240,6 +320,7 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
         } else locationClient.lastLocation.addOnSuccessListener {
             Log.d("TAG", ": lat: ${it.latitude} | long: ${it.longitude}")
             mlocationViewModel.getLocationKey(it.latitude, it.longitude)
+            mlocationViewModel.getCurrentWeather(it.latitude, it.longitude)
             binding.imgLocation.visibility = View.VISIBLE
             binding.tvCurrentLocation.visibility = View.VISIBLE
 

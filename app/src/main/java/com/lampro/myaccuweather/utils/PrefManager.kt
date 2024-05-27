@@ -1,7 +1,9 @@
 package com.lampro.myaccuweather.utils
 
 import android.content.Context
+import com.google.gson.Gson
 import com.lampro.myaccuweather.MyApplication
+import com.lampro.myaccuweather.objects.locationdata.Locationitem
 
 class PrefManager {
     companion object{
@@ -32,6 +34,21 @@ class PrefManager {
         }
         fun getLocationKey(): String {
             return currentLocation.getString("key", "")!!
+        }
+
+
+        val LIST_LOCATION : String = "list_Location"
+        val listLocation = MyApplication.getAppContext().getSharedPreferences(LIST_LOCATION,Context.MODE_PRIVATE)
+        fun saveListLocation(list: List<Locationitem>) {
+            listLocation.edit().putString("listLocation",Gson().toJson(list)).commit()
+        }
+        fun getListLocation(): List<Locationitem>?{
+            val json = listLocation.getString("listLocation",null)
+            json?.let {
+                val listLocation = Gson().fromJson(json, Array<Locationitem>::class.java).toList()
+                return listLocation
+            }
+            return null
         }
     }
 }

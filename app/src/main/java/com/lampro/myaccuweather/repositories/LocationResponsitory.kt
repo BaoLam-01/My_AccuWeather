@@ -5,6 +5,7 @@ import com.lampro.myaccuweather.network.api.ApiResponse
 import com.lampro.myaccuweather.network.api.GenericApiResponse
 import com.lampro.myaccuweather.network.api.clients.AccuClient
 import com.lampro.myaccuweather.network.api.clients.OpenClient
+import com.lampro.myaccuweather.objects.currentweatherresponse.CurrentWeatherResponse
 import com.lampro.myaccuweather.objects.dailyweatherresponse.DailyWeatherResponse
 import com.lampro.myaccuweather.objects.geopositionresponse.GeopositionResponse
 import com.lampro.myaccuweather.objects.locationkeyresponse.LocationKeyResponse
@@ -18,6 +19,14 @@ class LocationResponsitory : GenericApiResponse() {
     suspend fun getGeoByCityName(cityName:String) : ApiResponse<GeopositionResponse>{
         return apiCall {
             OpenClient.getOpenWeatherApi.getGeoByCityName(cityName)
+        }
+    }
+    suspend fun getCurrentWeather(lat: Double, lon: Double): ApiResponse<CurrentWeatherResponse> {
+        return apiCall {
+            OpenClient.getOpenWeatherApi.getCurrentWeather(
+                lat.toString(),
+                lon.toString()
+            )
         }
     }
 

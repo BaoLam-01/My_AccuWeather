@@ -17,9 +17,8 @@
         <LinearLayout
             android:id="@+id/itemBody"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_110sdp"
-            android:layout_marginHorizontal="@dimen/_30sdp"
-            android:layout_marginBottom="@dimen/_20sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:background="@drawable/bg_frame_airquality_gradient"
             android:elevation="@dimen/_5sdp"
             android:orientation="vertical"
@@ -41,6 +40,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/opensan_bold"
                     android:textSize="@dimen/_15ssp"
+                    android:text="@{location.cityName}"
                     tools:text="Hà Đông" />
 
                 <TextView
@@ -58,6 +58,7 @@
                     android:fontFamily="@font/opensans_medium"
                     android:textColor="#92FFFFFF"
                     android:textSize="@dimen/_12ssp"
+                    android:text="@{location.countryName}"
                     tools:text="Hà Nội" />
             </LinearLayout>
 
@@ -66,11 +67,12 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:layout_width="@dimen/_70sdp"
+                    android:layout_width="@dimen/_50sdp"
                     android:layout_height="match_parent"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:scaleType="fitStart"
+                    imageUrl="@{location.icon}"
                     tools:src="@drawable/weather_sunrain" />
 
                 <TextView
@@ -80,7 +82,8 @@
                     android:layout_centerVertical="true"
                     android:fontFamily="@font/poppins_bold"
                     android:includeFontPadding="false"
-                    android:textSize="@dimen/_35ssp"
+                    android:textSize="@dimen/_30ssp"
+                    android:text="@{location.temp}"
                     tools:text="30°" />
 
             </RelativeLayout>
