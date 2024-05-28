@@ -103,8 +103,7 @@
                             android:fontFamily="@font/opensans_regular"
                             android:text="Current location"
                             android:textColor="#4AFFFFFF"
-                            android:textSize="@dimen/_13ssp"
-                            android:visibility="invisible" />
+                            android:textSize="@dimen/_13ssp" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -117,8 +116,7 @@
                                 android:layout_alignParentLeft="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginRight="@dimen/_10sdp"
-                                android:src="@drawable/icon_location"
-                                android:visibility="invisible" />
+                                android:src="@drawable/icon_location"/>
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -160,6 +158,24 @@
 
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:id="@+id/llSearchLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bogoc"
+                        android:clickable="true"
+                        android:elevation="@dimen/_5sdp"
+                        android:orientation="vertical"
+                        android:padding="@dimen/_10sdp"
+                        android:visibility="invisible">
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvCitySearch"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/llRecently"

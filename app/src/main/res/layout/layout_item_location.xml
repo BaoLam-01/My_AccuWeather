@@ -7,7 +7,7 @@
 
         <variable
             name="location"
-            type="com.lampro.myaccuweather.objects.locationdata.Locationitem" />
+            type="com.lampro.myaccuweather.objects.locationdata.LocationItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

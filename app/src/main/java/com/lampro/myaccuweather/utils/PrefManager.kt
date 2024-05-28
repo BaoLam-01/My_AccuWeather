@@ -3,7 +3,7 @@ package com.lampro.myaccuweather.utils
 import android.content.Context
 import com.google.gson.Gson
 import com.lampro.myaccuweather.MyApplication
-import com.lampro.myaccuweather.objects.locationdata.Locationitem
+import com.lampro.myaccuweather.objects.locationdata.LocationItem
 
 class PrefManager {
     companion object{
@@ -39,13 +39,13 @@ class PrefManager {
 
         val LIST_LOCATION : String = "list_Location"
         val listLocation = MyApplication.getAppContext().getSharedPreferences(LIST_LOCATION,Context.MODE_PRIVATE)
-        fun saveListLocation(list: List<Locationitem>) {
+        fun saveListLocation(list: List<LocationItem>) {
             listLocation.edit().putString("listLocation",Gson().toJson(list)).commit()
         }
-        fun getListLocation(): List<Locationitem>?{
+        fun getListLocation(): List<LocationItem>?{
             val json = listLocation.getString("listLocation",null)
             json?.let {
-                val listLocation = Gson().fromJson(json, Array<Locationitem>::class.java).toList()
+                val listLocation = Gson().fromJson(json, Array<LocationItem>::class.java).toList()
                 return listLocation
             }
             return null

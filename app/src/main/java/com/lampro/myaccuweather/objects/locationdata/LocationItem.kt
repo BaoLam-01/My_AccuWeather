@@ -1,6 +1,6 @@
 package com.lampro.myaccuweather.objects.locationdata
 
-data class Locationitem(
+data class LocationItem(
     var locationKey: String,
     var cityName: String,
     var countryName: String,
