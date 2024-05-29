@@ -7,6 +7,7 @@ import com.lampro.myaccuweather.objects.locationdata.LocationItem
 import com.lampro.myaccuweather.utils.PrefManager
 
 class CityNameAdapter : BaseRecyclerViewAdapter<LocationItem, LayoutItemCityBinding>() {
+    private lateinit var callBack : IOnItemClick
     override fun getLayout(): Int = R.layout.layout_item_city
     override fun onBindViewHolder(holder: BaseViewHolder<LayoutItemCityBinding>, position: Int) {
         holder.binding.itemBody.setOnClickListener {
@@ -19,8 +20,12 @@ class CityNameAdapter : BaseRecyclerViewAdapter<LocationItem, LayoutItemCityBind
             }
             listLocation.add(0, mListData[0])
             PrefManager.saveListLocation(listLocation)
-
+            callBack.onItemClick()
         }
         holder.binding.cityResponse = mListData[position]
+    }
+    fun setCallBack (callBack: IOnItemClick){this.callBack = callBack}
+    interface IOnItemClick{
+        fun onItemClick()
     }
 }

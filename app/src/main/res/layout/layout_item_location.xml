@@ -82,7 +82,7 @@
                     android:layout_centerVertical="true"
                     android:fontFamily="@font/poppins_bold"
                     android:includeFontPadding="false"
-                    android:textSize="@dimen/_30ssp"
+                    android:textSize="@dimen/_25ssp"
                     android:text="@{location.temp}"
                     tools:text="30°" />
 

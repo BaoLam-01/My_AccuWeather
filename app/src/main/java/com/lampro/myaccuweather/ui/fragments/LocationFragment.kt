@@ -38,7 +38,7 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 
-class LocationFragment : BaseFragment<FragmentLocationBinding>() {
+class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapter.IOnItemClick {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: MainActivity? = null
@@ -98,6 +98,7 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
             )
         }
 
+
         initViewModel()
 
         initView()
@@ -145,6 +146,7 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
                             listCities.add(locationitem)
 
                             mcityNameAdapter = CityNameAdapter()
+                            mcityNameAdapter.setCallBack(this)
                             mcityNameAdapter.updateData(listCities)
                             binding.rvCitySearch.apply {
                                 adapter = mcityNameAdapter
@@ -247,6 +249,7 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
 
     private fun initView() {
         binding.imgBtnLocationSearch.setOnClickListener {
+            binding.edtLoactionSearch.text = null
             statusSearch = true
             activity?.let { it1 ->
                 if (ActivityCompat.checkSelfPermission(
@@ -279,22 +282,22 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
         }
 
         binding.llCurrentLocation.setOnClickListener {
-            binding.llCurrentLocation.visibility = View.GONE
-            binding.imgLocation.visibility = View.GONE
-            binding.tvCurrentLocation.visibility = View.GONE
+
             param2?.apply {
+                PrefManager.setLocation(lat, lon)
+                PrefManager.setLocationKey(key)
+                locationitem = LocationItem(key, cityName, countryName, temp, icon, lat, lon)
+
+
+                listLocation.removeIf {
+                    it.cityName.equals(locationitem.cityName)
+                }
+                listLocation.add(0, locationitem)
+                PrefManager.saveListLocation(listLocation)
+
                 replaceFragment(HomeWeatherFragment.newInstance(null, param2), "", "")
             }
-            PrefManager.setLocation(lat, lon)
-            PrefManager.setLocationKey(key)
-            locationitem = LocationItem(key, cityName, countryName, temp, icon, lat, lon)
 
-
-            listLocation.removeIf {
-                it.cityName.equals(locationitem.cityName)
-            }
-            listLocation.add(0, locationitem)
-            PrefManager.saveListLocation(listLocation)
         }
 
 
@@ -369,6 +372,23 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
                     putSerializable(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onItemClick() {
+        param2?.apply {
+            PrefManager.setLocation(lat, lon)
+            PrefManager.setLocationKey(key)
+            locationitem = LocationItem(key, cityName, countryName, temp, icon, lat, lon)
+
+
+            listLocation.removeIf {
+                it.cityName.equals(locationitem.cityName)
+            }
+            listLocation.add(0, locationitem)
+            PrefManager.saveListLocation(listLocation)
+
+            replaceFragment(HomeWeatherFragment.newInstance(null, param2), "", "")
+        }
     }
 
 }

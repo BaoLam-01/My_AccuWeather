@@ -3,8 +3,12 @@ package com.lampro.myaccuweather.ui.fragments
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.ContentValues.TAG
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -270,14 +274,8 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
                     Manifest.permission.ACCESS_FINE_LOCATION
                 )
             ) {
-                val dialogView = layoutInflater.inflate(R.layout.dialog_custom, null)
-                val alertDialog = AlertDialog.Builder(this.context)
-                    .setView(dialogView)
-                    .create()
-                val btnView = dialogView.findViewById<Button>(R.id.OK)
 
-                alertDialog.show()
-                btnView.setOnClickListener { alertDialog.dismiss() }
+                showAlertDialog()
 
             } else {
                 return@registerForActivityResult
@@ -292,6 +290,23 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
             homeWeatherViewModel.getLocationKey(it.latitude, it.longitude)
 
             homeWeatherViewModel.getCurrentWeather(it.latitude, it.longitude)
+        }
+    }
+
+    private fun showAlertDialog() {
+        val dialog = this.context?.let { Dialog(it) }
+        if (dialog != null) {
+            dialog.window?.setBackgroundDrawableResource(R.drawable.dialogbg)
+            dialog.setContentView(R.layout.dialog_custom)
+            dialog.show()
+        }
+        val btnView1 = dialog?.findViewById<Button>(R.id.OK)
+        if (btnView1 != null) {
+            btnView1.setOnClickListener {
+                if (dialog != null) {
+                    dialog.dismiss()
+                }
+            }
         }
     }
 
