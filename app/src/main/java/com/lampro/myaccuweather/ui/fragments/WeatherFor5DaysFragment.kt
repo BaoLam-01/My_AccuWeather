@@ -176,6 +176,13 @@ class WeatherFor5DaysFragment : BaseFragment<FragmentWeatherFor5DaysBinding>() {
                 hideLoadingDialog()
                 response.data?.let {
                     getUvIndex(it.key)
+                    if (it.localizedName.isNotEmpty()){
+                        binding.tvCityName.text = it.localizedName
+                    }else{
+                        binding.tvCityName.text= it.englishName
+                    }
+                    binding.tvCountryName.text = it.administrativeArea.localizedName + ", " + it.country.localizedName
+
                 }
             }
 

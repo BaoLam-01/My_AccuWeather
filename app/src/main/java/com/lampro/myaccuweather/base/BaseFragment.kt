@@ -1,13 +1,16 @@
 package com.lampro.myaccuweather.base
 
-import android.app.ProgressDialog
+import android.app.AlertDialog
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.lampro.myaccuweather.R
+
 
 abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     private var _binding: VB? = null
@@ -15,7 +18,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     protected val binding: VB
         get() = _binding!!
 
-    private lateinit var mProgressDialog: ProgressDialog
+    private lateinit var dialog: AlertDialog
 
 
     abstract fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): VB
@@ -26,8 +29,11 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = inflateBinding(layoutInflater,container)
-        mProgressDialog = ProgressDialog(activity)
-        mProgressDialog.setMessage("Loading...")
+
+        val builder = AlertDialog.Builder(context)
+        val getView: View = layoutInflater.inflate(R.layout.loading_dialog,null)
+        dialog = builder.create()
+        dialog.setView(getView)
         return binding.root
     }
 
@@ -36,8 +42,9 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         _binding = null
     }
     fun showLoadingDialog() {
-        if (!mProgressDialog.isShowing) {
-            mProgressDialog.apply {
+        if (!dialog.isShowing) {
+            dialog.apply {
+                window?.setBackgroundDrawable(ColorDrawable(0))
                 show()
                 setCanceledOnTouchOutside(false)
                 setCancelable(false)
@@ -45,8 +52,8 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         }
     }
     fun hideLoadingDialog() {
-        if (mProgressDialog.isShowing) {
-            mProgressDialog.dismiss()
+        if (dialog.isShowing) {
+            dialog.dismiss()
         }
     }
 

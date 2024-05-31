@@ -4,8 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.android.volley.RequestQueue
-import com.android.volley.toolbox.Volley
 import com.lampro.myaccuweather.network.api.ApiResponse
 import com.lampro.myaccuweather.objects.currentweatherresponse.CurrentWeatherResponse
 import com.lampro.myaccuweather.objects.hourlyweatherresponse.HourlyWeatherResponse

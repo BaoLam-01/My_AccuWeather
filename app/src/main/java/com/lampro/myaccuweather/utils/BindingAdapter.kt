@@ -3,6 +3,7 @@ package com.lampro.myaccuweather.utils
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.lampro.myaccuweather.R
 
 object BindingAdapter {
     @BindingAdapter("imageUrl")
@@ -16,9 +17,9 @@ object BindingAdapter {
     fun bindOpenUrl2Image(imageView: ImageView, weatherIcon: String?) {
         Glide.with(imageView.context).load("https://openweathermap.org/img/wn/$weatherIcon@2x.png").into(imageView)
     }
-//    @BindingAdapter("imageUrl")
-//    @JvmStatic
-//    fun loadImgUrl(imageView: ImageView, url: String?) {
-//        Glide.with(imageView.context).load(url).into(imageView)
-//    }
+    @BindingAdapter("loadingGif")
+    @JvmStatic
+    fun loadImgUrl(imageView: ImageView, gif: Int?) {
+        Glide.with(imageView.context).load(gif).into(imageView)
+    }
 }

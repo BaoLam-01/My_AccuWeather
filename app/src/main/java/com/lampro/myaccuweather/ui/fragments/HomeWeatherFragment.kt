@@ -60,7 +60,6 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
     private var currentWeatherResponse: CurrentWeatherResponse? = null
     private var lat: Double = 0.0
     private var lon: Double = 0.0
-    private lateinit var locationKey: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -84,9 +83,8 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
         } else {
             lat = PrefManager.getLocationLat()
             lon = PrefManager.getLocationLon()
-            locationKey = PrefManager.getLocationKey()
+            homeWeatherViewModel.getLocationKey(lat, lon)
             homeWeatherViewModel.getCurrentWeather(lat, lon)
-            homeWeatherViewModel.getHourlyWeather(locationKey)
         }
 
         activity?.let { locationClient = LocationServices.getFusedLocationProviderClient(it) }
@@ -108,6 +106,13 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
                         homeWeatherViewModel.getHourlyWeather(it.key)
                         PrefManager.setLocationKey(it.key)
                         PrefManager.setLocation(lat, lon)
+                        if (it.localizedName.isNotEmpty()){
+                            binding.tvCityName.text = it.localizedName
+                        }else{
+                            binding.tvCityName.text= it.englishName
+                        }
+                        binding.tvCountryName.text = it.administrativeArea.localizedName + ", " + it.country.localizedName
+
                     }
                 }
 
@@ -296,8 +301,8 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
     private fun showAlertDialog() {
         val dialog = this.context?.let { Dialog(it) }
         if (dialog != null) {
-            dialog.window?.setBackgroundDrawableResource(R.drawable.dialogbg)
             dialog.setContentView(R.layout.dialog_custom)
+            dialog.window?.setBackgroundDrawable(ColorDrawable(0))
             dialog.show()
         }
         val btnView1 = dialog?.findViewById<Button>(R.id.OK)

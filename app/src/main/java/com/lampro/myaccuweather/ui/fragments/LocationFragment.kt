@@ -3,8 +3,11 @@ package com.lampro.myaccuweather.ui.fragments
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.ContentValues
 import android.content.pm.PackageManager
+import android.graphics.drawable.ColorDrawable
+import android.media.MediaRouter
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,7 +19,11 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.lampro.myaccuweather.R
@@ -38,7 +45,8 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 
-class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapter.IOnItemClick {
+class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapter.IOnItemClick,
+    LocationWeatherAdapter.IOnLocationClick {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: MainActivity? = null
@@ -53,7 +61,7 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapte
     private lateinit var icon: String
     private var lon by Delegates.notNull<Double>()
     private var lat by Delegates.notNull<Double>()
-    private lateinit var locationitem: LocationItem
+    private lateinit var locationItem: LocationItem
     private lateinit var listLocation: MutableList<LocationItem>
     private lateinit var mcityNameAdapter: CityNameAdapter
     private lateinit var listCities: MutableList<LocationItem>
@@ -88,6 +96,7 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapte
         }
 
         mlocationWeatherAdapter = LocationWeatherAdapter()
+        mlocationWeatherAdapter.setCallBack(this)
         mlocationWeatherAdapter.updateData(listLocation)
         binding.rvLocationWeather.apply {
             adapter = mlocationWeatherAdapter
@@ -98,6 +107,25 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapte
             )
         }
 
+        val callback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                var position = viewHolder.adapterPosition
+                listLocation.removeAt(position)
+                mlocationWeatherAdapter.notifyItemRemoved(position)
+                PrefManager.saveListLocation(listLocation)
+            }
+
+        }
+        val itemTouchHelper = ItemTouchHelper(callback)
+        itemTouchHelper.attachToRecyclerView(binding.rvLocationWeather)
 
         initViewModel()
 
@@ -286,13 +314,13 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapte
             param2?.apply {
                 PrefManager.setLocation(lat, lon)
                 PrefManager.setLocationKey(key)
-                locationitem = LocationItem(key, cityName, countryName, temp, icon, lat, lon)
+                locationItem = LocationItem(key, cityName, countryName, temp, icon, lat, lon)
 
 
                 listLocation.removeIf {
-                    it.cityName.equals(locationitem.cityName)
+                    it.cityName.equals(locationItem.cityName)
                 }
-                listLocation.add(0, locationitem)
+                listLocation.add(0, locationItem)
                 PrefManager.saveListLocation(listLocation)
 
                 replaceFragment(HomeWeatherFragment.newInstance(null, param2), "", "")
@@ -338,14 +366,8 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapte
                     Manifest.permission.ACCESS_FINE_LOCATION
                 )
             ) {
-                val dialogView = layoutInflater.inflate(R.layout.dialog_custom, null)
-                val alertDialog = AlertDialog.Builder(this.context)
-                    .setView(dialogView)
-                    .create()
-                val btnView = dialogView.findViewById<Button>(R.id.OK)
 
-                alertDialog.show()
-                btnView.setOnClickListener { alertDialog.dismiss() }
+                showAlertDialog()
 
             } else {
                 return@registerForActivityResult
@@ -358,6 +380,23 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapte
             lat = it.latitude
             lon = it.longitude
 
+        }
+    }
+
+    private fun showAlertDialog() {
+        val dialog = this.context?.let { Dialog(it) }
+        if (dialog != null) {
+            dialog.setContentView(R.layout.dialog_custom)
+            dialog.window?.setBackgroundDrawable(ColorDrawable(0))
+            dialog.show()
+        }
+        val btnView1 = dialog?.findViewById<Button>(R.id.OK)
+        if (btnView1 != null) {
+            btnView1.setOnClickListener {
+                if (dialog != null) {
+                    dialog.dismiss()
+                }
+            }
         }
     }
 
@@ -378,13 +417,30 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapte
         param2?.apply {
             PrefManager.setLocation(lat, lon)
             PrefManager.setLocationKey(key)
-            locationitem = LocationItem(key, cityName, countryName, temp, icon, lat, lon)
+            locationItem = LocationItem(key, cityName, countryName, temp, icon, lat, lon)
 
 
             listLocation.removeIf {
-                it.cityName.equals(locationitem.cityName)
+                it.cityName.equals(locationItem.cityName)
             }
-            listLocation.add(0, locationitem)
+            listLocation.add(0, locationItem)
+            PrefManager.saveListLocation(listLocation)
+
+            replaceFragment(HomeWeatherFragment.newInstance(null, param2), "", "")
+        }
+    }
+
+    override fun onLocationClick(item: LocationItem) {
+        param2?.apply {
+            PrefManager.setLocation(item.lat, item.lon)
+            PrefManager.setLocationKey(item.locationKey)
+            locationItem = item
+
+
+            listLocation.removeIf {
+                it.cityName.equals(locationItem.cityName)
+            }
+            listLocation.add(0, locationItem)
             PrefManager.saveListLocation(listLocation)
 
             replaceFragment(HomeWeatherFragment.newInstance(null, param2), "", "")
