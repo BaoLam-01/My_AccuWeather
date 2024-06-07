@@ -5,10 +5,13 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.ContentValues
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
 import android.media.MediaRouter
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -394,6 +397,20 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapte
         if (btnView1 != null) {
             btnView1.setOnClickListener {
                 if (dialog != null) {
+                    dialog.dismiss()
+                }
+            }
+        }
+        val btnView2 = dialog?.findViewById<Button>(R.id.btnSetting)
+        if (btnView2 != null) {
+            btnView2.setOnClickListener {
+                if (dialog != null) {
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    val uri = Uri.fromParts("package","com.lampro.myaccuweather", null)
+                    intent.data = uri
+
+                    startActivity(intent)
+
                     dialog.dismiss()
                 }
             }

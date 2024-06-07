@@ -2,25 +2,28 @@ package com.lampro.myaccuweather.ui.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
+import android.text.util.Linkify
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
+import androidx.annotation.StringRes
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.app.ActivityCompat
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -37,12 +40,11 @@ import com.lampro.myaccuweather.utils.PermissionManager
 import com.lampro.myaccuweather.utils.PrefManager
 import com.lampro.myaccuweather.viewmodels.homeweather.HomeWeatherViewModel
 import com.lampro.myaccuweather.viewmodels.homeweather.HomeWeatherViewModelFactory
-import com.lampro.myaccuweather.viewmodels.mainviewmodel.MainViewModel
+import com.lampro.myaccuweather.viewmodels.sharedviewmodel.SharedViewModel
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 // TODO: Rename parameter arguments, choose names that match
 private const val ARG_PARAM1 = "param1"
@@ -57,9 +59,9 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: MainActivity? = null
-    private var currentWeatherResponse: CurrentWeatherResponse? = null
     private var lat: Double = 0.0
     private var lon: Double = 0.0
+    private val viewModel: SharedViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -86,13 +88,12 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
             homeWeatherViewModel.getLocationKey(lat, lon)
             homeWeatherViewModel.getCurrentWeather(lat, lon)
         }
+//        binding.progressBar.setProgress(50)
 
         activity?.let { locationClient = LocationServices.getFusedLocationProviderClient(it) }
 
 
         initView()
-
-
 
         homeWeatherViewModel.locationKeyData.observe(viewLifecycleOwner) { response ->
             when (response) {
@@ -106,12 +107,13 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
                         homeWeatherViewModel.getHourlyWeather(it.key)
                         PrefManager.setLocationKey(it.key)
                         PrefManager.setLocation(lat, lon)
-                        if (it.localizedName.isNotEmpty()){
+                        if (it.localizedName.isNotEmpty()) {
                             binding.tvCityName.text = it.localizedName
-                        }else{
-                            binding.tvCityName.text= it.englishName
+                        } else {
+                            binding.tvCityName.text = it.englishName
                         }
-                        binding.tvCountryName.text = it.administrativeArea.localizedName + ", " + it.country.localizedName
+                        binding.tvCountryName.text =
+                            it.administrativeArea.localizedName + ", " + it.country.localizedName
 
                     }
                 }
@@ -138,14 +140,145 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
                     hideLoadingDialog()
                     response.data?.let {
                         //
+                        viewModel.shareData.value = it
                         binding.currentWeatherResponse = it
-                        currentWeatherResponse = it
                         val epochSeconds = it.dt.toLong()
                         val instant = Instant.ofEpochSecond(epochSeconds)
                         val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
-                        val formatter = DateTimeFormatter.ofPattern("MMM, dd", Locale.ENGLISH)
-                        val formattedDate = dateTime.format(formatter)
+                        val formatter = DateTimeFormatter.ofPattern("dd, MMM")
+                        val formattedDate = "Hôm nay: " + dateTime.format(formatter)
                         binding.tvCurrentDay.setText(formattedDate)
+                        binding.tvFeelsLike.setText(
+                            Math.ceil(it.main.feelsLike).toInt().toString() + "°"
+                        )
+                        lateinit var WindDetail: String
+                        when (Math.ceil(it.wind.speed).toInt()) {
+                            in 0..5 -> {
+                                WindDetail = "Gió rất nhẹ"
+                            }
+
+                            in 6..11 -> {
+                                WindDetail = "Gió nhẹ vừa phải"
+                            }
+
+                            in 12..19 -> {
+                                WindDetail = "Gió nhẹ nhàng"
+                            }
+
+                            in 20..28 -> {
+                                WindDetail = "Gió vừa phải"
+                            }
+
+                            in 118..220 -> {
+                                WindDetail = "Gió bão cực mạnh"
+                            }
+                        }
+                        when (it.wind.deg) {
+                            in 0..45 -> {
+                                WindDetail += ", Từ hướng bắc"
+                            }
+
+                            in 316..360 -> {
+                                WindDetail += ", Từ hướng bắc"
+                            }
+
+                            in 46..135 -> {
+                                WindDetail += ", Từ hướng đông"
+                            }
+
+                            in 136..225 -> {
+                                WindDetail += ", Từ hướng nam"
+                            }
+
+                            in 226..315 -> {
+                                WindDetail += ", Từ hướng tây"
+                            }
+                        }
+                        binding.tvWind.text = WindDetail
+
+//                        xoay icon huong gio
+                        binding.imgWind.rotation = it.wind.deg.toFloat()
+
+
+                        when (it.main.humidity) {
+                            in 0..20 -> {
+                                binding.tvHumidity.text = "Độ ẩm thấp, thời tiết hanh khô"
+                            }
+
+                            in 21..50 -> {
+                                binding.tvHumidity.text = "Độ ẩm thấp"
+                            }
+
+                            in 51..60 -> {
+                                binding.tvHumidity.text = "Độ ẩm vừa phải"
+                            }
+
+                            in 61..80 -> {
+                                binding.tvHumidity.text = "Độ ẩm cao"
+                            }
+
+                            in 81..100 -> {
+                                binding.tvHumidity.text = "Độ ẩm cao, trời nồm"
+                            }
+                        }
+
+//                        hien thi phan tram do am
+                        val constraintSet = ConstraintSet()
+                        constraintSet.clone(binding.clHumidity)
+                        constraintSet.constrainHeight(
+                            binding.humidityValue.id,
+                            ConstraintSet.MATCH_CONSTRAINT
+                        )
+//                        constraintSet.setDimensionRatio(binding.humidityValue.id, "1:1")
+                        constraintSet.constrainPercentHeight(
+                            binding.humidityValue.id,
+                            it.main.humidity / 100f
+                        )
+                        constraintSet.applyTo(binding.clHumidity)
+
+
+                        // hien thi phan tram ap suat
+//                        val constraintSet2 = ConstraintSet()
+//                        constraintSet.clone(binding.clPressure)
+//                        constraintSet.constrainHeight(binding.pressurePercent.id, ConstraintSet.MATCH_CONSTRAINT)
+//                        constraintSet.constrainPercentHeight(binding.pressurePercent.id, it.main.pressure/100f)
+//                        constraintSet.applyTo(binding.clHumidity)
+
+
+                        when (it.clouds.all) {
+                            in 0..10 -> {
+                                binding.tvCloudQuality.text = "Trời quang mây"
+                            }
+
+                            in 11..30 -> {
+                                binding.tvHumidity.text = "Mây thưa thớt"
+                            }
+
+                            in 31..60 -> {
+                                binding.tvHumidity.text = "Lượng mây vưa phải"
+                            }
+
+                            in 61..80 -> {
+                                binding.tvCloudQuality.text = "Trời nhiều mây"
+                            }
+
+                            in 81..100 -> {
+                                binding.tvCloudQuality.text = "Mật độ mây dày đặc"
+                            }
+
+                        }
+
+                        val constraintSet3 = ConstraintSet()
+                        constraintSet.clone(binding.clCloud)
+                        constraintSet.constrainHeight(
+                            binding.cloudPercent.id,
+                            ConstraintSet.MATCH_CONSTRAINT
+                        )
+                        constraintSet.constrainPercentHeight(
+                            binding.cloudPercent.id,
+                            it.clouds.all / 100f
+                        )
+                        constraintSet.applyTo(binding.clCloud)
                     }
                 }
 
@@ -248,7 +381,7 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
         binding.btnMenu.setOnClickListener {
             param2?.addFragment(
                 WeatherFor5DaysFragment.newInstance(
-                    currentWeatherResponse,
+                    null,
                     param2,
                 ), "", ""
             )
@@ -313,6 +446,21 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
                 }
             }
         }
+        val btnView2 = dialog?.findViewById<Button>(R.id.btnSetting)
+        if (btnView2 != null) {
+            btnView2.setOnClickListener {
+                if (dialog != null) {
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    val uri = Uri.fromParts("package","com.lampro.myaccuweather", null)
+                    intent.data = uri
+
+                    startActivity(intent)
+
+                    dialog.dismiss()
+                }
+            }
+        }
+
     }
 
     companion object {

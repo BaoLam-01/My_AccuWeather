@@ -100,7 +100,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="@{StringUtils.INSTANCE.convertDouble2String(currentWeather.main.tempMax+1)}"
+                            android:text="@{StringUtils.INSTANCE.convertDouble2String(Math.ceil(currentWeather.main.tempMax+1))}"
                             tools:text="20"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_16ssp" />
@@ -134,7 +134,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="@{StringUtils.INSTANCE.convertDouble2String(currentWeather.main.tempMin-5)}"
+                            android:text="@{StringUtils.INSTANCE.convertDouble2String(Math.ceil(currentWeather.main.tempMin-5))}"
                             tools:text="18"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_16ssp" />
@@ -243,9 +243,11 @@
                         android:background="@drawable/bg_frame_hour_gradient" />
 
                     <RelativeLayout
+                        android:id="@+id/btnSeeMore"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
+                        android:clickable="false"
                         android:paddingHorizontal="@dimen/_15sdp">
 
                         <TextView

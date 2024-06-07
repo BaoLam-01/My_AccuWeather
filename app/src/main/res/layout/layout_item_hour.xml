@@ -17,9 +17,9 @@
         android:layout_height="wrap_content">
 
         <FrameLayout
-            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_18sdp"
             android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_150sdp"
+            android:layout_height="@dimen/_100sdp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -44,7 +44,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="@{StringUtils.INSTANCE.convertDouble2String(hourlyWeatherResponse.temperature.value)}"
+                        android:text="@{StringUtils.INSTANCE.convertDouble2String(Math.ceil(hourlyWeatherResponse.temperature.value))}"
                         android:textSize="@dimen/_12ssp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"

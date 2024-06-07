@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.view.WindowManager.LayoutParams
+import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.lampro.myaccuweather.R
@@ -32,8 +34,16 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
         val builder = AlertDialog.Builder(context)
         val getView: View = layoutInflater.inflate(R.layout.loading_dialog,null)
+        builder.setView(getView)
         dialog = builder.create()
-        dialog.setView(getView)
+        val window = dialog.window
+//        val layoutParams = window?.attributes
+//        layoutParams?.width = WindowManager.LayoutParams.WRAP_CONTENT
+//        window?.attributes = layoutParams
+
+        window?.setBackgroundDrawable(ColorDrawable(0))
+
+
         return binding.root
     }
 
@@ -44,11 +54,11 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     fun showLoadingDialog() {
         if (!dialog.isShowing) {
             dialog.apply {
-                window?.setBackgroundDrawable(ColorDrawable(0))
                 show()
                 setCanceledOnTouchOutside(false)
                 setCancelable(false)
             }
+
         }
     }
     fun hideLoadingDialog() {

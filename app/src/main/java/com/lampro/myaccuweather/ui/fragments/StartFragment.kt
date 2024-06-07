@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import com.lampro.myaccuweather.base.BaseFragment
 import com.lampro.myaccuweather.databinding.FragmentStartBinding
 import com.lampro.myaccuweather.ui.activities.MainActivity
 import com.lampro.myaccuweather.utils.PrefManager
-import com.lampro.myaccuweather.viewmodels.mainviewmodel.MainViewModel
 
 
 private const val ARG_PARAM1 = "param1"

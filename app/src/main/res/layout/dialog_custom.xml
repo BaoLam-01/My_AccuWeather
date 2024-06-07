@@ -17,19 +17,41 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_100sdp"
+            android:layout_height="@dimen/_250sdp"
             android:background="#00FFFFFF"
             android:padding="@dimen/_5sdp">
 
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_8sdp"
-                android:fontFamily="@font/poppins_bold"
-                android:textSize="@dimen/_15ssp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_8sdp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/getstart"
+                    android:text="Bạn đã từ chối quyền truy cập trước đây, để sử dụng chức năng này cần cấp quyền truy cập cho ứng dụng trong phần cài đặt" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_122sdp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/location_permission" />
+            </LinearLayout>
+            <Button
+                android:id="@+id/btnSetting"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:background="@null"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
                 android:textColor="@color/getstart"
-                android:text="ban can phai cap quyen truy cap de su dung chuc nang nay" />
+                android:text="Cài đặt" />
 
             <Button
                 android:id="@+id/OK"
