@@ -6,6 +6,7 @@ import android.app.Dialog
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
@@ -17,6 +18,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -36,6 +38,7 @@ import com.lampro.myaccuweather.network.api.ApiResponse
 import com.lampro.myaccuweather.objects.currentweatherresponse.CurrentWeatherResponse
 import com.lampro.myaccuweather.repositories.HomeWeatherRepository
 import com.lampro.myaccuweather.ui.activities.MainActivity
+import com.lampro.myaccuweather.ui.customview.MyCustomView
 import com.lampro.myaccuweather.utils.PermissionManager
 import com.lampro.myaccuweather.utils.PrefManager
 import com.lampro.myaccuweather.viewmodels.homeweather.HomeWeatherViewModel
@@ -68,11 +71,12 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getSerializable(ARG_PARAM2) as MainActivity?
         }
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         initViewModel()
 
@@ -88,7 +92,7 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
             homeWeatherViewModel.getLocationKey(lat, lon)
             homeWeatherViewModel.getCurrentWeather(lat, lon)
         }
-//        binding.progressBar.setProgress(50)
+
 
         activity?.let { locationClient = LocationServices.getFusedLocationProviderClient(it) }
 
@@ -238,13 +242,16 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
 
 
                         // hien thi phan tram ap suat
-//                        val constraintSet2 = ConstraintSet()
-//                        constraintSet.clone(binding.clPressure)
-//                        constraintSet.constrainHeight(binding.pressurePercent.id, ConstraintSet.MATCH_CONSTRAINT)
-//                        constraintSet.constrainPercentHeight(binding.pressurePercent.id, it.main.pressure/100f)
-//                        constraintSet.applyTo(binding.clHumidity)
+                        var presurePercent = ((it.main.pressure / 2200f) * 270f)
+                        if (presurePercent <= 0) {
+                            binding.myCustomView.changeAngle(0f)
+                        }else if (presurePercent >= 270) {
+                            binding.myCustomView.changeAngle(270f)
+                        } else {
+                            binding.myCustomView.changeAngle(presurePercent)
+                        }
 
-
+//                        may
                         when (it.clouds.all) {
                             in 0..10 -> {
                                 binding.tvCloudQuality.text = "Trời quang mây"
@@ -269,16 +276,16 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
                         }
 
                         val constraintSet3 = ConstraintSet()
-                        constraintSet.clone(binding.clCloud)
-                        constraintSet.constrainHeight(
+                        constraintSet3.clone(binding.clCloud)
+                        constraintSet3.constrainHeight(
                             binding.cloudPercent.id,
                             ConstraintSet.MATCH_CONSTRAINT
                         )
-                        constraintSet.constrainPercentHeight(
+                        constraintSet3.constrainPercentHeight(
                             binding.cloudPercent.id,
                             it.clouds.all / 100f
                         )
-                        constraintSet.applyTo(binding.clCloud)
+                        constraintSet3.applyTo(binding.clCloud)
                     }
                 }
 
@@ -451,7 +458,7 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
             btnView2.setOnClickListener {
                 if (dialog != null) {
                     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                    val uri = Uri.fromParts("package","com.lampro.myaccuweather", null)
+                    val uri = Uri.fromParts("package", "com.lampro.myaccuweather", null)
                     intent.data = uri
 
                     startActivity(intent)

@@ -17,7 +17,7 @@
             android:background="@drawable/bg_frame_hour_gradient"
             android:orientation="vertical"
             android:paddingVertical="@dimen/_10sdp"
-            android:padding="@dimen/_5sdp"
+            android:paddingHorizontal="@dimen/_10sdp"
             android:gravity="center">
 
 

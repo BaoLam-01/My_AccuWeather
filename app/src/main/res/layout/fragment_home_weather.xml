@@ -62,8 +62,8 @@
                                 android:layout_gravity="center"
                                 android:fontFamily="@font/poppins_medium"
                                 android:includeFontPadding="false"
-                                android:textColor="#48FFFFFF"
                                 android:text="@{currentWeatherResponse.name}"
+                                android:textColor="#48FFFFFF"
                                 android:textSize="@dimen/_20sdp"
                                 tools:text="london" />
 
@@ -73,8 +73,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:fontFamily="@font/poppins_medium"
-                                android:textColor="#48FFFFFF"
                                 android:text="@{currentWeatherResponse.sys.country}"
+                                android:textColor="#48FFFFFF"
                                 android:textSize="@dimen/_10sdp"
                                 tools:text="US" />
                         </LinearLayout>
@@ -337,8 +337,8 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/opensan_bold"
-                                            android:textSize="@dimen/_17ssp"
                                             android:text="@{StringUtils.INSTANCE.convertDouble2String(Math.ceil(currentWeatherResponse.wind.speed)) }"
+                                            android:textSize="@dimen/_17ssp"
                                             tools:text="2" />
 
                                         <TextView
@@ -433,8 +433,8 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/opensan_bold"
-                                            android:textSize="@dimen/_17ssp"
                                             android:text="@{StringUtils.INSTANCE.convertInt2String(currentWeatherResponse.main.humidity)}"
+                                            android:textSize="@dimen/_17ssp"
                                             tools:text="71" />
 
                                         <TextView
@@ -503,7 +503,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginVertical="@dimen/_10sdp"
                         android:orientation="horizontal">
 
                         <LinearLayout
@@ -551,8 +551,8 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/opensan_bold"
-                                            android:textSize="@dimen/_17ssp"
                                             android:text="@{StringUtils.INSTANCE.convertInt2String(currentWeatherResponse.main.pressure)}"
+                                            android:textSize="@dimen/_17ssp"
                                             tools:text="1.009" />
                                     </LinearLayout>
 
@@ -564,44 +564,62 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:id="@+id/viewContainer"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="2"
-                                    android:gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center_horizontal"
                                     android:orientation="vertical">
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="2"
-                                        android:fontFamily="@font/opensans_regular"
-                                        android:text="cao" />
+                                    <FrameLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
 
-                                    <androidx.constraintlayout.widget.ConstraintLayout
-                                        android:id="@+id/clPressure"
-                                        android:layout_width="@dimen/_25sdp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1"
-                                        android:background="@drawable/shape_humidity">
+                                        <com.lampro.myaccuweather.ui.customview.MyCustomView
+                                            android:id="@+id/myCustomView"
+                                            android:layout_width="@dimen/_50sdp"
+                                            android:layout_height="@dimen/_50sdp"
+                                            android:layout_gravity="center"
+                                            android:rotation="90"
+                                            app:myViewColor="#DAB3EBF4" />
+
+
+
+                                    </FrameLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:fontFamily="@font/opensans_regular"
+                                            android:text="Thấp"
+                                            android:textAlignment="center"
+                                            android:textSize="@dimen/_8sdp"
+                                            android:textStyle="bold" />
 
                                         <View
-                                            android:id="@+id/pressurePercent"
                                             android:layout_width="match_parent"
-                                            android:layout_height="0dp"
-                                            android:background="@drawable/humidity_percent"
-                                            app:layout_constraintBottom_toBottomOf="parent"
-                                            app:layout_constraintHeight_percent="0.7"
-                                            app:layout_constraintLeft_toLeftOf="parent"
-                                            app:layout_constraintRight_toRightOf="parent" />
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="2" />
 
-                                    </androidx.constraintlayout.widget.ConstraintLayout>
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:fontFamily="@font/opensans_regular"
+                                            android:text="Cao"
+                                            android:textAlignment="center"
+                                            android:textSize="@dimen/_8sdp"
+                                            android:textStyle="bold" />
+                                    </LinearLayout>
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="2"
-                                        android:fontFamily="@font/opensans_regular"
-                                        android:text="Thấp" />
                                 </LinearLayout>
                             </LinearLayout>
 
@@ -652,9 +670,10 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/opensan_bold"
-                                            android:textSize="@dimen/_17ssp"
                                             android:text="@{StringUtils.INSTANCE.convertInt2String(currentWeatherResponse.clouds.all)}"
+                                            android:textSize="@dimen/_17ssp"
                                             tools:text="1" />
+
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
@@ -718,76 +737,76 @@
                     </LinearLayout>
 
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_110sdp"
-                        android:layout_marginHorizontal="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/_20sdp"
-                        android:background="@drawable/bg_frame_airquality_gradient"
-                        android:elevation="@dimen/_5sdp"
-                        android:orientation="vertical">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_110sdp"-->
+<!--                        android:layout_marginHorizontal="@dimen/_20sdp"-->
+<!--                        android:layout_marginTop="@dimen/_20sdp"-->
+<!--                        android:background="@drawable/bg_frame_airquality_gradient"-->
+<!--                        android:elevation="@dimen/_5sdp"-->
+<!--                        android:orientation="vertical">-->
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:paddingHorizontal="@dimen/_15sdp"
-                            android:paddingVertical="@dimen/_10sdp">
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:orientation="horizontal"-->
+<!--                            android:paddingHorizontal="@dimen/_15sdp"-->
+<!--                            android:paddingVertical="@dimen/_10sdp">-->
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/icon_crosshairs" />
+<!--                            <ImageView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:src="@drawable/icon_crosshairs" />-->
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="@dimen/_10sdp"
-                                android:fontFamily="@font/opensans_regular"
-                                android:text="AIR QUALITY"
-                                android:textColor="@color/white" />
-                        </LinearLayout>
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_gravity="center"-->
+<!--                                android:layout_marginLeft="@dimen/_10sdp"-->
+<!--                                android:fontFamily="@font/opensans_regular"-->
+<!--                                android:text="AIR QUALITY"-->
+<!--                                android:textColor="@color/white" />-->
+<!--                        </LinearLayout>-->
 
-                        <TextView
-                            android:id="@+id/tvAirQuality"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/opensan_bold"
-                            android:paddingHorizontal="@dimen/_15sdp"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/_15sdp"
-                            tools:text="-1 - Ổn định" />
+<!--                        <TextView-->
+<!--                            android:id="@+id/tvAirQuality"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:fontFamily="@font/opensan_bold"-->
+<!--                            android:paddingHorizontal="@dimen/_15sdp"-->
+<!--                            android:textColor="@color/white"-->
+<!--                            android:textSize="@dimen/_15sdp"-->
+<!--                            tools:text="-1 - Ổn định" />-->
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_4sdp"
-                            android:layout_marginHorizontal="@dimen/_15sdp"
-                            android:layout_marginVertical="@dimen/_10sdp"
-                            android:background="@drawable/bg_frame_hour_gradient" />
+<!--                        <View-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="@dimen/_4sdp"-->
+<!--                            android:layout_marginHorizontal="@dimen/_15sdp"-->
+<!--                            android:layout_marginVertical="@dimen/_10sdp"-->
+<!--                            android:background="@drawable/bg_frame_hour_gradient" />-->
 
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:paddingHorizontal="@dimen/_15sdp">
+<!--                        <RelativeLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:orientation="horizontal"-->
+<!--                            android:paddingHorizontal="@dimen/_15sdp">-->
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:text="See more"
-                                android:textColor="@color/white" />
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="match_parent"-->
+<!--                                android:layout_gravity="center"-->
+<!--                                android:text="See more"-->
+<!--                                android:textColor="@color/white" />-->
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_gravity="center"
-                                android:src="@drawable/icon_chevron_left" />
-                        </RelativeLayout>
+<!--                            <ImageView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_alignParentRight="true"-->
+<!--                                android:layout_gravity="center"-->
+<!--                                android:src="@drawable/icon_chevron_left" />-->
+<!--                        </RelativeLayout>-->
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
                 </LinearLayout>
             </ScrollView>
