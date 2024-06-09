@@ -1,30 +1,29 @@
 package com.lampro.myaccuweather.ui.fragments
 
 import android.Manifest
+import android.R.drawable
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.graphics.ColorSpace
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.text.util.Linkify
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
+import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.StringRes
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.app.ActivityCompat
+import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,13 +31,12 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.lampro.myaccuweather.R
 import com.lampro.myaccuweather.adapters.HourlyWeatherAdapter
+import com.lampro.myaccuweather.adapters.LanguageAdapter
 import com.lampro.myaccuweather.base.BaseFragment
 import com.lampro.myaccuweather.databinding.FragmentHomeWeatherBinding
 import com.lampro.myaccuweather.network.api.ApiResponse
-import com.lampro.myaccuweather.objects.currentweatherresponse.CurrentWeatherResponse
 import com.lampro.myaccuweather.repositories.HomeWeatherRepository
 import com.lampro.myaccuweather.ui.activities.MainActivity
-import com.lampro.myaccuweather.ui.customview.MyCustomView
 import com.lampro.myaccuweather.utils.PermissionManager
 import com.lampro.myaccuweather.utils.PrefManager
 import com.lampro.myaccuweather.viewmodels.homeweather.HomeWeatherViewModel
@@ -65,6 +63,7 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
     private var lat: Double = 0.0
     private var lon: Double = 0.0
     private val viewModel: SharedViewModel by activityViewModels()
+    private lateinit var languageAdapter: LanguageAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -78,7 +77,12 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         initViewModel()
+        val listLang = mutableListOf<String>()
+        listLang.addAll(resources.getStringArray(R.array.language))
+        languageAdapter = LanguageAdapter(requireContext(),R.layout.item_selected,listLang)
+        binding.spinerLanguage.adapter = languageAdapter
 
 
         if (PrefManager.getLocationLat() == 0.0 || PrefManager.getLocationLon() == 0.0 || PrefManager.getLocationKey() == null) {
@@ -396,6 +400,7 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
         binding.btnPlusCircle.setOnClickListener {
             param2?.addFragment(LocationFragment.newInstance("", param2), "", "")
         }
+
 
     }
 

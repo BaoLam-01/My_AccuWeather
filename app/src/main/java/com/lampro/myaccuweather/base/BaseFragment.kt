@@ -37,10 +37,6 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         builder.setView(getView)
         dialog = builder.create()
         val window = dialog.window
-//        val layoutParams = window?.attributes
-//        layoutParams?.width = WindowManager.LayoutParams.WRAP_CONTENT
-//        window?.attributes = layoutParams
-
         window?.setBackgroundDrawable(ColorDrawable(0))
 
 
