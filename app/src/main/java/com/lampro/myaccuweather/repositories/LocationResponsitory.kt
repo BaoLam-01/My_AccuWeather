@@ -13,22 +13,32 @@ import com.lampro.myaccuweather.utils.PrefManager
 
 class LocationResponsitory : GenericApiResponse() {
     val lang = PrefManager.getCurrentLang()
-    suspend fun getLocationKey(lat : Double, lon: Double) : ApiResponse<LocationKeyResponse>{
+    val units = if (PrefManager.getCurrentUnits() == "℃") {
+        "metric"
+    } else {
+        "imperial"
+    }
+
+    suspend fun getLocationKey(lat: Double, lon: Double): ApiResponse<LocationKeyResponse> {
         return apiCall {
-            AccuClient.getAccuWeatherApi.getLocationKey("$lat,$lon",lang)
+            AccuClient.getAccuWeatherApi.getLocationKey("$lat,$lon", lang)
         }
     }
-    suspend fun getGeoByCityName(cityName:String) : ApiResponse<GeopositionResponse>{
+
+    suspend fun getGeoByCityName(cityName: String): ApiResponse<GeopositionResponse> {
         return apiCall {
-            OpenClient.getOpenWeatherApi.getGeoByCityName(cityName,lang)
+            OpenClient.getOpenWeatherApi.getGeoByCityName(cityName, lang, units)
         }
     }
+
     suspend fun getCurrentWeather(lat: Double, lon: Double): ApiResponse<CurrentWeatherResponse> {
         return apiCall {
             OpenClient.getOpenWeatherApi.getCurrentWeather(
                 lat.toString(),
                 lon.toString(),
-                lang
+                lang,
+                units
+
             )
         }
     }

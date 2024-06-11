@@ -4,7 +4,7 @@ data class LocationItem(
     var locationKey: String,
     var cityName: String,
     var countryName: String,
-    var temp: String,
+    var temp: Int,
     var icon : String,
     var lat: Double,
     var lon: Double

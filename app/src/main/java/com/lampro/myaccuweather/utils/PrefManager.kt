@@ -60,5 +60,16 @@ class PrefManager {
         fun getCurrentLang(): String {
             return currentLang.getString("lang","").toString()
         }
+
+        val CURRENT_UNITS: String = "Current_Units"
+        val currentUnits =
+            MyApplication.getAppContext().getSharedPreferences(CURRENT_UNITS, Context.MODE_PRIVATE)
+        fun setCurrentUnits(units: String) {
+            currentUnits.edit().putString("units", units).commit()
+        }
+        fun getCurrentUnits(): String {
+            return currentUnits.getString("units","℃").toString()
+        }
     }
+
 }

@@ -17,7 +17,7 @@
         <LinearLayout
             android:id="@+id/itemBody"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_80sdp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_10sdp"
             android:background="@drawable/bg_frame_airquality_gradient"
             android:elevation="@dimen/_5sdp"
@@ -64,7 +64,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="@dimen/_30sdp">
 
                 <ImageView
                     android:layout_width="@dimen/_50sdp"
@@ -76,6 +76,7 @@
                     tools:src="@drawable/weather_sunrain" />
 
                 <TextView
+                    android:id="@+id/tvLocationTemp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -83,7 +84,6 @@
                     android:fontFamily="@font/poppins_bold"
                     android:includeFontPadding="false"
                     android:textSize="@dimen/_25ssp"
-                    android:text="@{location.temp}"
                     tools:text="30°" />
 
             </RelativeLayout>

@@ -41,6 +41,7 @@ class DailyWeatherAdapter : BaseRecyclerViewAdapter<DailyWeather, LayoutItemDayB
         val formattedDate = dateTime.format(formatter)
         Log.d(TAG, "onBindViewHolder: $position")
         holder.binding.hourItem.setText(formattedDate)
+        holder.binding.tvUnits.text = PrefManager.getCurrentUnits()
         if (position == 0) {
             holder.binding.itemBody.setBackgroundResource(R.drawable.bg_dailyday_gradient_2)
         }

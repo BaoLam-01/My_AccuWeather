@@ -59,7 +59,6 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:fontFamily="@font/poppins_bold"
-                android:text="@{cityResponse.temp}"
                 android:textSize="@dimen/_20ssp"
                 tools:text="30℃" />
         </RelativeLayout>

@@ -36,6 +36,7 @@ import com.google.android.gms.location.LocationServices
 import com.lampro.myaccuweather.R
 import com.lampro.myaccuweather.adapters.HourlyWeatherAdapter
 import com.lampro.myaccuweather.adapters.LanguageAdapter
+import com.lampro.myaccuweather.adapters.UnitsAdapter
 import com.lampro.myaccuweather.base.BaseFragment
 import com.lampro.myaccuweather.databinding.FragmentHomeWeatherBinding
 import com.lampro.myaccuweather.network.api.ApiResponse
@@ -69,14 +70,16 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
     private var lon: Double = 0.0
     private val viewModel: SharedViewModel by activityViewModels()
     private lateinit var languageAdapter: LanguageAdapter
+    private lateinit var unitsAdapter: UnitsAdapter
     private var isSpinerInitialized = false
+    private var isSpinerUnitInitialized = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 param2 = it.getSerializable(ARG_PARAM2, MainActivity::class.java)
-            }else{
+            } else {
                 param2 = it.getSerializable(ARG_PARAM2) as MainActivity
             }
         }
@@ -88,49 +91,8 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
 
 
         initViewModel()
-        val listLang = mutableListOf<String>()
-        listLang.addAll(resources.getStringArray(R.array.language))
-        languageAdapter = LanguageAdapter(requireContext(), R.layout.item_selected, listLang)
-        binding.spinerLanguage.adapter = languageAdapter
-        when (PrefManager.getCurrentLang()) {
-            "vi" -> {
-                binding.spinerLanguage.setSelection(0)
-            }
-
-            "en" -> {
-                binding.spinerLanguage.setSelection(1)
-            }
-
-            else -> {
-            }
-        }
-
-        binding.spinerLanguage.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    if (isSpinerInitialized) {
-                        when (position) {
-                            0 -> PrefManager.setCurrentLang("vi")
-                            1 -> PrefManager.setCurrentLang("en")
-                            else -> PrefManager.setCurrentLang("vi")
-                        }
-                        startActivity(Intent(context, MainActivity::class.java))
-                        activity?.finish()
-                    } else {
-                        isSpinerInitialized = true
-                    }
-
-
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                }
-            }
+        spinLang()
+        spinUnits()
 
 
         if (PrefManager.getLocationLat() == 0.0 || PrefManager.getLocationLon() == 0.0 || PrefManager.getLocationKey() == "") {
@@ -201,7 +163,10 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
                         val epochSeconds = it.dt.toLong()
                         val instant = Instant.ofEpochSecond(epochSeconds)
                         val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
-                        val formatter = DateTimeFormatter.ofPattern("dd, MMM",Locale(PrefManager.getCurrentLang()))
+                        val formatter = DateTimeFormatter.ofPattern(
+                            "dd, MMM",
+                            Locale(PrefManager.getCurrentLang())
+                        )
                         val formattedDate = getString(R.string.today) + dateTime.format(formatter)
                         binding.tvCurrentDay.setText(formattedDate)
                         binding.tvFeelsLike.setText(
@@ -385,6 +350,98 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
                 }
             }
         }
+    }
+
+    private fun spinUnits() {
+        val listUnits = mutableListOf<String>()
+        listUnits.addAll(resources.getStringArray(R.array.units))
+        unitsAdapter = UnitsAdapter(requireContext(), R.layout.item_selected, listUnits)
+        binding.spinerUnits.adapter = unitsAdapter
+        binding.spinerUnits.dropDownHorizontalOffset = -80
+        when (PrefManager.getCurrentUnits()) {
+            "℃" -> {
+                binding.spinerUnits.setSelection(0)
+            }
+
+            "℉" -> {
+                binding.spinerUnits.setSelection(1)
+            }
+
+            else -> {
+            }
+        }
+        binding.spinerUnits.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    if (isSpinerUnitInitialized) {
+                        when (position) {
+                            0 -> PrefManager.setCurrentUnits("℃")
+                            1 -> PrefManager.setCurrentUnits("℉")
+                            else -> PrefManager.setCurrentUnits("℃")
+                        }
+                        startActivity(Intent(context, MainActivity::class.java))
+                        activity?.finish()
+                    } else {
+                        isSpinerUnitInitialized = true
+                    }
+
+
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
+            }
+    }
+
+    private fun spinLang() {
+        val listLang = mutableListOf<String>()
+        listLang.addAll(resources.getStringArray(R.array.language))
+        languageAdapter = LanguageAdapter(requireContext(), R.layout.item_selected, listLang)
+        binding.spinerLanguage.adapter = languageAdapter
+        when (PrefManager.getCurrentLang()) {
+            "vi" -> {
+                binding.spinerLanguage.setSelection(0)
+            }
+
+            "en" -> {
+                binding.spinerLanguage.setSelection(1)
+            }
+
+            else -> {
+            }
+        }
+
+        binding.spinerLanguage.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    if (isSpinerInitialized) {
+                        when (position) {
+                            0 -> PrefManager.setCurrentLang("vi")
+                            1 -> PrefManager.setCurrentLang("en")
+                            else -> PrefManager.setCurrentLang("vi")
+                        }
+                        startActivity(Intent(context, MainActivity::class.java))
+                        activity?.finish()
+                    } else {
+                        isSpinerInitialized = true
+                    }
+
+
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
+            }
     }
 
 

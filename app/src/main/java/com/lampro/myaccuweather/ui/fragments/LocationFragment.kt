@@ -60,7 +60,7 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapte
     private lateinit var key: String
     private lateinit var cityName: String
     private lateinit var countryName: String
-    private lateinit var temp: String
+    private var temp by Delegates.notNull<Int>()
     private lateinit var icon: String
     private var lon by Delegates.notNull<Double>()
     private var lat by Delegates.notNull<Double>()
@@ -187,7 +187,6 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapte
                                     false
                                 )
                             }
-//                            binding.rvCitySearch.setOnClickListener(view.setOnClickListener())
                         }
                     }
 
@@ -252,8 +251,14 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapte
                 is ApiResponse.Success -> {
                     hideLoadingDialog()
                     response.data?.let {
-                        binding.tvTemp.text = it.main.temp.toInt().toString() + "℃"
-                        temp = it.main.temp.toInt().toString() + "℃"
+                        binding.tvTemp.text = it.main.temp.toInt().toString() + PrefManager.getCurrentUnits()
+                        if (PrefManager.getCurrentUnits() == "℃") {
+                            temp = Math.ceil(it.main.temp).toInt()
+                        } else {
+                            val f = it.main.temp
+                            val c = 5/9f * (f - 32)
+                            temp = c.toInt()
+                        }
                         icon = it.weather[0].icon
                     }
                 }

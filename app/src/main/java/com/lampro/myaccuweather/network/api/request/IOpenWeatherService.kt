@@ -14,27 +14,31 @@ interface IOpenWeatherService {
     @GET(ConstantsApi.GET_CURRENT_WEATHER)
     suspend fun getCurrentWeather(
         @Query("q") q: String,
-        @Query("lang") lang: String
-    ): Response<CurrentWeatherResponse>
+        @Query("lang") lang: String,
+        @Query("units") units: String
+        ): Response<CurrentWeatherResponse>
 
     @GET(ConstantsApi.GET_CURRENT_WEATHER)
     suspend fun getCurrentWeather(
         @Query("lat") lat: String,
         @Query("lon") lon: String,
-        @Query("lang") lang: String
+        @Query("lang") lang: String,
+        @Query("units") units: String
     ): Response<CurrentWeatherResponse>
 
     @GET(ConstantsApi.GET_DAILY_WEATHER)
     suspend fun getDailyWeather(
         @Query("q") q: String,
-        @Query("lang") lang: String
+        @Query("lang") lang: String,
+        @Query("units") units: String
     ): Response<DailyWeatherResponse>
 
     @GET(ConstantsApi.GET_DAILY_WEATHER)
     suspend fun getDailyWeather(
         @Query("lat") lat: String,
         @Query("lon") lon: String,
-        @Query("lang") lang: String
+        @Query("lang") lang: String,
+        @Query("units") units: String
     ): Response<DailyWeatherResponse>
 
     @GET(ConstantsApi.GET_AIR_QUALITY)
@@ -46,7 +50,8 @@ interface IOpenWeatherService {
     @GET(ConstantsApi.GET_GEO_BY_CITY_NAME)
     suspend fun getGeoByCityName(
         @Query("q") q: String,
-        @Query("lang") lang: String
+        @Query("lang") lang: String,
+        @Query("units") units: String
     ): Response<GeopositionResponse>
 }
 

@@ -3,10 +3,11 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@color/getstart"
+    android:gravity="center"
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="@dimen/_100sdp"
+        android:layout_width="@dimen/_90sdp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical">
@@ -16,13 +17,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_regular"
-            android:textSize="@dimen/_15sdp"
+            android:textSize="@dimen/_14sdp"
             android:text="@string/vi" />
 
-<!--        <View-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="0.5dp"-->
-<!--            android:background="@color/gray" />-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#88777777" />
 
     </LinearLayout>
 </LinearLayout>

@@ -12,9 +12,14 @@ import com.lampro.myaccuweather.utils.PrefManager
 
 class Weather5DayResponsitory : GenericApiResponse() {
     val lang = PrefManager.getCurrentLang()
+    val units = if (PrefManager.getCurrentUnits() == "℃") {
+        "metric"
+    } else {
+        "imperial"
+    }
 
     suspend fun getDailyWeather(cityName: String): ApiResponse<DailyWeatherResponse> {
-        return apiCall { OpenClient.getOpenWeatherApi.getDailyWeather(cityName, lang) }
+        return apiCall { OpenClient.getOpenWeatherApi.getDailyWeather(cityName, lang, units) }
     }
 
     suspend fun getDailyWeather(lat: Double, lon: Double): ApiResponse<DailyWeatherResponse> {
@@ -22,7 +27,8 @@ class Weather5DayResponsitory : GenericApiResponse() {
             OpenClient.getOpenWeatherApi.getDailyWeather(
                 lat.toString(),
                 lon.toString(),
-                lang
+                lang,
+                units
             )
         }
     }
@@ -35,13 +41,13 @@ class Weather5DayResponsitory : GenericApiResponse() {
 
     suspend fun getUvIndex(locationKey: String): ApiResponse<UVIndexResponse> {
         return apiCall {
-            AccuClient.getAccuWeatherApi.getUvIndex(locationKey,lang)
+            AccuClient.getAccuWeatherApi.getUvIndex(locationKey, lang)
         }
     }
 
     suspend fun getLocationKey(lat: Double, lon: Double): ApiResponse<LocationKeyResponse> {
         return apiCall {
-            AccuClient.getAccuWeatherApi.getLocationKey("$lat,$lon",lang)
+            AccuClient.getAccuWeatherApi.getLocationKey("$lat,$lon", lang)
         }
     }
 }

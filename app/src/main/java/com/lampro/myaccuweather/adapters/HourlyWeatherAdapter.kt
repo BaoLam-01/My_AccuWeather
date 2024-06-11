@@ -4,6 +4,7 @@ import com.lampro.myaccuweather.R
 import com.lampro.myaccuweather.base.BaseRecyclerViewAdapter
 import com.lampro.myaccuweather.databinding.LayoutItemHourBinding
 import com.lampro.myaccuweather.objects.hourlyweatherresponse.HourlyWeatherResponseItem
+import com.lampro.myaccuweather.utils.PrefManager
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -23,6 +24,7 @@ class HourlyWeatherAdapter : BaseRecyclerViewAdapter<HourlyWeatherResponseItem, 
         val formatter = DateTimeFormatter.ofPattern("HH.mm")
         val formattedDate = dateTime.format(formatter)
         holder.binding.tvhourItem.setText(formattedDate)
+        holder.binding.tvUnits.text = PrefManager.getCurrentUnits()
     }
 
 }

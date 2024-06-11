@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="@dimen/_50sdp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical">
@@ -10,21 +10,10 @@
         android:id="@+id/tvSelected"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toStartOf="@id/imgdropdown"
         android:textSize="@dimen/_14sdp"
         android:fontFamily="@font/poppins_regular"
-        android:textColor="#B7FFFFFF"
+        android:textColor="#83FFFFFF"
         android:text="@string/vi" />
 
-    <ImageView
-        android:id="@+id/imgdropdown"
-        android:layout_width="@dimen/_10sdp"
-        android:layout_height="@dimen/_10sdp"
-        android:layout_alignParentRight="true"
-        android:layout_centerInParent="true"
-        android:rotation="90"
-        android:src="@drawable/icon_chevron_left"
-        android:layout_margin="@dimen/_3sdp"
-        app:tint="#8DFFFFFF" />
 
 </RelativeLayout>

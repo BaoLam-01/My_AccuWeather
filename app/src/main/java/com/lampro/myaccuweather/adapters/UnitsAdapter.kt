@@ -7,37 +7,33 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.lampro.myaccuweather.R
-import com.lampro.myaccuweather.utils.PrefManager
 
-class LanguageAdapter : ArrayAdapter<String>{
+class UnitsAdapter : ArrayAdapter<String> {
     constructor(context: Context, resource: Int, objects: MutableList<String>) : super(
         context,
         resource,
         objects
     )
 
-
-
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_selected,parent,false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_selected, parent, false)
         val textView = view.findViewById<TextView>(R.id.tvSelected)
-        var lang = this.getItem(position)
-        if (lang != null) {
-            if (lang == "Vietnamese" || lang == "Tiếng việt") {
-                textView.setText("VI")
-            }else{
-                textView.setText("EN")
-            }
-        }
+        val units = this.getItem(position)
+        units?.let { textView.text = it }
         return view
+
     }
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.dropdown_item,parent,false)
+
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.dropdown_item, parent, false)
         val textView = view.findViewById<TextView>(R.id.tvDropItem)
-        var lang = this.getItem(position)
-        if (lang != null) {
-            textView.setText(lang)
+        var units = this.getItem(position)
+        units?.let {
+
+            textView.text = it
         }
         return view
     }

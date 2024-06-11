@@ -15,7 +15,8 @@ interface IAccuWeatherService {
     @GET(ConstantsApi.GET_HOURLY_WEATHER)
     suspend fun getHourlyWeather(
         @Path("locationkey") locationKey: String,
-        @Query("language") lang: String
+        @Query("language") lang: String,
+        @Query("metric") metric: Boolean
     ): Response<HourlyWeatherResponse>
 
     @GET(ConstantsApi.GET_INF_BY_CITY_NAME)

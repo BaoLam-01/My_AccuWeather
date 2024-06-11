@@ -12,8 +12,19 @@ import com.lampro.myaccuweather.utils.PrefManager
 
 class HomeWeatherRepository : GenericApiResponse() {
     val lang = PrefManager.getCurrentLang()
+    val units = if (PrefManager.getCurrentUnits() == "℃") {
+        "metric"
+    } else {
+        "imperial"
+    }
+    val metric = if (PrefManager.getCurrentUnits() == "℃") {
+        true
+    } else {
+        false
+    }
+
     suspend fun getCurrentWeather(q: String): ApiResponse<CurrentWeatherResponse> {
-        return apiCall { OpenClient.getOpenWeatherApi.getCurrentWeather(q,lang) }
+        return apiCall { OpenClient.getOpenWeatherApi.getCurrentWeather(q, lang, units) }
     }
 
     suspend fun getCurrentWeather(lat: Double, lon: Double): ApiResponse<CurrentWeatherResponse> {
@@ -21,21 +32,23 @@ class HomeWeatherRepository : GenericApiResponse() {
             OpenClient.getOpenWeatherApi.getCurrentWeather(
                 lat.toString(),
                 lon.toString(),
-                lang
+                lang,
+                units
             )
         }
     }
 
     suspend fun getHourlyWeather(locationKey: String): ApiResponse<HourlyWeatherResponse> {
-        return apiCall { AccuClient.getAccuWeatherApi.getHourlyWeather(locationKey,lang) }
+        return apiCall { AccuClient.getAccuWeatherApi.getHourlyWeather(locationKey, lang, metric) }
     }
 
     suspend fun getInfCityByName(cityName: String): ApiResponse<InfCityResponse> {
-        return apiCall { AccuClient.getAccuWeatherApi.getInfCityByName(cityName,lang) }
+        return apiCall { AccuClient.getAccuWeatherApi.getInfCityByName(cityName, lang) }
     }
-    suspend fun getLocationKey(lat : Double, lon: Double) : ApiResponse<LocationKeyResponse>{
+
+    suspend fun getLocationKey(lat: Double, lon: Double): ApiResponse<LocationKeyResponse> {
         return apiCall {
-            AccuClient.getAccuWeatherApi.getLocationKey("$lat,$lon",lang)
+            AccuClient.getAccuWeatherApi.getLocationKey("$lat,$lon", lang)
         }
     }
 }
