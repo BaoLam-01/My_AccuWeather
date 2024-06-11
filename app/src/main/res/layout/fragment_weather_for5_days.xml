@@ -91,7 +91,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="Max: "
+                            android:text="@string/max"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_16ssp" />
 
@@ -125,7 +125,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="Min: "
+                            android:text="@string/min"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_16ssp" />
 
@@ -160,7 +160,7 @@
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="@dimen/_30sdp"
                         android:fontFamily="@font/opensan_bold"
-                        android:text="5-Days Forecasts"
+                        android:text="@string/days_forecasts"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_15ssp" />
 
@@ -176,6 +176,7 @@
                             android:paddingHorizontal="@dimen/_10sdp"
                             android:layout_weight="1"
                             android:rotation="180"
+                            android:visibility="invisible"
                             android:src="@drawable/icon_chevron_left" />
 
                         <androidx.recyclerview.widget.RecyclerView
@@ -190,6 +191,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingHorizontal="@dimen/_10sdp"
+                            android:visibility="invisible"
                             android:layout_weight="1"
                             android:src="@drawable/icon_chevron_left" />
                     </LinearLayout>
@@ -221,7 +223,7 @@
                             android:layout_gravity="center"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:fontFamily="@font/opensans_regular"
-                            android:text="AIR QUALITY"
+                            android:text="@string/air_quality"
                             android:textColor="@color/white" />
                     </LinearLayout>
 
@@ -254,7 +256,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:text="See more"
+                            android:text="@string/see_more"
                             android:textColor="@color/white" />
 
                         <ImageView
@@ -301,7 +303,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:fontFamily="@font/opensans_regular"
-                                android:text="SUNRISE"
+                                android:text="@string/sunrise"
                                 android:textSize="@dimen/_13ssp" />
                         </LinearLayout>
 
@@ -331,7 +333,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/opensan_bold"
-                                android:text="Sunset: "
+                                android:text="@string/sunset"
+                                android:maxWidth="@dimen/_50sdp"
                                 android:textColor="#9CFFFFFF" />
 
                             <TextView
@@ -373,7 +376,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:fontFamily="@font/opensans_regular"
-                                android:text="UV INDEX"
+                                android:text="@string/uv_index"
                                 android:textSize="@dimen/_13ssp" />
                         </LinearLayout>
 
@@ -395,7 +398,7 @@
                             android:fontFamily="@font/opensan_bold"
                             android:paddingHorizontal="@dimen/_10sdp"
                             tools:text="Moderate"
-                            android:text="Moderate"
+                            android:text="@string/moderate"
                             android:textSize="@dimen/_16ssp" />
 
                     </LinearLayout>

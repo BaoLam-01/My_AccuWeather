@@ -60,7 +60,7 @@
                             android:layout_height="wrap_content"
                             android:background="@null"
                             android:fontFamily="@font/opensans_regular"
-                            android:hint="Search Location"
+                            android:hint="@string/search_location"
                             android:maxLines="1"
                             android:textColor="@color/white"
                             android:textColorHint="#66FFFFFF"
@@ -187,7 +187,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="recently"
+                            android:text="@string/recently"
                             android:textColor="#85FFFFFF"
                             android:textSize="@dimen/_15ssp" />
 

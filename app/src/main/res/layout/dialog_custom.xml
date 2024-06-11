@@ -35,7 +35,7 @@
                     android:fontFamily="@font/poppins_bold"
                     android:textSize="@dimen/_13ssp"
                     android:textColor="@color/getstart"
-                    android:text="Bạn đã từ chối quyền truy cập trước đây, để sử dụng chức năng này cần cấp quyền truy cập cho ứng dụng trong phần cài đặt" />
+                    android:text="@string/textLocationAlert" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -52,7 +52,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"
                 android:textColor="@color/getstart"
-                android:text="Cài đặt" />
+                android:text="@string/setting" />
 
             <Button
                 android:id="@+id/OK"
@@ -63,7 +63,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:textColor="@color/getstart"
-                android:text="OK" />
+                android:text="@string/ok" />
         </RelativeLayout>
 
 

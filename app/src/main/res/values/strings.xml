@@ -2,8 +2,70 @@
     <string name="app_name">My Weather</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_world">Hello World!</string>
+    <string name="ok">OK</string>
+    <string name="setting">Setting</string>
+    <string name="textLocationAlert">You have previously denied access. To use this function, you need to grant access to the application in the settings.</string>
+    <string name="high">High:\u0020</string>
+    <string name="low">Low:\u0020</string>
+    <string name="feels_like">Feels like:\u0020</string>
+    <string name="hours_forecast">12 hours forecast</string>
+    <string name="wind">Wind</string>
+    <string name="km_h">\u0020km/h</string>
+    <string name="wind_detail">Calm wind • From the north</string>
+    <string name="N">B</string>
+    <string name="humidity">Humidity</string>
+    <string name="mbar">mBar</string>
+    <string name="cloud">Cloud</string>
+    <string name="search_location">Search Location</string>
+    <string name="get_start">Get Start</string>
+    <string name="max">Max:\u0020</string>
+    <string name="min">Min:\u0020</string>
+    <string name="days_forecasts">5-Days Forecasts</string>
+    <string name="air_quality">AIR QUALITY</string>
+    <string name="see_more">See more</string>
+    <string name="sunrise">SUNRISE</string>
+    <string name="sunset">Sunset:\u0020</string>
+    <string name="uv_index">UV INDEX</string>
+    <string name="moderate">Moderate</string>
+    <string name="c">°C</string>
+    <string name="please_wait">Please wait . . .</string>
     <string-array name="language">
-        <item>VI</item>
-        <item>EN</item>
+        <item>Vietnamese</item>
+        <item>English</item>
     </string-array>
+    <string-array name="units">
+        <item>℃</item>
+        <item>℉</item>
+    </string-array>
+    <string name="vi">VI</string>
+    <string name="pressure">Pressure</string>
+    <string name="get_location_key_failed">Get location key Failed %1$s</string>
+    <string name="today">"Today:\u0020"</string>
+    <string name="very_light">The wind is very light</string>
+    <string name="moderately_light">Moderately light wind</string>
+    <string name="gentle_wind">Gentle wind</string>
+    <string name="moderate_wind">Moderate wind</string>
+    <string name="strong_storm">Extremely strong storm winds</string>
+    <string name="from_the_north">, From the north</string>
+    <string name="from_the_east">, From the east</string>
+    <string name="from_the_south">, From the south</string>
+    <string name="from_the_west">, From the west</string>
+    <string name="Low_dry">Low humidity, dry weather</string>
+    <string name="low_humidity">Low humidity</string>
+    <string name="moderate_humidity">Moderate humidity</string>
+    <string name="high_humidity">High humidity</string>
+    <string name="high_humidity_humid">High humidity, humid weather</string>
+    <string name="clear_cloudy">The sky is clear and cloudy</string>
+    <string name="sparse_clouds">Sparse clouds</string>
+    <string name="moderate_clouds">Moderate amount of clouds</string>
+    <string name="cloudy">Cloudy</string>
+    <string name="cloud_dense">Cloud density is dense</string>
+    <string name="low_pressure">Low</string>
+    <string name="high_pressure">High</string>
+    <string name="recently">recently</string>
+    <string name="air_good">Good</string>
+    <string name="air_medium">Medium</string>
+    <string name="air_polluted">Polluted</string>
+    <string name="air_danger">Danger</string>
 </resources>

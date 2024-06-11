@@ -13,13 +13,26 @@ import retrofit2.http.Query
 interface IAccuWeatherService {
 
     @GET(ConstantsApi.GET_HOURLY_WEATHER)
-    suspend fun getHourlyWeather(@Path("locationkey") locationKey: String): Response<HourlyWeatherResponse>
+    suspend fun getHourlyWeather(
+        @Path("locationkey") locationKey: String,
+        @Query("language") lang: String
+    ): Response<HourlyWeatherResponse>
 
     @GET(ConstantsApi.GET_INF_BY_CITY_NAME)
-    suspend fun getInfCityByName(@Query("q") cityName: String): Response<InfCityResponse>
+    suspend fun getInfCityByName(
+        @Query("q") cityName: String,
+        @Query("language") lang: String
+    ): Response<InfCityResponse>
 
     @GET(ConstantsApi.GET_UV_INDEX)
-    suspend fun getUvIndex(@Path("locationkey") loactionKey: String): Response<UVIndexResponse>
+    suspend fun getUvIndex(
+        @Path("locationkey") loactionKey: String,
+        @Query("language") lang: String
+    ): Response<UVIndexResponse>
+
     @GET(ConstantsApi.GET_LOCATION_KEY)
-    suspend fun getLocationKey(@Query("q") q: String): Response<LocationKeyResponse>
+    suspend fun getLocationKey(
+        @Query("q") q: String,
+        @Query("language") lang: String
+    ): Response<LocationKeyResponse>
 }

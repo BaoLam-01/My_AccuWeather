@@ -54,7 +54,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_medium"
                         android:textSize="@dimen/_12ssp"
-                        android:text="°C"
+                        android:text="@string/c"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </LinearLayout>

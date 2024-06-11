@@ -6,6 +6,7 @@ import com.lampro.myaccuweather.R
 import com.lampro.myaccuweather.base.BaseRecyclerViewAdapter
 import com.lampro.myaccuweather.databinding.LayoutItemDayBinding
 import com.lampro.myaccuweather.objects.dailyweatherresponse.DailyWeather
+import com.lampro.myaccuweather.utils.PrefManager
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -16,20 +17,27 @@ class DailyWeatherAdapter : BaseRecyclerViewAdapter<DailyWeather, LayoutItemDayB
     override fun getLayout(): Int = R.layout.layout_item_day
     override fun onBindViewHolder(holder: BaseViewHolder<LayoutItemDayBinding>, position: Int) {
 
+
         holder.binding.itemBody.setOnClickListener{
             listener?.invoke(it,mListData[position],position)
-            val epochSeconds = mListData[position].dt.toLong()
-            val instant = Instant.ofEpochSecond(epochSeconds)
-            val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
-            val formatter = DateTimeFormatter.ofPattern("EE yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
-            val formattedDate = dateTime.format(formatter)
-            Log.d(TAG, "onBindViewHolder: " + formattedDate)
+//            val epochSeconds = mListData[position].dt.toLong()
+//            val instant = Instant.ofEpochSecond(epochSeconds)
+//            val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
+//            val formatter: DateTimeFormatter
+//            if (PrefManager.getCurrentLang() == "en") {
+//                formatter = DateTimeFormatter.ofPattern("EE yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
+//            }else{
+//
+//                formatter = DateTimeFormatter.ofPattern("EE yyyy-MM-dd HH:mm:ss")
+//            }
+//            val formattedDate = dateTime.format(formatter)
+//            Log.d(TAG, "onBindViewHolder: " + formattedDate)
         }
         holder.binding.dailyWeather = mListData[position]
         val epochSeconds = mListData[position].dt.toLong()
         val instant = Instant.ofEpochSecond(epochSeconds)
         val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
-        val formatter = DateTimeFormatter.ofPattern("EE", Locale.ENGLISH)
+        val formatter = DateTimeFormatter.ofPattern("EE", Locale(PrefManager.getCurrentLang()))
         val formattedDate = dateTime.format(formatter)
         Log.d(TAG, "onBindViewHolder: $position")
         holder.binding.hourItem.setText(formattedDate)

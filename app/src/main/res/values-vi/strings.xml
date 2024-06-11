@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Weather</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_world">Xin chào thế giới</string>
+    <string name="ok">OK</string>
+    <string name="setting">Cài đặt</string>
+    <string name="textLocationAlert">Bạn đã từ chối quyền truy cập trước đây, để sử dụng chức năng này cần cấp quyền truy cập cho ứng dụng trong phần cài đặt</string>
+    <string name="vi">VI</string>
+    <string name="high">Cao:\u0020</string>
+    <string name="low">Thấp:\u0020</string>
+    <string name="feels_like">Cảm giác như:\u0020</string>
+    <string name="hours_forecast">Dự báo 12 giờ</string>
+    <string name="wind">Gió</string>
+    <string name="km_h">\u0020km/h</string>
+    <string name="wind_detail">Lặng gió • Từ hướng bắc</string>
+    <string name="N">B</string>
+    <string name="humidity">Độ ẩm</string>
+    <string name="pressure">Áp suất</string>
+    <string name="mbar">mBar</string>
+    <string name="cloud">Mây</string>
+    <string name="search_location">Nhập tên thành phố</string>
+    <string name="get_start">Bắt đầu</string>
+    <string name="max">Cao:\u0020</string>
+    <string name="min">Thấp:\u0020</string>
+    <string name="days_forecasts">Dự báo thời tiết 5 ngày</string>
+    <string name="air_quality">Chất lượng không khí</string>
+    <string name="see_more">Xem thêm</string>
+    <string name="sunrise">Mặt trời mọc</string>
+    <string name="sunset">Mặt trời lặn:\u0020</string>
+    <string name="uv_index">Tỉ số tia UV</string>
+    <string name="moderate">"Vừa phải"</string>
+    <string name="c">°C</string>
+    <string name="please_wait">Vui lòng đợi . . .</string>
+    <string-array name="language">
+        <item>Tiếng việt</item>
+        <item>Tiếng anh</item>
+    </string-array>
+    <string-array name="units">
+        <item>℃</item>
+        <item>℉</item>
+    </string-array>
+    <string name="get_location_key_failed">Get location key Failed %1$s</string>
+    <string name="today">Hôm nay:\u0020</string>
+    <string name="very_light">Gió rất nhẹ</string>
+    <string name="moderately_light">Gió nhẹ vừa phải</string>
+    <string name="gentle_wind">Gió nhẹ nhàng</string>
+    <string name="moderate_wind">Gió vừa phải</string>
+    <string name="strong_storm">Gió bão cực mạnh</string>
+    <string name="from_the_north">, Từ hướng bắc</string>
+    <string name="from_the_east">, Từ hướng đông</string>
+    <string name="from_the_south">, Từ hướng nam</string>
+    <string name="from_the_west">, Từ hướng tây</string>
+    <string name="Low_dry">Độ ẩm thấp, thời tiết hanh khô</string>
+    <string name="low_humidity">Độ ẩm thấp</string>
+    <string name="moderate_humidity">Độ ẩm vừa phải</string>
+    <string name="high_humidity">Độ ẩm cao</string>
+    <string name="high_humidity_humid">Độ ẩm cao, trời nồm</string>
+    <string name="clear_cloudy">Trời quang mây</string>
+    <string name="sparse_clouds">Mây thưa thớt</string>
+    <string name="moderate_clouds">Lượng mây vưa phải</string>
+    <string name="cloudy">Trời nhiều mây</string>
+    <string name="cloud_dense">Mật độ mây dày đặc</string>
+    <string name="low_pressure">Thấp</string>
+    <string name="high_pressure">Cao</string>
+    <string name="recently">Gần đây</string>
+    <string name="air_good">Tốt</string>
+    <string name="air_medium">Vừa phải</string>
+    <string name="air_polluted">Ô nhiễm</string>
+    <string name="air_danger">Nguy hiểm</string>
+</resources>

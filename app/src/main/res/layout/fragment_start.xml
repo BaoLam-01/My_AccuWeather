@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_30sdp"
-                android:text="Get Start"
+                android:text="@string/get_start"
                 android:textSize="@dimen/_20sdp"
                 android:textColor="@color/getstart"
                 android:fontFamily="@font/opensan_bold"

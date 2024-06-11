@@ -158,7 +158,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_regular"
-                                android:text="Cao: "
+                                android:text="@string/high"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_15ssp" />
 
@@ -191,7 +191,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_regular"
-                                android:text="Thấp: "
+                                android:text="@string/low"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_15ssp" />
 
@@ -224,7 +224,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="Cảm giác như: "
+                            android:text="@string/feels_like"
                             android:textStyle="bold" />
 
                         <TextView
@@ -266,7 +266,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/opensans_regular"
-                                android:text="Dự báo 12 giờ tới"
+                                android:text="@string/hours_forecast"
                                 android:textColor="@color/white"
                                 android:textStyle="bold" />
 
@@ -277,22 +277,23 @@
                                 android:layout_weight="1"
                                 android:fontFamily="@font/opensans_regular"
                                 android:gravity="right"
-                                android:text="July, 21"
+                                tools:text="July, 21"
                                 android:textColor="@color/white"
                                 android:textStyle="bold" />
                         </LinearLayout>
 
                         <View
-                            android:layout_width="match_parent"
+                            android:layout_width="@dimen/_250sdp"
                             android:layout_height="@dimen/_1sdp"
-                            android:background="#4DFFFFFF" />
+                            android:layout_gravity="center"
+                            android:background="@drawable/line" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rvWeatherHour"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingHorizontal="@dimen/_20sdp"
-                            android:paddingVertical="@dimen/_10sdp" />
+                            android:paddingVertical="@dimen/_5sdp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -322,7 +323,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:fontFamily="@font/opensans_regular"
-                                    android:text="Gió"
+                                    android:text="@string/wind"
                                     android:textSize="@dimen/_13ssp" />
                             </LinearLayout>
 
@@ -355,15 +356,17 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/opensans_regular"
-                                            android:text=" km/h" />
+                                            android:text="@string/km_h" />
                                     </LinearLayout>
 
                                     <TextView
                                         android:id="@+id/tvWind"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:maxHeight="@dimen/_50sdp"
                                         android:fontFamily="@font/opensans_regular"
-                                        tools:text="Lặng gió • Từ hướng bắc" />
+                                        android:textSize="@dimen/_10sdp"
+                                        tools:text="@string/wind_detail" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -378,7 +381,7 @@
                                         android:layout_height="match_parent"
                                         android:layout_weight="2"
                                         android:fontFamily="@font/opensans_regular"
-                                        android:text="B" />
+                                        android:text="@string/N" />
 
                                     <ImageView
                                         android:id="@+id/imgWind"
@@ -418,7 +421,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:fontFamily="@font/opensans_regular"
-                                    android:text="Độ ẩm"
+                                    android:text="@string/humidity"
                                     android:textSize="@dimen/_13ssp" />
                             </LinearLayout>
 
@@ -536,7 +539,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:fontFamily="@font/opensans_regular"
-                                    android:text="Áp suất"
+                                    android:text="@string/pressure"
                                     android:textSize="@dimen/_13ssp" />
                             </LinearLayout>
 
@@ -570,7 +573,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:fontFamily="@font/opensans_regular"
-                                        android:text="mBar" />
+                                        android:text="@string/mbar" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -608,7 +611,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_weight="1"
                                             android:fontFamily="@font/opensans_regular"
-                                            android:text="Thấp"
+                                            android:text="@string/low_pressure"
                                             android:textAlignment="center"
                                             android:textSize="@dimen/_8sdp"
                                             android:textStyle="bold" />
@@ -623,7 +626,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_weight="1"
                                             android:fontFamily="@font/opensans_regular"
-                                            android:text="Cao"
+                                            android:text="@string/high_pressure"
                                             android:textAlignment="center"
                                             android:textSize="@dimen/_8sdp"
                                             android:textStyle="bold" />
@@ -654,7 +657,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:fontFamily="@font/opensans_regular"
-                                    android:text="Mây"
+                                    android:text="@string/cloud"
                                     android:textSize="@dimen/_13ssp" />
                             </LinearLayout>
 
@@ -695,7 +698,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:fontFamily="@font/opensans_regular"
-                                        android:text="Trời nhiều mây" />
+                                        tools:text="Trời nhiều mây" />
                                 </LinearLayout>
 
                                 <LinearLayout

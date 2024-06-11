@@ -8,17 +8,21 @@ import com.lampro.myaccuweather.objects.airqualityresponse.AirQualityResponse
 import com.lampro.myaccuweather.objects.dailyweatherresponse.DailyWeatherResponse
 import com.lampro.myaccuweather.objects.locationkeyresponse.LocationKeyResponse
 import com.lampro.myaccuweather.objects.uvindexresponse.UVIndexResponse
+import com.lampro.myaccuweather.utils.PrefManager
 
 class Weather5DayResponsitory : GenericApiResponse() {
+    val lang = PrefManager.getCurrentLang()
+
     suspend fun getDailyWeather(cityName: String): ApiResponse<DailyWeatherResponse> {
-        return apiCall { OpenClient.getOpenWeatherApi.getDailyWeather(cityName) }
+        return apiCall { OpenClient.getOpenWeatherApi.getDailyWeather(cityName, lang) }
     }
 
     suspend fun getDailyWeather(lat: Double, lon: Double): ApiResponse<DailyWeatherResponse> {
         return apiCall {
             OpenClient.getOpenWeatherApi.getDailyWeather(
                 lat.toString(),
-                lon.toString()
+                lon.toString(),
+                lang
             )
         }
     }
@@ -28,14 +32,16 @@ class Weather5DayResponsitory : GenericApiResponse() {
             OpenClient.getOpenWeatherApi.getAirQuality(lat.toString(), lon.toString())
         }
     }
-    suspend fun getUvIndex(locationKey: String) : ApiResponse<UVIndexResponse>{
+
+    suspend fun getUvIndex(locationKey: String): ApiResponse<UVIndexResponse> {
         return apiCall {
-            AccuClient.getAccuWeatherApi.getUvIndex(locationKey)
+            AccuClient.getAccuWeatherApi.getUvIndex(locationKey,lang)
         }
     }
-    suspend fun getLocationKey(lat : Double, lon: Double) : ApiResponse<LocationKeyResponse>{
+
+    suspend fun getLocationKey(lat: Double, lon: Double): ApiResponse<LocationKeyResponse> {
         return apiCall {
-            AccuClient.getAccuWeatherApi.getLocationKey("$lat,$lon")
+            AccuClient.getAccuWeatherApi.getLocationKey("$lat,$lon",lang)
         }
     }
 }

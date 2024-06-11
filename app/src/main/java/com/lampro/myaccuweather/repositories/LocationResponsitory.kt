@@ -9,23 +9,26 @@ import com.lampro.myaccuweather.objects.currentweatherresponse.CurrentWeatherRes
 import com.lampro.myaccuweather.objects.dailyweatherresponse.DailyWeatherResponse
 import com.lampro.myaccuweather.objects.geopositionresponse.GeopositionResponse
 import com.lampro.myaccuweather.objects.locationkeyresponse.LocationKeyResponse
+import com.lampro.myaccuweather.utils.PrefManager
 
 class LocationResponsitory : GenericApiResponse() {
+    val lang = PrefManager.getCurrentLang()
     suspend fun getLocationKey(lat : Double, lon: Double) : ApiResponse<LocationKeyResponse>{
         return apiCall {
-            AccuClient.getAccuWeatherApi.getLocationKey("$lat,$lon")
+            AccuClient.getAccuWeatherApi.getLocationKey("$lat,$lon",lang)
         }
     }
     suspend fun getGeoByCityName(cityName:String) : ApiResponse<GeopositionResponse>{
         return apiCall {
-            OpenClient.getOpenWeatherApi.getGeoByCityName(cityName)
+            OpenClient.getOpenWeatherApi.getGeoByCityName(cityName,lang)
         }
     }
     suspend fun getCurrentWeather(lat: Double, lon: Double): ApiResponse<CurrentWeatherResponse> {
         return apiCall {
             OpenClient.getOpenWeatherApi.getCurrentWeather(
                 lat.toString(),
-                lon.toString()
+                lon.toString(),
+                lang
             )
         }
     }

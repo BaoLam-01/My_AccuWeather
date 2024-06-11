@@ -12,11 +12,11 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.lampro.myaccuweather.R
 import com.lampro.myaccuweather.adapters.DailyWeatherAdapter
 import com.lampro.myaccuweather.base.BaseFragment
 import com.lampro.myaccuweather.databinding.FragmentWeatherFor5DaysBinding
 import com.lampro.myaccuweather.network.api.ApiResponse
-import com.lampro.myaccuweather.objects.currentweatherresponse.CurrentWeatherResponse
 import com.lampro.myaccuweather.objects.dailyweatherresponse.DailyWeather
 import com.lampro.myaccuweather.repositories.Weather5DayResponsitory
 import com.lampro.myaccuweather.ui.activities.MainActivity
@@ -75,7 +75,7 @@ class WeatherFor5DaysFragment : BaseFragment<FragmentWeatherFor5DaysBinding>() {
                 val epochDateSunSet = it.sys.sunset.toLong()
                 var instant = Instant.ofEpochSecond(epochDateSunSet)
                 var dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
-                var formatter = DateTimeFormatter.ofPattern("h:mm a", Locale.US)
+                var formatter = DateTimeFormatter.ofPattern("h:mm a", Locale(PrefManager.getCurrentLang()))
                 var formattedDate = dateTime.format(formatter)
                 binding.timeSunset.setText(formattedDate)
 
@@ -154,10 +154,10 @@ class WeatherFor5DaysFragment : BaseFragment<FragmentWeatherFor5DaysBinding>() {
                     response.data?.let {
                         var airQuality = it.list[0].main.aqi.toString() + " - "
                         when (it.list[0].main.aqi) {
-                            in 1..3 -> airQuality += "Tốt"
-                            in 4..6 -> airQuality += "Vừa phải"
-                            in 7..10 -> airQuality += "Ô nhiễm"
-                            else -> airQuality += "Nguy hiểm"
+                            in 1..3 -> airQuality += getString(R.string.air_good)
+                            in 4..6 -> airQuality += getString(R.string.air_medium)
+                            in 7..10 -> airQuality += getString(R.string.air_polluted)
+                            else -> airQuality += getString(R.string.air_danger)
                         }
                         binding.tvAirQuality.text = airQuality
                     }
@@ -276,7 +276,7 @@ class WeatherFor5DaysFragment : BaseFragment<FragmentWeatherFor5DaysBinding>() {
         val epochSeconds = dt.toLong()
         val instant = Instant.ofEpochSecond(epochSeconds)
         val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
-        val formatter = DateTimeFormatter.ofPattern("HH", Locale.ENGLISH)
+        val formatter = DateTimeFormatter.ofPattern("HH")
         val formattedDate = dateTime.format(formatter)
         return formattedDate.toInt()
     }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.lampro.myaccuweather.R
+import com.lampro.myaccuweather.utils.PrefManager
 
 class LanguageAdapter : ArrayAdapter<String>{
     constructor(context: Context, resource: Int, objects: MutableList<String>) : super(
@@ -22,7 +23,11 @@ class LanguageAdapter : ArrayAdapter<String>{
         val textView = convertView.findViewById<TextView>(R.id.tvSelected)
         var lang = this.getItem(position)
         if (lang != null) {
-            textView.setText(lang)
+            if (lang == "Vietnamese" || lang == "Tiếng việt") {
+                textView.setText("VI")
+            }else{
+                textView.setText("EN")
+            }
         }
         return convertView
     }

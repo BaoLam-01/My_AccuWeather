@@ -1,12 +1,18 @@
 package com.lampro.myaccuweather.ui.activities
 
+import android.content.ContentValues.TAG
+import android.os.Build
 import android.os.Bundle
+import android.os.LocaleList
+import android.util.Log
+import android.widget.Toast
 import com.lampro.myaccuweather.base.BaseActivity
 import com.lampro.myaccuweather.databinding.ActivityMainBinding
 import com.lampro.myaccuweather.ui.fragments.HomeWeatherFragment
 import com.lampro.myaccuweather.ui.fragments.StartFragment
 import com.lampro.myaccuweather.utils.PrefManager
 import java.io.Serializable
+import java.util.Locale
 
 class MainActivity : BaseActivity<ActivityMainBinding>(), Serializable {
 
@@ -18,5 +24,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), Serializable {
         } else {
             replaceFragment(StartFragment.newInstance(this, null), "", "")
         }
+        if (PrefManager.getCurrentLang() == "") {
+            val language: String = resources.configuration.locales[0].language
+            setLanguage(language)
+            PrefManager.setCurrentLang(language)
+            Log.d(TAG, "onCreate: " + language)
+            Toast.makeText(this, "language: $language", Toast.LENGTH_SHORT).show()
+        } else {
+            setLanguage(PrefManager.getCurrentLang())
+        }
+    }
+
+    private fun setLanguage(language: String) {
+        val configuration = resources.configuration
+        val locale = Locale(language)
+        configuration.setLocale(locale)
+        resources.updateConfiguration(configuration, resources.displayMetrics)
     }
 }

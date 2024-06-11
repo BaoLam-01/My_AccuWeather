@@ -50,5 +50,15 @@ class PrefManager {
             }
             return null
         }
+
+        val CURRENT_LANG: String = "Current_lang"
+        val currentLang =
+            MyApplication.getAppContext().getSharedPreferences(CURRENT_LANG, Context.MODE_PRIVATE)
+        fun setCurrentLang(lang: String) {
+            currentLang.edit().putString("lang", lang).commit()
+        }
+        fun getCurrentLang(): String {
+            return currentLang.getString("lang","").toString()
+        }
     }
 }

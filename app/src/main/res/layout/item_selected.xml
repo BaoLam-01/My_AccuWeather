@@ -14,7 +14,7 @@
         android:textSize="@dimen/_14sdp"
         android:fontFamily="@font/poppins_regular"
         android:textColor="#B7FFFFFF"
-        android:text="VI" />
+        android:text="@string/vi" />
 
     <ImageView
         android:id="@+id/imgdropdown"
