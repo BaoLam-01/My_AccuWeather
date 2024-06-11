@@ -12,18 +12,24 @@ object ConstantsApi {
     Vgx7dBAN35AEjsJ4KgVVSBPHWOIMBaI6
     2qG5lURDwvJGqSRL6Hxl514djaOpJf3c
     lgAOdKCgYiYxqXlCuCxJyBshJrzJyd2o
+    8Zjyi3FvAYGwGc9te9G1ntigztOUF21E
+    jaMHWWGEp3BwvAgsW9D4JKgY22ehWqtQ
+    0HUjdtIjCREWsFz6MVr0hqjCETmUcZDK
     * */
 
-    const val ACCU_API_KEY = "2qG5lURDwvJGqSRL6Hxl514djaOpJf3c"
+    const val ACCU_API_KEY = "lgAOdKCgYiYxqXlCuCxJyBshJrzJyd2o"
+    const val ACCU_API_KEY1 = "8Zjyi3FvAYGwGc9te9G1ntigztOUF21E"
+    const val ACCU_API_KEY2 = "jaMHWWGEp3BwvAgsW9D4JKgY22ehWqtQ"
+    const val ACCU_API_KEY3 = "0HUjdtIjCREWsFz6MVr0hqjCETmUcZDK"
     const val ACCU_BASE_URL = "https://dataservice.accuweather.com/"
 //    const val GET_CURRENT_WEATHER = "currentconditions/v1/{locationkey}?apikey=$ACCU_API_KEY&language=vi&details=true"
     const val GET_HOURLY_WEATHER = "forecasts/v1/hourly/12hour/{locationkey}?apikey=$ACCU_API_KEY&details=true"
 //    const val GET_DAILY_WEATHER = "forecasts/v1/daily/5day/{locationkey}?apikey=$ACCU_API_KEY&language=vi&details=true&metric=true"
-    const val GET_DAILY_1DAY_WEATHER = "forecasts/v1/daily/1day/{locationkey}?apikey=$ACCU_API_KEY&details=true&metric=true"
-    const val GET_CITY_NAME = "locations/v1/cities/neighbors/{locationkey}?apikey=$ACCU_API_KEY&details=false"
-    const val GET_LOCATION_KEY = "locations/v1/cities/geoposition/search?apikey=$ACCU_API_KEY&details=false"
-    const val GET_INF_BY_CITY_NAME = "locations/v1/cities/search?apikey=$ACCU_API_KEY&details=true&offset=3"
-    const val GET_UV_INDEX = "currentconditions/v1/{locationkey}?apikey=$ACCU_API_KEY&details=true"
+//    const val GET_DAILY_1DAY_WEATHER = "forecasts/v1/daily/1day/{locationkey}?apikey=$ACCU_API_KEY&details=true&metric=true"
+//    const val GET_CITY_NAME = "locations/v1/cities/neighbors/{locationkey}?apikey=$ACCU_API_KEY&details=false"
+    const val GET_LOCATION_KEY = "locations/v1/cities/geoposition/search?apikey=$ACCU_API_KEY1&details=false"
+    const val GET_INF_BY_CITY_NAME = "locations/v1/cities/search?apikey=$ACCU_API_KEY2&details=true&offset=3"
+    const val GET_UV_INDEX = "currentconditions/v1/{locationkey}?apikey=$ACCU_API_KEY3&details=true"
 
 
 
