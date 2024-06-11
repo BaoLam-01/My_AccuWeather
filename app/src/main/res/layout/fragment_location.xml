@@ -63,6 +63,7 @@
                             android:hint="@string/search_location"
                             android:maxLines="1"
                             android:textColor="@color/white"
+                            android:inputType="text"
                             android:textColorHint="#66FFFFFF"
                             android:textSize="@dimen/_13ssp" />
                     </LinearLayout>

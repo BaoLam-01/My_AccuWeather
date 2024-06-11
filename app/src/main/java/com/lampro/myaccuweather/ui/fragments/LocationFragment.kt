@@ -5,7 +5,9 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences.Editor
 import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
 import android.media.MediaRouter
@@ -16,11 +18,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback
@@ -352,6 +357,19 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapte
                 statusSearch = false
                 listCities = mutableListOf()
             }
+        }
+        binding.edtLoactionSearch.setOnEditorActionListener{_ ,actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                if (binding.edtLoactionSearch.text.isEmpty()) {
+                    Toast.makeText(context, "Enter yout location!", Toast.LENGTH_SHORT).show()
+                } else {
+                    mlocationViewModel.getGeoByCityName(binding.edtLoactionSearch.text.toString())
+                    statusSearch = false
+                    listCities = mutableListOf()
+                }
+                return@setOnEditorActionListener true
+            }
+            false
         }
     }
 

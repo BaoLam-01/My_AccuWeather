@@ -32,7 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/_8sdp"
-                    android:fontFamily="@font/poppins_bold"
+                    android:fontFamily="@font/opensan_bold"
                     android:textSize="@dimen/_13ssp"
                     android:textColor="@color/getstart"
                     android:text="@string/textLocationAlert" />
