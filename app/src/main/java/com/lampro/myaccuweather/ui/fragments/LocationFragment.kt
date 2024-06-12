@@ -201,7 +201,7 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapte
                     hideLoadingDialog()
                     Toast.makeText(
                         this.context,
-                        "get inf City failed ${response.message}",
+                        getString(R.string.call_api_failed, response.message),
                         Toast.LENGTH_SHORT
                     ).show()
 
@@ -230,7 +230,7 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapte
                         } else {
                             Toast.makeText(
                                 this.context,
-                                "No information about ${binding.edtLoactionSearch.text} city was found",
+                                getString(R.string.city_not_found, binding.edtLoactionSearch.text),
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
@@ -241,7 +241,7 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapte
                     hideLoadingDialog()
                     Toast.makeText(
                         this.context,
-                        "Get api failed ${response.message}",
+                        getString(R.string.call_api_failed, response.message),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -351,7 +351,7 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapte
 
         binding.imgBtnSearch.setOnClickListener {
             if (binding.edtLoactionSearch.text.isEmpty()) {
-                Toast.makeText(context, "Enter yout location!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.enter_yout_location), Toast.LENGTH_SHORT).show()
             } else {
                 mlocationViewModel.getGeoByCityName(binding.edtLoactionSearch.text.toString())
                 statusSearch = false
@@ -361,7 +361,7 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapte
         binding.edtLoactionSearch.setOnEditorActionListener{_ ,actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_NEXT) {
                 if (binding.edtLoactionSearch.text.isEmpty()) {
-                    Toast.makeText(context, "Enter yout location!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, getString(R.string.enter_yout_location), Toast.LENGTH_SHORT).show()
                 } else {
                     mlocationViewModel.getGeoByCityName(binding.edtLoactionSearch.text.toString())
                     statusSearch = false

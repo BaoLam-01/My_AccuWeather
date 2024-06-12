@@ -40,7 +40,7 @@
     </string-array>
     <string name="vi">VI</string>
     <string name="pressure">Pressure</string>
-    <string name="get_location_key_failed">Get location key Failed %1$s</string>
+    <string name="get_location_key_failed">Call API Failed %1$s</string>
     <string name="today">"Today:\u0020"</string>
     <string name="very_light">The wind is very light</string>
     <string name="moderately_light">Moderately light wind</string>
@@ -68,4 +68,7 @@
     <string name="air_medium">Medium</string>
     <string name="air_polluted">Polluted</string>
     <string name="air_danger">Danger</string>
+    <string name="call_api_failed">Call API failed %1$s</string>
+    <string name="city_not_found">No information about %1$s city was found</string>
+    <string name="enter_yout_location">Please enter your location!</string>
 </resources>

@@ -40,7 +40,7 @@
         <item>℃</item>
         <item>℉</item>
     </string-array>
-    <string name="get_location_key_failed">Get location key Failed %1$s</string>
+    <string name="get_location_key_failed">Gọi API không thành công %1$s</string>
     <string name="today">Hôm nay:\u0020</string>
     <string name="very_light">Gió rất nhẹ</string>
     <string name="moderately_light">Gió nhẹ vừa phải</string>
@@ -68,4 +68,7 @@
     <string name="air_medium">Vừa phải</string>
     <string name="air_polluted">Ô nhiễm</string>
     <string name="air_danger">Nguy hiểm</string>
+    <string name="call_api_failed">Gọi API thất bại %1$s</string>
+    <string name="city_not_found">Không tìm thấy thông tin nào về thành phố %1$s</string>
+    <string name="enter_yout_location">Vui Lòng nhập vào vị trí của bạn!</string>
 </resources>

@@ -310,7 +310,7 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
                     hideLoadingDialog()
                     Toast.makeText(
                         this@HomeWeatherFragment.context,
-                        "get curent weather failed ${response.message}",
+                        getString(R.string.call_api_failed, response.message),
                         Toast.LENGTH_SHORT
                     ).show()
                     Log.d(TAG, "getCurrentWeather: ${response.message}")
@@ -344,7 +344,7 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
                     hideLoadingDialog()
                     Toast.makeText(
                         this@HomeWeatherFragment.context,
-                        "get hourly weather failed ${response.message}",
+                          R.string.call_api_failed.toString() + response.message,
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -478,7 +478,6 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
                 } else {
                     locationClient.lastLocation.addOnSuccessListener {
                         Log.d(TAG, "initView: lat: ${it.latitude} | long: ${it.longitude}")
-//                        Toast.makeText(context,getLocationKey(it.latitude, it.longitude), Toast.LENGTH_SHORT).show()
 
 
                         lat = it.latitude

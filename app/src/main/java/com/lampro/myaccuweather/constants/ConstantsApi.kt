@@ -17,10 +17,10 @@ object ConstantsApi {
     0HUjdtIjCREWsFz6MVr0hqjCETmUcZDK
     * */
 
-    const val ACCU_API_KEY = "lgAOdKCgYiYxqXlCuCxJyBshJrzJyd2o"
-    const val ACCU_API_KEY1 = "8Zjyi3FvAYGwGc9te9G1ntigztOUF21E"
-    const val ACCU_API_KEY2 = "jaMHWWGEp3BwvAgsW9D4JKgY22ehWqtQ"
-    const val ACCU_API_KEY3 = "0HUjdtIjCREWsFz6MVr0hqjCETmUcZDK"
+    const val ACCU_API_KEY = "799lqqQ7AjSkWWO70SyydaRdAzi3O0Bn"
+    const val ACCU_API_KEY1 = "Mf15AZL6AUmk99LwqAgjwd2G4NDwUHY6"
+    const val ACCU_API_KEY2 = "A18DGMLcvebA06oD90XjemEVAp6rR1P6"
+    const val ACCU_API_KEY3 = "3VYmfBZDenK2xi21ERvnfGyCUhqjyV4Y"
     const val ACCU_BASE_URL = "https://dataservice.accuweather.com/"
 //    const val GET_CURRENT_WEATHER = "currentconditions/v1/{locationkey}?apikey=$ACCU_API_KEY&language=vi&details=true"
     const val GET_HOURLY_WEATHER = "forecasts/v1/hourly/12hour/{locationkey}?apikey=$ACCU_API_KEY&details=true"

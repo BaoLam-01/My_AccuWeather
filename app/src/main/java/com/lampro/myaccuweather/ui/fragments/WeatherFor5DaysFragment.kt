@@ -167,7 +167,7 @@ class WeatherFor5DaysFragment : BaseFragment<FragmentWeatherFor5DaysBinding>() {
                     hideLoadingDialog()
                     Toast.makeText(
                         this.context,
-                        "Get air quality failed ${response.message}",
+                        getString(R.string.call_api_failed,response.message),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -204,7 +204,7 @@ class WeatherFor5DaysFragment : BaseFragment<FragmentWeatherFor5DaysBinding>() {
                     hideLoadingDialog()
                     Toast.makeText(
                         this.context,
-                        "Get UV Index failed ${response.message}",
+                        getString(R.string.call_api_failed,response.message),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -240,7 +240,7 @@ class WeatherFor5DaysFragment : BaseFragment<FragmentWeatherFor5DaysBinding>() {
                     hideLoadingDialog()
                     Toast.makeText(
                         this.context,
-                        "Get UV Index failed ${response.message}",
+                        getString(R.string.call_api_failed,response.message),
                         Toast.LENGTH_SHORT
                     ).show()
                     binding.btnSeeMore.isClickable = false
