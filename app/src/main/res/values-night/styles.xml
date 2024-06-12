@@ -2,5 +2,7 @@
 
     <style name="Widget.Theme.MyAccuWeather.MyView" parent="">
         <item name="android:background">@color/gray_600</item>
+        <item name="android:statusBarColor">@color/statusBar</item>
+        <item name="android:navigationBarColor">@color/navigationBar</item>
     </style>
 </resources>

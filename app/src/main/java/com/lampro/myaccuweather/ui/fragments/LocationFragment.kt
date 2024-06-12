@@ -256,12 +256,13 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapte
                 is ApiResponse.Success -> {
                     hideLoadingDialog()
                     response.data?.let {
-                        binding.tvTemp.text = it.main.temp.toInt().toString() + PrefManager.getCurrentUnits()
+                        binding.tvTemp.text =
+                            it.main.temp.toInt().toString() + PrefManager.getCurrentUnits()
                         if (PrefManager.getCurrentUnits() == "℃") {
                             temp = Math.ceil(it.main.temp).toInt()
                         } else {
                             val f = it.main.temp
-                            val c = 5/9f * (f - 32)
+                            val c = 5 / 9f * (f - 32)
                             temp = c.toInt()
                         }
                         icon = it.weather[0].icon
@@ -312,7 +313,9 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapte
                         mlocationViewModel.getLocationKey(it.latitude, it.longitude)
                         mlocationViewModel.getCurrentWeather(it.latitude, it.longitude)
 
+                        PrefManager.setStatusLocation(true)
 
+                        
                         lat = it.latitude
                         lon = it.longitude
 
@@ -351,17 +354,22 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapte
 
         binding.imgBtnSearch.setOnClickListener {
             if (binding.edtLoactionSearch.text.isEmpty()) {
-                Toast.makeText(context, getString(R.string.enter_yout_location), Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.enter_yout_location), Toast.LENGTH_SHORT)
+                    .show()
             } else {
                 mlocationViewModel.getGeoByCityName(binding.edtLoactionSearch.text.toString())
                 statusSearch = false
                 listCities = mutableListOf()
             }
         }
-        binding.edtLoactionSearch.setOnEditorActionListener{_ ,actionId, _ ->
+        binding.edtLoactionSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_NEXT) {
                 if (binding.edtLoactionSearch.text.isEmpty()) {
-                    Toast.makeText(context, getString(R.string.enter_yout_location), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        getString(R.string.enter_yout_location),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
                     mlocationViewModel.getGeoByCityName(binding.edtLoactionSearch.text.toString())
                     statusSearch = false
@@ -383,25 +391,33 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapte
                 requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            if (!ActivityCompat.shouldShowRequestPermissionRationale(
-                    requireActivity(),
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) &&
-                !ActivityCompat.shouldShowRequestPermissionRationale(
-                    requireActivity(),
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                )
-            ) {
-
+            if (!PrefManager.getStatusLocation()) {
                 showAlertDialog()
-
             } else {
-                return@registerForActivityResult
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(
+                        requireActivity(),
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) &&
+                    !ActivityCompat.shouldShowRequestPermissionRationale(
+                        requireActivity(),
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    )
+                ) {
+
+                    PrefManager.setStatusLocation(false)
+
+                } else {
+                    return@registerForActivityResult
+                }
             }
         } else locationClient.lastLocation.addOnSuccessListener {
             Log.d("TAG", ": lat: ${it.latitude} | long: ${it.longitude}")
             mlocationViewModel.getLocationKey(it.latitude, it.longitude)
             mlocationViewModel.getCurrentWeather(it.latitude, it.longitude)
+
+
+            PrefManager.setStatusLocation(true)
+
 
             lat = it.latitude
             lon = it.longitude
@@ -429,7 +445,7 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapte
             btnView2.setOnClickListener {
                 if (dialog != null) {
                     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                    val uri = Uri.fromParts("package","com.lampro.myaccuweather", null)
+                    val uri = Uri.fromParts("package", "com.lampro.myaccuweather", null)
                     intent.data = uri
 
                     startActivity(intent)

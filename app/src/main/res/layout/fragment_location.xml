@@ -19,13 +19,13 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/background_gradient"
             android:clickable="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@id/bottomnav"
+                android:background="@drawable/background_gradient"
                 android:orientation="vertical"
                 android:paddingHorizontal="@dimen/_20sdp">
 
@@ -61,9 +61,9 @@
                             android:background="@null"
                             android:fontFamily="@font/opensans_regular"
                             android:hint="@string/search_location"
+                            android:inputType="text"
                             android:maxLines="1"
                             android:textColor="@color/white"
-                            android:inputType="text"
                             android:textColorHint="#66FFFFFF"
                             android:textSize="@dimen/_13ssp" />
                     </LinearLayout>
@@ -117,7 +117,7 @@
                                 android:layout_alignParentLeft="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginRight="@dimen/_10sdp"
-                                android:src="@drawable/icon_location"/>
+                                android:src="@drawable/icon_location" />
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -168,11 +168,11 @@
                         android:orientation="vertical"
                         android:padding="@dimen/_10sdp"
                         android:visibility="invisible">
+
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rvCitySearch"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
-
+                            android:layout_height="wrap_content" />
 
 
                     </LinearLayout>
@@ -207,6 +207,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_alignParentBottom="true"
+                android:background="@drawable/nav_bg_gradient"
                 android:gravity="center"
                 android:orientation="horizontal">
 

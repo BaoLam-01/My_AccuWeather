@@ -26,6 +26,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
 import androidx.databinding.adapters.AdapterViewBindingAdapter.OnItemSelected
 import androidx.fragment.app.activityViewModels
@@ -34,6 +35,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.lampro.myaccuweather.R
+import com.lampro.myaccuweather.adapters.HourlyRainAdapter
 import com.lampro.myaccuweather.adapters.HourlyWeatherAdapter
 import com.lampro.myaccuweather.adapters.LanguageAdapter
 import com.lampro.myaccuweather.adapters.UnitsAdapter
@@ -60,6 +62,7 @@ private const val ARG_PARAM2 = "param2"
 private lateinit var homeWeatherViewModel: HomeWeatherViewModel
 
 private lateinit var mHourlyWeatherAdapter: HourlyWeatherAdapter
+private lateinit var mHourlyRainAdapter: HourlyRainAdapter
 private lateinit var locationClient: FusedLocationProviderClient
 
 class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
@@ -93,6 +96,7 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
         initViewModel()
         spinLang()
         spinUnits()
+
 
 
         if (PrefManager.getLocationLat() == 0.0 || PrefManager.getLocationLon() == 0.0 || PrefManager.getLocationKey() == "") {
@@ -327,10 +331,20 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
                 is ApiResponse.Success -> {
                     hideLoadingDialog()
                     mHourlyWeatherAdapter = HourlyWeatherAdapter()
+                    mHourlyRainAdapter = HourlyRainAdapter()
                     response.data?.let {
                         mHourlyWeatherAdapter.updateData(it)
                         binding.rvWeatherHour.apply {
                             adapter = mHourlyWeatherAdapter
+                            layoutManager = LinearLayoutManager(
+                                this@HomeWeatherFragment.context,
+                                LinearLayoutManager.HORIZONTAL,
+                                false
+                            )
+                        }
+                        mHourlyRainAdapter.updateData(it)
+                        binding.rvRainyHour.apply {
+                            adapter = mHourlyRainAdapter
                             layoutManager = LinearLayoutManager(
                                 this@HomeWeatherFragment.context,
                                 LinearLayoutManager.HORIZONTAL,
@@ -344,7 +358,7 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
                     hideLoadingDialog()
                     Toast.makeText(
                         this@HomeWeatherFragment.context,
-                          R.string.call_api_failed.toString() + response.message,
+                        R.string.call_api_failed.toString() + response.message,
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -464,6 +478,8 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
     private fun initView() {
 
         binding.btnLocation.setOnClickListener {
+
+
             activity?.let { it1 ->
                 if (ActivityCompat.checkSelfPermission(
                         requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION
@@ -471,13 +487,17 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
                         requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION
                     ) != PackageManager.PERMISSION_GRANTED
                 ) {
+
                     PermissionManager.requestLocationPermission(
                         it1, locationResultLauncher
                     )
-                    Log.d(TAG, "initView: click")
+
                 } else {
                     locationClient.lastLocation.addOnSuccessListener {
                         Log.d(TAG, "initView: lat: ${it.latitude} | long: ${it.longitude}")
+
+
+                        PrefManager.setStatusLocation(true)
 
 
                         lat = it.latitude
@@ -519,24 +539,29 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
                 requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            if (!ActivityCompat.shouldShowRequestPermissionRationale(
-                    requireActivity(),
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) &&
-                !ActivityCompat.shouldShowRequestPermissionRationale(
-                    requireActivity(),
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                )
-            ) {
-
+            if (!PrefManager.getStatusLocation()) {
                 showAlertDialog()
-
             } else {
-                return@registerForActivityResult
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(
+                        requireActivity(),
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) &&
+                    !ActivityCompat.shouldShowRequestPermissionRationale(
+                        requireActivity(),
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    )
+                ) {
+
+                    PrefManager.setStatusLocation(false)
+
+                } else {
+                    return@registerForActivityResult
+                }
             }
         } else locationClient.lastLocation.addOnSuccessListener {
             Log.d("TAG", ": lat: ${it.latitude} | long: ${it.longitude}")
 
+            PrefManager.setStatusLocation(true)
 
 
             lat = it.latitude

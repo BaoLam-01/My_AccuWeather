@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="currentWeather"
             type="com.lampro.myaccuweather.objects.currentweatherresponse.CurrentWeatherResponse" />
@@ -14,34 +15,37 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background_gradient"
         tools:context=".ui.fragments.WeatherFor7Days">
+
         <RelativeLayout
-            android:clickable="true"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:clickable="true">
 
             <LinearLayout
                 android:id="@+id/bottomnav"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_alignParentBottom="true"
+                android:background="@drawable/nav_bg_gradient"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <ImageView
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <ImageView
-                    android:id="@+id/btnBack"
-                    android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:id="@+id/btnBack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:rotation="180"
                     android:src="@drawable/icon_chevron_left" />
 
@@ -51,6 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/bottomnav"
+                android:background="@drawable/background_gradient"
                 android:orientation="vertical">
 
                 <TextView
@@ -61,9 +66,10 @@
                     android:layout_marginTop="@dimen/_40sdp"
                     android:fontFamily="@font/poppins_bold"
                     android:text="@{currentWeather.name}"
-                    tools:text="Ha Noi"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_18ssp" />
+                    android:textSize="@dimen/_18ssp"
+                    tools:text="Ha Noi" />
+
                 <TextView
                     android:id="@+id/tvCountryName"
                     android:layout_width="wrap_content"
@@ -71,9 +77,9 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:text="@{currentWeather.sys.country}"
-                    tools:text="VN"
                     android:textColor="#7AFFFFFF"
-                    android:textSize="@dimen/_10ssp" />
+                    android:textSize="@dimen/_10ssp"
+                    tools:text="VN" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -101,9 +107,9 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_regular"
                             android:text="@{StringUtils.INSTANCE.convertDouble2String(Math.ceil(currentWeather.main.tempMax+1))}"
-                            tools:text="20"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/_16ssp" />
+                            android:textSize="@dimen/_16ssp"
+                            tools:text="20" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -135,9 +141,9 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_regular"
                             android:text="@{StringUtils.INSTANCE.convertDouble2String(Math.ceil(currentWeather.main.tempMin-5))}"
-                            tools:text="18"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/_16ssp" />
+                            android:textSize="@dimen/_16ssp"
+                            tools:text="18" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -158,8 +164,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingHorizontal="@dimen/_30sdp"
                         android:fontFamily="@font/opensan_bold"
+                        android:paddingHorizontal="@dimen/_30sdp"
                         android:text="@string/days_forecasts"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_15ssp" />
@@ -173,11 +179,11 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingHorizontal="@dimen/_10sdp"
                             android:layout_weight="1"
+                            android:paddingHorizontal="@dimen/_10sdp"
                             android:rotation="180"
-                            android:visibility="invisible"
-                            android:src="@drawable/icon_chevron_left" />
+                            android:src="@drawable/icon_chevron_left"
+                            android:visibility="invisible" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rv_5Days"
@@ -190,10 +196,10 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingHorizontal="@dimen/_10sdp"
-                            android:visibility="invisible"
                             android:layout_weight="1"
-                            android:src="@drawable/icon_chevron_left" />
+                            android:paddingHorizontal="@dimen/_10sdp"
+                            android:src="@drawable/icon_chevron_left"
+                            android:visibility="invisible" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -233,9 +239,9 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/opensan_bold"
                         android:paddingHorizontal="@dimen/_15sdp"
-                        tools:text="-1 - Ổn định"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_15sdp"
-                        android:textColor="@color/white" />
+                        tools:text="-1 - Ổn định" />
 
                     <View
                         android:layout_width="match_parent"
@@ -248,8 +254,8 @@
                         android:id="@+id/btnSeeMore"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_25sdp"
-                        android:orientation="horizontal"
                         android:clickable="false"
+                        android:orientation="horizontal"
                         android:paddingHorizontal="@dimen/_15sdp">
 
                         <TextView
@@ -263,8 +269,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:padding="@dimen/_7sdp"
                             android:layout_gravity="center"
+                            android:padding="@dimen/_7sdp"
                             android:src="@drawable/icon_chevron_left" />
                     </RelativeLayout>
 
@@ -318,10 +324,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/opensan_bold"
-                                tools:text="5:28 AM"
-                                android:textSize="@dimen/_16ssp" />
+                                android:textSize="@dimen/_16ssp"
+                                tools:text="5:28 AM" />
 
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -333,8 +340,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/opensan_bold"
-                                android:text="@string/sunset"
                                 android:maxWidth="@dimen/_50sdp"
+                                android:text="@string/sunset"
                                 android:textColor="#9CFFFFFF" />
 
                             <TextView
@@ -342,8 +349,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/opensan_bold"
-                                tools:text="7:25 PM"
-                                android:textColor="#73FFFFFF" />
+                                android:textColor="#73FFFFFF"
+                                tools:text="7:25 PM" />
 
                         </LinearLayout>
 
@@ -388,8 +395,8 @@
                             android:fontFamily="@font/opensan_bold"
                             android:paddingHorizontal="@dimen/_10sdp"
                             android:text="10"
-                            tools:text="-4"
-                            android:textSize="@dimen/_16ssp" />
+                            android:textSize="@dimen/_16ssp"
+                            tools:text="-4" />
 
                         <TextView
                             android:id="@+id/tvUvIndex2"
@@ -397,9 +404,9 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/opensan_bold"
                             android:paddingHorizontal="@dimen/_10sdp"
-                            tools:text="Moderate"
                             android:text="@string/moderate"
-                            android:textSize="@dimen/_16ssp" />
+                            android:textSize="@dimen/_16ssp"
+                            tools:text="Moderate" />
 
                     </LinearLayout>
 
@@ -407,7 +414,6 @@
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
-
 
 
     </FrameLayout>

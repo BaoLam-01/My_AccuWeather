@@ -61,6 +61,7 @@ class PrefManager {
             return currentLang.getString("lang","").toString()
         }
 
+
         val CURRENT_UNITS: String = "Current_Units"
         val currentUnits =
             MyApplication.getAppContext().getSharedPreferences(CURRENT_UNITS, Context.MODE_PRIVATE)
@@ -69,6 +70,18 @@ class PrefManager {
         }
         fun getCurrentUnits(): String {
             return currentUnits.getString("units","℃").toString()
+        }
+
+
+        val CURRENT_STATUS_LOCATION: String = "Current_Status_Location"
+        val currentStatusLocation=
+            MyApplication.getAppContext().getSharedPreferences(CURRENT_STATUS_LOCATION, Context.MODE_PRIVATE)
+        fun setStatusLocation(status: Boolean) {
+
+            currentStatusLocation.edit().putBoolean("denyStatus", status).commit()
+        }
+        fun getStatusLocation(): Boolean{
+            return currentStatusLocation.getBoolean("denyStatus",true)
         }
     }
 

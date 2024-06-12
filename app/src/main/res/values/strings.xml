@@ -71,4 +71,5 @@
     <string name="call_api_failed">Call API failed %1$s</string>
     <string name="city_not_found">No information about %1$s city was found</string>
     <string name="enter_yout_location">Please enter your location!</string>
+    <string name="hourly_rain_forecast">Hourly rainfall forecast</string>
 </resources>

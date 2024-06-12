@@ -87,6 +87,7 @@
                             android:layout_alignParentRight="true"
                             android:layout_marginHorizontal="@dimen/_10sdp"
                             android:background="@android:color/transparent" />
+
                         <Spinner
                             android:id="@+id/spinerUnits"
                             android:layout_width="wrap_content"
@@ -283,9 +284,9 @@
                                 android:layout_weight="1"
                                 android:fontFamily="@font/opensans_regular"
                                 android:gravity="right"
-                                tools:text="July, 21"
                                 android:textColor="@color/white"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                tools:text="July, 21" />
                         </LinearLayout>
 
                         <View
@@ -369,8 +370,8 @@
                                         android:id="@+id/tvWind"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:maxHeight="@dimen/_50sdp"
                                         android:fontFamily="@font/opensans_regular"
+                                        android:maxHeight="@dimen/_50sdp"
                                         android:textSize="@dimen/_10sdp"
                                         tools:text="@string/wind_detail" />
                                 </LinearLayout>
@@ -755,76 +756,45 @@
                     </LinearLayout>
 
 
-                    <!--                    <LinearLayout-->
-                    <!--                        android:layout_width="match_parent"-->
-                    <!--                        android:layout_height="@dimen/_110sdp"-->
-                    <!--                        android:layout_marginHorizontal="@dimen/_20sdp"-->
-                    <!--                        android:layout_marginTop="@dimen/_20sdp"-->
-                    <!--                        android:background="@drawable/bg_frame_airquality_gradient"-->
-                    <!--                        android:elevation="@dimen/_5sdp"-->
-                    <!--                        android:orientation="vertical">-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_20sdp"
+                        android:layout_marginVertical="@dimen/_10sdp"
+                        android:background="@drawable/bg_frame_airquality_gradient"
+                        android:elevation="@dimen/_5sdp"
+                        android:orientation="vertical">
 
-                    <!--                        <LinearLayout-->
-                    <!--                            android:layout_width="match_parent"-->
-                    <!--                            android:layout_height="wrap_content"-->
-                    <!--                            android:orientation="horizontal"-->
-                    <!--                            android:paddingHorizontal="@dimen/_15sdp"-->
-                    <!--                            android:paddingVertical="@dimen/_10sdp">-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="@dimen/_15sdp"
+                            android:paddingVertical="@dimen/_10sdp">
 
-                    <!--                            <ImageView-->
-                    <!--                                android:layout_width="wrap_content"-->
-                    <!--                                android:layout_height="wrap_content"-->
-                    <!--                                android:src="@drawable/icon_crosshairs" />-->
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/rainy"
+                                app:tint="#D2FFFFFF" />
 
-                    <!--                            <TextView-->
-                    <!--                                android:layout_width="wrap_content"-->
-                    <!--                                android:layout_height="wrap_content"-->
-                    <!--                                android:layout_gravity="center"-->
-                    <!--                                android:layout_marginLeft="@dimen/_10sdp"-->
-                    <!--                                android:fontFamily="@font/opensans_regular"-->
-                    <!--                                android:text="AIR QUALITY"-->
-                    <!--                                android:textColor="@color/white" />-->
-                    <!--                        </LinearLayout>-->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:fontFamily="@font/opensans_regular"
+                                android:text="@string/hourly_rain_forecast"
+                                android:textColor="@color/white" />
+                        </LinearLayout>
 
-                    <!--                        <TextView-->
-                    <!--                            android:id="@+id/tvAirQuality"-->
-                    <!--                            android:layout_width="match_parent"-->
-                    <!--                            android:layout_height="wrap_content"-->
-                    <!--                            android:fontFamily="@font/opensan_bold"-->
-                    <!--                            android:paddingHorizontal="@dimen/_15sdp"-->
-                    <!--                            android:textColor="@color/white"-->
-                    <!--                            android:textSize="@dimen/_15sdp"-->
-                    <!--                            tools:text="-1 - Ổn định" />-->
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvRainyHour"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_10sdp" />
 
-                    <!--                        <View-->
-                    <!--                            android:layout_width="match_parent"-->
-                    <!--                            android:layout_height="@dimen/_4sdp"-->
-                    <!--                            android:layout_marginHorizontal="@dimen/_15sdp"-->
-                    <!--                            android:layout_marginVertical="@dimen/_10sdp"-->
-                    <!--                            android:background="@drawable/bg_frame_hour_gradient" />-->
-
-                    <!--                        <RelativeLayout-->
-                    <!--                            android:layout_width="match_parent"-->
-                    <!--                            android:layout_height="wrap_content"-->
-                    <!--                            android:orientation="horizontal"-->
-                    <!--                            android:paddingHorizontal="@dimen/_15sdp">-->
-
-                    <!--                            <TextView-->
-                    <!--                                android:layout_width="wrap_content"-->
-                    <!--                                android:layout_height="match_parent"-->
-                    <!--                                android:layout_gravity="center"-->
-                    <!--                                android:text="See more"-->
-                    <!--                                android:textColor="@color/white" />-->
-
-                    <!--                            <ImageView-->
-                    <!--                                android:layout_width="wrap_content"-->
-                    <!--                                android:layout_height="wrap_content"-->
-                    <!--                                android:layout_alignParentRight="true"-->
-                    <!--                                android:layout_gravity="center"-->
-                    <!--                                android:src="@drawable/icon_chevron_left" />-->
-                    <!--                        </RelativeLayout>-->
-
-                    <!--                    </LinearLayout>-->
+                    </LinearLayout>
 
                 </LinearLayout>
             </ScrollView>

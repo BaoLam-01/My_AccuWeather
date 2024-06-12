@@ -17,16 +17,20 @@ object ConstantsApi {
     0HUjdtIjCREWsFz6MVr0hqjCETmUcZDK
     * */
 
-    const val ACCU_API_KEY = "799lqqQ7AjSkWWO70SyydaRdAzi3O0Bn"
-    const val ACCU_API_KEY1 = "Mf15AZL6AUmk99LwqAgjwd2G4NDwUHY6"
-    const val ACCU_API_KEY2 = "A18DGMLcvebA06oD90XjemEVAp6rR1P6"
-    const val ACCU_API_KEY3 = "3VYmfBZDenK2xi21ERvnfGyCUhqjyV4Y"
+    const val ACCU_API_KEY = "lgAOdKCgYiYxqXlCuCxJyBshJrzJyd2o"
+    const val ACCU_API_KEY1 = "8Zjyi3FvAYGwGc9te9G1ntigztOUF21E"
+    const val ACCU_API_KEY2 = "jaMHWWGEp3BwvAgsW9D4JKgY22ehWqtQ"
+    const val ACCU_API_KEY3 = "0HUjdtIjCREWsFz6MVr0hqjCETmUcZDK"
     const val ACCU_BASE_URL = "https://dataservice.accuweather.com/"
 //    const val GET_CURRENT_WEATHER = "currentconditions/v1/{locationkey}?apikey=$ACCU_API_KEY&language=vi&details=true"
+
+    //https://dataservice.accuweather.com/forecasts/v1/hourly/12hour/3558174?apikey=799lqqQ7AjSkWWO70SyydaRdAzi3O0Bn&language=vi&details=true&metric=true%22
     const val GET_HOURLY_WEATHER = "forecasts/v1/hourly/12hour/{locationkey}?apikey=$ACCU_API_KEY&details=true"
 //    const val GET_DAILY_WEATHER = "forecasts/v1/daily/5day/{locationkey}?apikey=$ACCU_API_KEY&language=vi&details=true&metric=true"
 //    const val GET_DAILY_1DAY_WEATHER = "forecasts/v1/daily/1day/{locationkey}?apikey=$ACCU_API_KEY&details=true&metric=true"
 //    const val GET_CITY_NAME = "locations/v1/cities/neighbors/{locationkey}?apikey=$ACCU_API_KEY&details=false"
+
+    //https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=799lqqQ7AjSkWWO70SyydaRdAzi3O0Bn&details=false&q=35.6895%2C139.6917&language=vi
     const val GET_LOCATION_KEY = "locations/v1/cities/geoposition/search?apikey=$ACCU_API_KEY1&details=false"
     const val GET_INF_BY_CITY_NAME = "locations/v1/cities/search?apikey=$ACCU_API_KEY2&details=true&offset=3"
     const val GET_UV_INDEX = "currentconditions/v1/{locationkey}?apikey=$ACCU_API_KEY3&details=true"

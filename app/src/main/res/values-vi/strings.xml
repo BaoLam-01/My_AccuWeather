@@ -71,4 +71,6 @@
     <string name="call_api_failed">Gọi API thất bại %1$s</string>
     <string name="city_not_found">Không tìm thấy thông tin nào về thành phố %1$s</string>
     <string name="enter_yout_location">Vui Lòng nhập vào vị trí của bạn!</string>
+    <string name="hourly_rain_forecast">Dự báo lượng mưa theo giờ</string>
+
 </resources>
