@@ -8,12 +8,16 @@ object ConstantsApi {
     AAuFGbkGboPaya9OAHpKKgzTbLKsFwdT
     fFZgDCHwPErjSOAR6x3RssMrA8NLmSrv
 
+    5rPbGhdgYi2z3xcsAyp8NwyGX7KHIdXw
+    66NiI0n5GS0jUWsOdcWClEC62B9CaqtL
+    UqscG7k7cynUayVlGDEK4hM8cP1jyvz0
+    fReK2GqWoLGoUviBGBKyHjmgNNuuwQWv
     * */
 
-    const val ACCU_API_KEY = "3SJypCH9lXz7AfsARwGGUMvhtjtr7Ftd"
-    const val ACCU_API_KEY1 = "iTUu29xgqw2GmBAJkHnAVzFCRjeveRjW"
-    const val ACCU_API_KEY2 = "hssp2PGmAGVFQgCu8givMCPoAfTB6RWM"
-    const val ACCU_API_KEY3 = "D0JhSHoOnZuGplsWHvaeyKGGdP84ksyg"
+    const val ACCU_API_KEY = "4eOArh5GLVcTBQdAg7aFi1I5tw7IC6hF"
+    const val ACCU_API_KEY1 = "aUmqfUZHXKzz9GiGoFzZU8sUSVoOU9nx"
+    const val ACCU_API_KEY2 = "AAuFGbkGboPaya9OAHpKKgzTbLKsFwdT"
+    const val ACCU_API_KEY3 = "fFZgDCHwPErjSOAR6x3RssMrA8NLmSrv"
     const val ACCU_BASE_URL = "https://dataservice.accuweather.com/"
 //    const val GET_CURRENT_WEATHER = "currentconditions/v1/{locationkey}?apikey=$ACCU_API_KEY&language=vi&details=true"
 

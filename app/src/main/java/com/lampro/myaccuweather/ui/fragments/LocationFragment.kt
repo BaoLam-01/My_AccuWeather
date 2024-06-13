@@ -220,8 +220,8 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapte
                     response.data?.let {
                         if (it.size != 0) {
                             for (i in it) {
-                                mlocationViewModel.getLocationKey(i.lat, i.lon)
                                 mlocationViewModel.getCurrentWeather(i.lat, i.lon)
+                                mlocationViewModel.getLocationKey(i.lat, i.lon)
                                 lat = i.lat
                                 lon = i.lon
 
