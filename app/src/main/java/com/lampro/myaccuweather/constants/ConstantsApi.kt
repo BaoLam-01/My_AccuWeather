@@ -3,26 +3,10 @@ package com.lampro.myaccuweather.constants
 object ConstantsApi {
 
     /*
-    799lqqQ7AjSkWWO70SyydaRdAzi3O0Bn
-    Mf15AZL6AUmk99LwqAgjwd2G4NDwUHY6
-    A18DGMLcvebA06oD90XjemEVAp6rR1P6
-    3VYmfBZDenK2xi21ERvnfGyCUhqjyV4Y
-    O45qbcr1hT0Z7EsD2Gy0RzHDJrHGbhXB
-    Dg98nYAeVGcVxD55lEokoKLLypiYTDGC
-    Vgx7dBAN35AEjsJ4KgVVSBPHWOIMBaI6
-    2qG5lURDwvJGqSRL6Hxl514djaOpJf3c
-    lgAOdKCgYiYxqXlCuCxJyBshJrzJyd2o
-    8Zjyi3FvAYGwGc9te9G1ntigztOUF21E
-    jaMHWWGEp3BwvAgsW9D4JKgY22ehWqtQ
-    0HUjdtIjCREWsFz6MVr0hqjCETmUcZDK
-    KpRAtMDA4swvtWIxVZbdACWsOAtnRf7b
-    GmUsvAcPMAF2zGT6pKlCmOtfhd93Jcfy
-    KmGYoMr3RfF8f3bMuqHSLwvBuvgtRpfk
-    iYtmECGNm09wvcVUcKqTGwwmzMXK84Ax
-    3SJypCH9lXz7AfsARwGGUMvhtjtr7Ftd
-    iTUu29xgqw2GmBAJkHnAVzFCRjeveRjW
-    hssp2PGmAGVFQgCu8givMCPoAfTB6RWM
-    D0JhSHoOnZuGplsWHvaeyKGGdP84ksyg
+    4eOArh5GLVcTBQdAg7aFi1I5tw7IC6hF
+    aUmqfUZHXKzz9GiGoFzZU8sUSVoOU9nx
+    AAuFGbkGboPaya9OAHpKKgzTbLKsFwdT
+    fFZgDCHwPErjSOAR6x3RssMrA8NLmSrv
 
     * */
 
