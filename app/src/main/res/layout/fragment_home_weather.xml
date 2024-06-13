@@ -63,6 +63,7 @@
                                 android:layout_gravity="center"
                                 android:fontFamily="@font/poppins_medium"
                                 android:includeFontPadding="false"
+                                android:text="@{currentWeatherResponse.name}"
                                 android:textColor="#48FFFFFF"
                                 android:textSize="@dimen/_20sdp"
                                 tools:text="london" />
@@ -73,6 +74,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:fontFamily="@font/poppins_medium"
+                                android:text="@{currentWeatherResponse.sys.country}"
                                 android:textColor="#48FFFFFF"
                                 android:textSize="@dimen/_10sdp"
                                 tools:text="US" />

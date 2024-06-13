@@ -127,7 +127,7 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapte
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 var position = viewHolder.adapterPosition
                 listLocation.removeAt(position)
-                mlocationWeatherAdapter.notifyItemRemoved(position)
+                mlocationWeatherAdapter.notifyDataSetChanged()
                 PrefManager.saveListLocation(listLocation)
             }
 

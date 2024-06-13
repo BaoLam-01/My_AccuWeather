@@ -93,6 +93,7 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
 
+        initView()
         initViewModel()
         spinLang()
         spinUnits()
@@ -103,11 +104,9 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
             lat = 35.6895
             lon = 139.6917
             homeWeatherViewModel.getCurrentWeather(lat, lon)
-            homeWeatherViewModel.getLocationKey(lat, lon)
         } else {
             lat = PrefManager.getLocationLat()
             lon = PrefManager.getLocationLon()
-            homeWeatherViewModel.getLocationKey(lat, lon)
             homeWeatherViewModel.getCurrentWeather(lat, lon)
         }
 
@@ -115,42 +114,8 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
         activity?.let { locationClient = LocationServices.getFusedLocationProviderClient(it) }
 
 
-        initView()
 
-        homeWeatherViewModel.locationKeyData.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is ApiResponse.Loading -> {
-                    showLoadingDialog()
-                }
 
-                is ApiResponse.Success -> {
-                    hideLoadingDialog()
-                    response.data?.let {
-                        homeWeatherViewModel.getHourlyWeather(it.key)
-                        PrefManager.setLocationKey(it.key)
-                        PrefManager.setLocation(lat, lon)
-                        if (it.localizedName.isNotEmpty()) {
-                            binding.tvCityName.text = it.localizedName
-                        } else {
-                            binding.tvCityName.text = it.englishName
-                        }
-                        binding.tvCountryName.text =
-                            it.administrativeArea.localizedName + ", " + it.country.localizedName
-
-                    }
-                }
-
-                is ApiResponse.Failed -> {
-                    hideLoadingDialog()
-                    Toast.makeText(
-                        this.context,
-                        getString(R.string.get_location_key_failed, response.message),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-
-            }
-        }
         homeWeatherViewModel.currentWeatherData.observe(viewLifecycleOwner) { response ->
 
             when (response) {
@@ -164,6 +129,7 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
                         //
                         viewModel.shareData.value = it
                         binding.currentWeatherResponse = it
+                        homeWeatherViewModel.getLocationKey(lat, lon)
                         val epochSeconds = it.dt.toLong()
                         val instant = Instant.ofEpochSecond(epochSeconds)
                         val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
@@ -321,7 +287,40 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
                 }
             }
         }
+        homeWeatherViewModel.locationKeyData.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is ApiResponse.Loading -> {
+                    showLoadingDialog()
+                }
 
+                is ApiResponse.Success -> {
+                    hideLoadingDialog()
+                    response.data?.let {
+                        homeWeatherViewModel.getHourlyWeather(it.key)
+                        PrefManager.setLocationKey(it.key)
+                        PrefManager.setLocation(lat, lon)
+                        if (it.localizedName.isNotEmpty()) {
+                            binding.tvCityName.text = it.localizedName
+                        } else {
+                            binding.tvCityName.text = it.englishName
+                        }
+                        binding.tvCountryName.text =
+                            it.administrativeArea.localizedName + ", " + it.country.localizedName
+
+                    }
+                }
+
+                is ApiResponse.Failed -> {
+                    hideLoadingDialog()
+                    Toast.makeText(
+                        this.context,
+                        getString(R.string.get_location_key_failed, response.message),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+            }
+        }
         homeWeatherViewModel.hourlyWeatherData.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is ApiResponse.Loading -> {
@@ -502,7 +501,6 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
 
                         lat = it.latitude
                         lon = it.longitude
-                        homeWeatherViewModel.getLocationKey(it.latitude, it.longitude)
 
                         homeWeatherViewModel.getCurrentWeather(it.latitude, it.longitude)
 
@@ -566,7 +564,6 @@ class HomeWeatherFragment : BaseFragment<FragmentHomeWeatherBinding>() {
 
             lat = it.latitude
             lon = it.longitude
-            homeWeatherViewModel.getLocationKey(it.latitude, it.longitude)
 
             homeWeatherViewModel.getCurrentWeather(it.latitude, it.longitude)
         }
