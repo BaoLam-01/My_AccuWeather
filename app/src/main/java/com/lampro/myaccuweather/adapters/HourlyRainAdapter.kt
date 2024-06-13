@@ -31,8 +31,30 @@ class HourlyRainAdapter :
         val formatter = DateTimeFormatter.ofPattern("HH.mm")
         val formattedDate = dateTime.format(formatter)
         holder.binding.tvTimeRain.setText(formattedDate)
+
+        val constraintSet = ConstraintSet()
+        constraintSet.clone(holder.binding.clRainHour)
+        constraintSet.constrainHeight(
+            holder.binding.vPercentRain.id,
+            ConstraintSet.MATCH_CONSTRAINT
+        )
+        constraintSet.constrainPercentHeight(
+            holder.binding.vPercentRain.id,
+             mListData[position].rainProbability / 100f
+        )
+        constraintSet.applyTo(holder.binding.clRainHour)
+
         when (mListData[position].rainProbability) {
-            in 0 .. 10 -> {
+            in 0 .. 5-> {
+                holder.binding.vPercentRain.setBackgroundResource(R.drawable.percent_rain_verylow)
+                holder.binding.tvPercentRain.text = "<5%"
+                constraintSet.constrainPercentHeight(
+                    holder.binding.vPercentRain.id,
+                    0.05f
+                )
+                constraintSet.applyTo(holder.binding.clRainHour)
+            }
+            in 6 .. 10 -> {
                 holder.binding.vPercentRain.setBackgroundResource(R.drawable.percent_rain_verylow)
             }
             in 11 .. 20-> {
@@ -51,17 +73,5 @@ class HourlyRainAdapter :
                 holder.binding.vPercentRain.setBackgroundResource(R.drawable.percent_rain_very_high)
             }
         }
-        val constraintSet = ConstraintSet()
-        constraintSet.clone(holder.binding.clRainHour)
-        constraintSet.constrainHeight(
-            holder.binding.vPercentRain.id,
-            ConstraintSet.MATCH_CONSTRAINT
-        )
-        constraintSet.constrainPercentHeight(
-            holder.binding.vPercentRain.id,
-             mListData[position].rainProbability / 100f
-        )
-        constraintSet.applyTo(holder.binding.clRainHour)
-
     }
 }

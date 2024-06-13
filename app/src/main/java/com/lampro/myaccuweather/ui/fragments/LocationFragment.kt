@@ -469,11 +469,11 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(), CityNameAdapte
             }
     }
 
-    override fun onItemClick() {
+    override fun onItemClick(item: LocationItem) {
         param2?.apply {
-            PrefManager.setLocation(lat, lon)
-            PrefManager.setLocationKey(key)
-            locationItem = LocationItem(key, cityName, countryName, temp, icon, lat, lon)
+            PrefManager.setLocation(item.lat, item.lon)
+            PrefManager.setLocationKey(item.locationKey)
+            locationItem = item
 
 
             listLocation.removeIf {

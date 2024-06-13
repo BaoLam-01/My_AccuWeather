@@ -20,7 +20,7 @@ class CityNameAdapter : BaseRecyclerViewAdapter<LocationItem, LayoutItemCityBind
             }
             listLocation.add(0, mListData[0])
             PrefManager.saveListLocation(listLocation)
-            callBack.onItemClick()
+            callBack.onItemClick(mListData[position])
         }
         if (PrefManager.getCurrentUnits() == "℃") {
             holder.binding.tvTempItem.text = mListData[position].temp.toString() + PrefManager.getCurrentUnits()
@@ -33,6 +33,6 @@ class CityNameAdapter : BaseRecyclerViewAdapter<LocationItem, LayoutItemCityBind
     }
     fun setCallBack (callBack: IOnItemClick){this.callBack = callBack}
     interface IOnItemClick{
-        fun onItemClick()
+        fun onItemClick(item: LocationItem)
     }
 }
